@@ -75,10 +75,14 @@ spec <- tribble(
 df_features |>
   summarize(
     .by = c(group, task),
-    Participants = n_distinct(participant)
+    n = n_distinct(participant)
   ) |>
-  arrange(group, task) |>
-  gt()
+  pivot_wider(names_from = group, values_from = n) |>
+  mutate(task = if_else(task == "Account", "Trauma Account", "Impact Statement")) |>
+  gt(rowname_col = "task") |>
+  tab_stubhead(label = "Task") |>
+  tab_spanner(label = "Participants", columns = c(PTSD, Control)) |>
+  cols_align(align = "center", columns = c(PTSD, Control))
 ```
 
 ## Table S1

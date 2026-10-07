@@ -199,29 +199,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_features <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(group, task),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Participants =</span> <span class="fu">n_distinct</span>(participant)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n_distinct</span>(participant)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(group, task) <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> group, <span class="at">values_from =</span> n) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">task =</span> <span class="fu">if_else</span>(task <span class="sc">==</span> <span class="st">"Account"</span>, <span class="st">"Trauma Account"</span>, <span class="st">"Impact Statement"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>(<span class="at">rowname_col =</span> <span class="st">"task"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_stubhead</span>(<span class="at">label =</span> <span class="st">"Task"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_spanner</span>(<span class="at">label =</span> <span class="st">"Participants"</span>, <span class="at">columns =</span> <span class="fu">c</span>(PTSD, Control)) <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"center"</span>, <span class="at">columns =</span> <span class="fu">c</span>(PTSD, Control))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="bpaskcvavn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bpaskcvavn table {
+<div id="zbuodcqlex" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zbuodcqlex table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bpaskcvavn thead, #bpaskcvavn tbody, #bpaskcvavn tfoot, #bpaskcvavn tr, #bpaskcvavn td, #bpaskcvavn th {
+#zbuodcqlex thead, #zbuodcqlex tbody, #zbuodcqlex tfoot, #zbuodcqlex tr, #zbuodcqlex td, #zbuodcqlex th {
   border-style: none;
 }
 
-#bpaskcvavn p {
+#zbuodcqlex p {
   margin: 0;
   padding: 0;
 }
 
-#bpaskcvavn .gt_table {
+#zbuodcqlex .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -247,12 +251,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_caption {
+#zbuodcqlex .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bpaskcvavn .gt_title {
+#zbuodcqlex .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -264,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#bpaskcvavn .gt_subtitle {
+#zbuodcqlex .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -276,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#bpaskcvavn .gt_heading {
+#zbuodcqlex .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -288,13 +292,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_bottom_border {
+#zbuodcqlex .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_col_headings {
+#zbuodcqlex .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -309,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_col_heading {
+#zbuodcqlex .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -329,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#bpaskcvavn .gt_column_spanner_outer {
+#zbuodcqlex .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -341,15 +345,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#bpaskcvavn .gt_column_spanner_outer:first-child {
+#zbuodcqlex .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bpaskcvavn .gt_column_spanner_outer:last-child {
+#zbuodcqlex .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bpaskcvavn .gt_column_spanner {
+#zbuodcqlex .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -361,11 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#bpaskcvavn .gt_spanner_row {
+#zbuodcqlex .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bpaskcvavn .gt_group_heading {
+#zbuodcqlex .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -391,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#bpaskcvavn .gt_empty_group_heading {
+#zbuodcqlex .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -406,15 +410,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#bpaskcvavn .gt_from_md > :first-child {
+#zbuodcqlex .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bpaskcvavn .gt_from_md > :last-child {
+#zbuodcqlex .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bpaskcvavn .gt_row {
+#zbuodcqlex .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -433,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#bpaskcvavn .gt_stub {
+#zbuodcqlex .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -446,7 +450,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bpaskcvavn .gt_stub_row_group {
+#zbuodcqlex .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -460,15 +464,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#bpaskcvavn .gt_row_group_first td {
+#zbuodcqlex .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bpaskcvavn .gt_row_group_first th {
+#zbuodcqlex .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bpaskcvavn .gt_summary_row {
+#zbuodcqlex .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -478,16 +482,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bpaskcvavn .gt_first_summary_row {
+#zbuodcqlex .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_first_summary_row.thick {
+#zbuodcqlex .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bpaskcvavn .gt_last_summary_row {
+#zbuodcqlex .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -497,7 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_grand_summary_row {
+#zbuodcqlex .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -507,7 +511,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bpaskcvavn .gt_first_grand_summary_row {
+#zbuodcqlex .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -517,7 +521,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_last_grand_summary_row_top {
+#zbuodcqlex .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -527,11 +531,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_striped {
+#zbuodcqlex .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bpaskcvavn .gt_table_body {
+#zbuodcqlex .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -540,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_footnotes {
+#zbuodcqlex .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -554,7 +558,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_footnote {
+#zbuodcqlex .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -563,7 +567,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bpaskcvavn .gt_sourcenotes {
+#zbuodcqlex .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -577,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bpaskcvavn .gt_sourcenote {
+#zbuodcqlex .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -585,104 +589,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bpaskcvavn .gt_left {
+#zbuodcqlex .gt_left {
   text-align: left;
 }
 
-#bpaskcvavn .gt_center {
+#zbuodcqlex .gt_center {
   text-align: center;
 }
 
-#bpaskcvavn .gt_right {
+#zbuodcqlex .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bpaskcvavn .gt_font_normal {
+#zbuodcqlex .gt_font_normal {
   font-weight: normal;
 }
 
-#bpaskcvavn .gt_font_bold {
+#zbuodcqlex .gt_font_bold {
   font-weight: bold;
 }
 
-#bpaskcvavn .gt_font_italic {
+#zbuodcqlex .gt_font_italic {
   font-style: italic;
 }
 
-#bpaskcvavn .gt_super {
+#zbuodcqlex .gt_super {
   font-size: 65%;
 }
 
-#bpaskcvavn .gt_footnote_marks {
+#zbuodcqlex .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bpaskcvavn .gt_asterisk {
+#zbuodcqlex .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bpaskcvavn .gt_indent_1 {
+#zbuodcqlex .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bpaskcvavn .gt_indent_2 {
+#zbuodcqlex .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bpaskcvavn .gt_indent_3 {
+#zbuodcqlex .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bpaskcvavn .gt_indent_4 {
+#zbuodcqlex .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bpaskcvavn .gt_indent_5 {
+#zbuodcqlex .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bpaskcvavn .katex-display {
+#zbuodcqlex .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bpaskcvavn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zbuodcqlex div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
-<tr class="gt_col_headings header">
-<th id="group" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">group</th>
-<th id="task" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">task</th>
-<th id="Participants" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Participants</th>
+<tr class="gt_col_headings gt_spanner_row header">
+<th rowspan="2" id="a::stub" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Task</th>
+<th colspan="2" id="Participants" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><div class="gt_column_spanner">
+Participants
+</div></th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="PTSD" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">PTSD</th>
+<th id="Control" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Control</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_center" headers="group">PTSD</td>
-<td class="gt_row gt_center" headers="task">Account</td>
-<td class="gt_row gt_right" headers="Participants">48</td>
+<th id="stub_1_1" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Trauma Account</th>
+<td class="gt_row gt_center" headers="stub_1_1 PTSD">48</td>
+<td class="gt_row gt_center" headers="stub_1_1 Control">43</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_center" headers="group">PTSD</td>
-<td class="gt_row gt_center" headers="task">Impact</td>
-<td class="gt_row gt_right" headers="Participants">48</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center" headers="group">Control</td>
-<td class="gt_row gt_center" headers="task">Account</td>
-<td class="gt_row gt_right" headers="Participants">43</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="group">Control</td>
-<td class="gt_row gt_center" headers="task">Impact</td>
-<td class="gt_row gt_right" headers="Participants">43</td>
+<th id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Impact Statement</th>
+<td class="gt_row gt_center" headers="stub_1_2 PTSD">48</td>
+<td class="gt_row gt_center" headers="stub_1_2 Control">43</td>
 </tr>
 </tbody>
 </table>
@@ -742,23 +746,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  )))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="vsvytjivts" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vsvytjivts table {
+<div id="mstdxjtqyb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mstdxjtqyb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vsvytjivts thead, #vsvytjivts tbody, #vsvytjivts tfoot, #vsvytjivts tr, #vsvytjivts td, #vsvytjivts th {
+#mstdxjtqyb thead, #mstdxjtqyb tbody, #mstdxjtqyb tfoot, #mstdxjtqyb tr, #mstdxjtqyb td, #mstdxjtqyb th {
   border-style: none;
 }
 
-#vsvytjivts p {
+#mstdxjtqyb p {
   margin: 0;
   padding: 0;
 }
 
-#vsvytjivts .gt_table {
+#mstdxjtqyb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -784,12 +788,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_caption {
+#mstdxjtqyb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vsvytjivts .gt_title {
+#mstdxjtqyb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -801,7 +805,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#vsvytjivts .gt_subtitle {
+#mstdxjtqyb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -813,7 +817,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#vsvytjivts .gt_heading {
+#mstdxjtqyb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -825,13 +829,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_bottom_border {
+#mstdxjtqyb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_col_headings {
+#mstdxjtqyb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -846,7 +850,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_col_heading {
+#mstdxjtqyb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -866,7 +870,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#vsvytjivts .gt_column_spanner_outer {
+#mstdxjtqyb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -878,15 +882,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#vsvytjivts .gt_column_spanner_outer:first-child {
+#mstdxjtqyb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vsvytjivts .gt_column_spanner_outer:last-child {
+#mstdxjtqyb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vsvytjivts .gt_column_spanner {
+#mstdxjtqyb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -898,11 +902,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#vsvytjivts .gt_spanner_row {
+#mstdxjtqyb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vsvytjivts .gt_group_heading {
+#mstdxjtqyb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -928,7 +932,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#vsvytjivts .gt_empty_group_heading {
+#mstdxjtqyb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -943,15 +947,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#vsvytjivts .gt_from_md > :first-child {
+#mstdxjtqyb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vsvytjivts .gt_from_md > :last-child {
+#mstdxjtqyb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vsvytjivts .gt_row {
+#mstdxjtqyb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -970,7 +974,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#vsvytjivts .gt_stub {
+#mstdxjtqyb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -983,7 +987,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vsvytjivts .gt_stub_row_group {
+#mstdxjtqyb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -997,15 +1001,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#vsvytjivts .gt_row_group_first td {
+#mstdxjtqyb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vsvytjivts .gt_row_group_first th {
+#mstdxjtqyb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vsvytjivts .gt_summary_row {
+#mstdxjtqyb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1015,16 +1019,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vsvytjivts .gt_first_summary_row {
+#mstdxjtqyb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_first_summary_row.thick {
+#mstdxjtqyb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vsvytjivts .gt_last_summary_row {
+#mstdxjtqyb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1034,7 +1038,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_grand_summary_row {
+#mstdxjtqyb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1044,7 +1048,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vsvytjivts .gt_first_grand_summary_row {
+#mstdxjtqyb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1054,7 +1058,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_last_grand_summary_row_top {
+#mstdxjtqyb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1064,11 +1068,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_striped {
+#mstdxjtqyb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vsvytjivts .gt_table_body {
+#mstdxjtqyb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1077,7 +1081,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_footnotes {
+#mstdxjtqyb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1091,7 +1095,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_footnote {
+#mstdxjtqyb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1100,7 +1104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vsvytjivts .gt_sourcenotes {
+#mstdxjtqyb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1114,7 +1118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vsvytjivts .gt_sourcenote {
+#mstdxjtqyb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1122,72 +1126,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vsvytjivts .gt_left {
+#mstdxjtqyb .gt_left {
   text-align: left;
 }
 
-#vsvytjivts .gt_center {
+#mstdxjtqyb .gt_center {
   text-align: center;
 }
 
-#vsvytjivts .gt_right {
+#mstdxjtqyb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vsvytjivts .gt_font_normal {
+#mstdxjtqyb .gt_font_normal {
   font-weight: normal;
 }
 
-#vsvytjivts .gt_font_bold {
+#mstdxjtqyb .gt_font_bold {
   font-weight: bold;
 }
 
-#vsvytjivts .gt_font_italic {
+#mstdxjtqyb .gt_font_italic {
   font-style: italic;
 }
 
-#vsvytjivts .gt_super {
+#mstdxjtqyb .gt_super {
   font-size: 65%;
 }
 
-#vsvytjivts .gt_footnote_marks {
+#mstdxjtqyb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vsvytjivts .gt_asterisk {
+#mstdxjtqyb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vsvytjivts .gt_indent_1 {
+#mstdxjtqyb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vsvytjivts .gt_indent_2 {
+#mstdxjtqyb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vsvytjivts .gt_indent_3 {
+#mstdxjtqyb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vsvytjivts .gt_indent_4 {
+#mstdxjtqyb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vsvytjivts .gt_indent_5 {
+#mstdxjtqyb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vsvytjivts .katex-display {
+#mstdxjtqyb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vsvytjivts div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mstdxjtqyb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

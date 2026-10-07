@@ -126,64 +126,167 @@ demo_all <-
     across(Race:Sex, \(x) fct_na_value_to_level(x, "Unknown"))
   )
 
+```
+
+### Sample
+
+```{r}
 n_group <- table(demo_all$PTSD)
-n_group
-table(Recruitment = demo_all$GRP, Diagnosis = demo_all$PTSD)
+
+demo_all |>
+  count(GRP, PTSD) |>
+  pivot_wider(names_from = PTSD, values_from = n, values_fill = 0) |>
+  mutate(
+    GRP = str_to_title(GRP),
+    Total = PTSD + Control
+  ) |>
+  gt(rowname_col = "GRP") |>
+  tab_stubhead(label = "Recruitment source") |>
+  tab_spanner(label = "Diagnostic group (CAPS-5)", columns = c(PTSD, Control)) |>
+  grand_summary_rows(columns = c(PTSD, Control, Total), fns = list(Total ~ sum(.)), fmt = ~ fmt_integer(.)) |>
+  cols_align(align = "center", columns = c(PTSD, Control, Total))
 ```
 
 ## Group Comparisons
 
-### Categorical Variables
-
 ```{r}
+# Formatting helpers (APA style: no leading zero for p and bounded effect sizes)
 fmt_p <- function(p) {
-  if_else(p < .001, "p < .001", paste("p =", sub("^0", "", sprintf("%.3f", p))))
+  if_else(p < .001, "< .001", sub("^0", "", sprintf("%.3f", p)))
+}
+fmt_es <- function(x) {
+  sub("^(-?)0", "\\1", sprintf("%.2f", x)) |> sub(pattern = "^-", replacement = "−")
 }
 
-tabulate_var <- function(data, var) {
-  tab <- table(droplevels(data[[var]]), data$PTSD)
-  pct <- 100 * prop.table(tab, 2)
+# Mann-Whitney U test with rank-biserial correlation (positive = higher in PTSD group)
+mwu_test <- function(data, var) {
+  data <- filter(data, !is.na(.data[[var]]))
+  x <- data[[var]][data$PTSD == "PTSD"]
+  y <- data[[var]][data$PTSD == "Control"]
+  w <- wilcox.test(x, y, exact = FALSE)
   tibble(
-    variable = var,
-    level = rownames(tab),
-    n_ptsd = tab[, "PTSD"],
-    pct_ptsd = pct[, "PTSD"],
-    n_ctrl = tab[, "Control"],
-    pct_ctrl = pct[, "Control"]
+    test = "Mann-Whitney U",
+    statistic = sprintf("U = %.1f", w$statistic),
+    p = w$p.value,
+    es_name = "r",
+    es = unname(2 * w$statistic / (length(x) * length(y)) - 1),
+    n = length(x) + length(y)
   )
 }
 
-# Sex: chi-square test
-sex_test <- chisq.test(table(droplevels(demo_all$Sex), demo_all$PTSD), correct = FALSE)
+# Chi-square or Fisher's exact test with Cramér's V
+nominal_test <- function(data, var, exact) {
+  tab <- table(droplevels(data[[var]]), data$PTSD)
+  chi <- suppressWarnings(chisq.test(tab, correct = FALSE))
+  v <- sqrt(unname(chi$statistic) / (sum(tab) * (min(dim(tab)) - 1)))
+  result <- if (exact) {
+    tibble(test = "Fisher's exact", statistic = "", p = fisher.test(tab)$p.value)
+  } else {
+    tibble(
+      test = "Chi-square",
+      statistic = sprintf("χ²(%d) = %.2f", chi$parameter, chi$statistic),
+      p = chi$p.value
+    )
+  }
+  mutate(result, es_name = "V", es = v, n = sum(tab), min_expected = min(chi$expected))
+}
 
-# Race and ethnicity: Fisher's exact test because some expected counts are < 5
-race_test <- fisher.test(table(droplevels(demo_all$Race), demo_all$PTSD))
-ethnicity_test <- fisher.test(table(droplevels(demo_all$Ethnicity), demo_all$PTSD))
+comparisons <- bind_rows(
+  # Expected counts are all >= 5 for sex
+  nominal_test(demo_all, "Sex", exact = FALSE) |> mutate(variable = "Sex"),
+  # Some expected counts are < 5 for race and ethnicity
+  nominal_test(demo_all, "Race", exact = TRUE) |> mutate(variable = "Race"),
+  nominal_test(filter(demo_all, Ethnicity != "Unknown"), "Ethnicity", exact = TRUE) |>
+    mutate(variable = "Ethnicity"),
+  # Income is ordinal, so compare the ordered income brackets
+  demo_all |>
+    filter(Income != "Prefer not to say") |>
+    mutate(Income_rank = as.integer(droplevels(Income))) |>
+    mwu_test("Income_rank") |>
+    mutate(variable = "Income"),
+  mwu_test(demo_all, "Age") |> mutate(variable = "Age (years)"),
+  mwu_test(demo_all, "Education") |> mutate(variable = "Education (years)"),
+  mwu_test(demo_all, "SUDS_Account") |> mutate(variable = "SUDS, Account"),
+  mwu_test(demo_all, "SUDS_Impact") |> mutate(variable = "SUDS, Impact"),
+  mwu_test(demo_all, "PCL5") |> mutate(variable = "PCL-5")
+  # CAPS-5 is not tested because the groups were defined by the CAPS-5 diagnosis
+) |>
+  relocate(variable)
 
-# Income: Fisher's exact test, excluding "Prefer not to say"
-income_data <- filter(demo_all, Income != "Prefer not to say")
-income_test <- fisher.test(table(droplevels(income_data$Income), income_data$PTSD))
-
-categorical_tests <- tibble(
-  variable = c("Sex", "Race", "Ethnicity", "Income"),
-  test = c(
-    sprintf("χ²(%d) = %.2f, %s", sex_test$parameter, sex_test$statistic, fmt_p(sex_test$p.value)),
-    paste("Fisher's exact,", fmt_p(race_test$p.value)),
-    paste("Fisher's exact,", fmt_p(ethnicity_test$p.value)),
-    paste("Fisher's exact,", fmt_p(income_test$p.value))
-  )
-)
-
-categorical_table <-
-  map(categorical_tests$variable, \(v) tabulate_var(demo_all, v)) |>
-  list_rbind()
-
-categorical_tests
+comparisons |>
+  gt(rowname_col = "variable") |>
+  fmt(columns = es, fns = fmt_es) |>
+  fmt_number(columns = min_expected, decimals = 1) |>
+  fmt(columns = p, fns = fmt_p) |>
+  sub_missing(missing_text = "") |>
+  cols_merge(columns = c(es_name, es), pattern = "{1} = {2}") |>
+  cols_label(
+    test = "Test",
+    statistic = "Statistic",
+    p = md("*p*"),
+    es_name = "Effect size",
+    n = md("*n*"),
+    min_expected = "Min. expected count"
+  ) |>
+  cols_align(align = "center", columns = -c(variable, test)) |>
+  tab_source_note(md(paste(
+    "Ethnicity excludes \"Unknown\" (n = 1) and income excludes \"Prefer not to say\" (n = 9).",
+    "*V* = Cramér's *V*; *r* = rank-biserial correlation, positive when values are higher in the PTSD group.",
+    "Income was compared as ordered brackets.",
+    "CAPS-5 was not tested because it defined the groups."
+  )))
 ```
 
-### Continuous Variables
+The proportion declining to report income also differed by group:
 
 ```{r}
+income_nonresponse <- table(
+  `Declined to report income` = demo_all$Income == "Prefer not to say",
+  demo_all$PTSD
+)
+
+income_nonresponse |>
+  as.data.frame.matrix() |>
+  rownames_to_column("Declined to report income") |>
+  mutate(`Declined to report income` = if_else(`Declined to report income` == "TRUE", "Yes", "No")) |>
+  gt() |>
+  cols_align(align = "center", columns = c(PTSD, Control)) |>
+  tab_source_note(sprintf(
+    "Fisher's exact test, p = %s",
+    fmt_p(fisher.test(income_nonresponse)$p.value)
+  ))
+```
+
+## Table 1
+
+```{r}
+tabulate_var <- function(var) {
+  tab <- table(droplevels(demo_all[[var]]), demo_all$PTSD)
+  pct <- 100 * prop.table(tab, 2)
+  tibble(
+    row = rownames(tab),
+    c1 = as.character(tab[, "PTSD"]),
+    c2 = sprintf("%.1f%%", pct[, "PTSD"]),
+    c3 = as.character(tab[, "Control"]),
+    c4 = sprintf("%.1f%%", pct[, "Control"]),
+    type = "level"
+  )
+}
+
+describe_var <- function(var, label) {
+  x <- na.omit(demo_all[[var]][demo_all$PTSD == "PTSD"])
+  y <- na.omit(demo_all[[var]][demo_all$PTSD == "Control"])
+  tibble(
+    row = label,
+    c1 = sprintf("%.2f", mean(x)), c2 = sprintf("%.2f", sd(x)),
+    c3 = sprintf("%.2f", mean(y)), c4 = sprintf("%.2f", sd(y)),
+    type = "continuous"
+  )
+}
+
+test_cols <- comparisons |>
+  transmute(row = variable, p = fmt_p(p), es = paste0("*", es_name, "* = ", fmt_es(es)))
+
 continuous_vars <- c(
   "Age" = "Age (years)",
   "Education" = "Education (years)",
@@ -193,68 +296,19 @@ continuous_vars <- c(
   "CAPS5" = "CAPS-5"
 )
 
-# Mann-Whitney U tests with rank-biserial correlations (positive = higher in PTSD group)
-continuous_table <-
-  imap(continuous_vars, \(label, var) {
-    x <- na.omit(demo_all[[var]][demo_all$PTSD == "PTSD"])
-    y <- na.omit(demo_all[[var]][demo_all$PTSD == "Control"])
-    w <- wilcox.test(x, y, exact = FALSE)
-    tibble(
-      variable = label,
-      m_ptsd = mean(x), sd_ptsd = sd(x),
-      m_ctrl = mean(y), sd_ctrl = sd(y),
-      U = unname(w$statistic),
-      p = w$p.value,
-      r = unname(2 * w$statistic / (length(x) * length(y)) - 1)
-    )
-  }) |>
-  list_rbind()
-
-continuous_table |>
-  gt() |>
-  fmt_number(columns = c(m_ptsd:sd_ctrl, r), decimals = 2) |>
-  fmt_number(columns = U, decimals = 1) |>
-  fmt(columns = p, fns = \(p) sub("p = ", "", fmt_p(p)) |> sub(pattern = "p ", replacement = "")) |>
-  cols_label(
-    variable = "", m_ptsd = "M (PTSD)", sd_ptsd = "SD (PTSD)",
-    m_ctrl = "M (Control)", sd_ctrl = "SD (Control)"
-  )
-```
-
-## Table 1
-
-```{r}
 table_1 <- bind_rows(
-  tibble(row = "Categorical variables", c1 = "Count", c2 = "Percent", c3 = "Count", c4 = "Percent", test = "", type = "header"),
-  map(categorical_tests$variable, \(v) {
-    bind_rows(
-      tibble(row = v, test = categorical_tests$test[categorical_tests$variable == v], type = "variable"),
-      categorical_table |>
-        filter(variable == v) |>
-        transmute(
-          row = level,
-          c1 = as.character(n_ptsd),
-          c2 = sprintf("%.1f%%", pct_ptsd),
-          c3 = as.character(n_ctrl),
-          c4 = sprintf("%.1f%%", pct_ctrl),
-          test = "",
-          type = "level"
-        )
-    )
+  tibble(row = "Categorical variables", c1 = "n", c2 = "%", c3 = "n", c4 = "%", type = "header"),
+  map(c("Sex", "Race", "Ethnicity", "Income"), \(v) {
+    bind_rows(tibble(row = v, type = "variable"), tabulate_var(v))
   }) |> list_rbind(),
-  tibble(row = "Continuous variables", c1 = "M", c2 = "SD", c3 = "M", c4 = "SD", test = "r", type = "header"),
-  continuous_table |>
-    transmute(
-      row = variable,
-      c1 = sprintf("%.2f", m_ptsd),
-      c2 = sprintf("%.2f", sd_ptsd),
-      c3 = sprintf("%.2f", m_ctrl),
-      c4 = sprintf("%.2f", sd_ctrl),
-      test = sub("-", "−", sprintf("%.2f", r)),
-      type = "level"
-    )
+  tibble(row = "Continuous variables", c1 = "M", c2 = "SD", c3 = "M", c4 = "SD", type = "header"),
+  imap(continuous_vars, \(label, var) describe_var(var, label)) |> list_rbind()
 ) |>
-  mutate(across(c1:c4, \(x) replace_na(x, "")))
+  left_join(test_cols, by = "row") |>
+  mutate(
+    across(c(p, es), \(x) if_else(row == "CAPS-5", "—", x)),
+    across(c(c1:c4, p, es), \(x) replace_na(x, ""))
+  )
 
 table_1 |>
   gt() |>
@@ -265,10 +319,15 @@ table_1 |>
   ) |>
   tab_spanner(label = sprintf("PTSD (n = %d)", n_group[["PTSD"]]), columns = c(c1, c2)) |>
   tab_spanner(label = sprintf("Control (n = %d)", n_group[["Control"]]), columns = c(c3, c4)) |>
-  cols_label(row = "", c1 = "", c2 = "", c3 = "", c4 = "", test = "Group Comparison") |>
-  cols_align(align = "center", columns = c(c1:c4, test)) |>
+  cols_label(row = "", c1 = "", c2 = "", c3 = "", c4 = "", p = md("*p*"), es = "Effect size") |>
+  fmt_markdown(columns = es) |>
+  cols_width(row ~ px(210), c(c1, c3) ~ px(55), c(c2, c4) ~ px(75), p ~ px(60), es ~ px(85)) |>
+  # keep Quarto from overriding the column widths
+  tab_options(quarto.disable_processing = TRUE) |>
+  cols_align(align = "center", columns = c(c1:c4, p, es)) |>
   tab_style(style = cell_text(weight = "bold"), locations = cells_body(rows = type == "header")) |>
-  tab_style(style = cell_text(indent = px(12)), locations = cells_body(columns = row, rows = type == "variable")) |>
+  tab_style(style = cell_text(style = "italic"), locations = cells_body(columns = c1:c4, rows = type == "header")) |>
+  tab_style(style = cell_text(indent = px(12)), locations = cells_body(columns = row, rows = type %in% c("variable", "continuous"))) |>
   tab_style(style = cell_text(indent = px(28)), locations = cells_body(columns = row, rows = type == "level")) |>
   tab_source_note(md(paste(
     sprintf(
@@ -276,14 +335,14 @@ table_1 |>
       sum(demo_all$GRP == "control" & demo_all$PTSD == "Control"),
       sum(demo_all$GRP == "patient" & demo_all$PTSD == "Control")
     ),
-    "Categorical variables: percentages are column percentages within each group.",
-    "Sex was compared with a chi-square test. Race, ethnicity, and income were compared with",
-    "Fisher's exact test because some expected cell counts were below 5; the income test excluded",
-    sprintf("\"Prefer not to say\" responses (remaining n = %d).", nrow(income_data)),
-    "Continuous variables: groups were compared with Mann-Whitney U tests; *r* is the rank-biserial",
-    "correlation, with positive values indicating higher values in the PTSD group.",
-    if (all(continuous_table$p < .001)) "All comparisons of continuous variables were significant at *p* < .001." else "",
-    "SUDS: Subjective Units of Distress Scale, rated for the trauma account and impact tasks;",
-    "PCL-5: PTSD Checklist for DSM-5; CAPS-5: Clinician-Administered PTSD Scale for DSM-5 total severity."
+    "Percentages are column percentages within each group.",
+    "Sex was compared with a chi-square test, and race and ethnicity with Fisher's exact test",
+    "because some expected cell counts were below 5; effect sizes are Cramér's *V*.",
+    "Income (as ordered brackets) and continuous variables were compared with Mann-Whitney *U* tests;",
+    "effect sizes are rank-biserial correlations (*r*), positive when values are higher in the PTSD group.",
+    "Tests of ethnicity and income excluded \"Unknown\" and \"Prefer not to say\" responses, respectively.",
+    "CAPS-5 was not tested because it defined the groups.",
+    "SUDS = Subjective Units of Distress Scale, rated after the trauma account and impact statement tasks;",
+    "PCL-5 = PTSD Checklist for DSM-5; CAPS-5 = Clinician-Administered PTSD Scale for DSM-5 total severity."
   )))
 ```
