@@ -27,6 +27,15 @@ authors:
     orcid: "https://orcid.org/0000-0002-7359-3746"
     affiliation: "University of Kansas"
 version: 1.0.0
+date-released: "2026-10-08"
+doi: 10.5281/zenodo.23224842
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23224843
+    description: "v1.0.0, the version cited in the article"
+  - type: doi
+    value: 10.5281/zenodo.23224842
+    description: "Concept DOI; always resolves to the latest archived version"
 license: CC-BY-4.0
 repository-code: "https://github.com/jmgirard/pilot-ptsd-markers"
 url: "https://jmgirard.github.io/pilot-ptsd-markers/"

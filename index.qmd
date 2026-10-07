@@ -7,8 +7,13 @@ This site hosts the supplemental data, analysis reports, and source code for:
 
 > Yang, Y., Jun, D., Welch, B. M., Sylvia, A., Sprunger, J. G., & Girard, J. M. (2026). *A pilot study of visual, vocal, and verbal markers of PTSD* [Manuscript submitted for publication]. Department of Psychology, University of Kansas.
 
-<!-- TODO: after the first GitHub release is archived on Zenodo, add an
-"Archived Version" section with the DOI badge (as in llm-depression-assessment) -->
+## Archived Version
+
+Frozen, citable copies of these materials are archived on Zenodo. The version
+cited in the article is **v1.0.0**
+([doi:10.5281/zenodo.23224843](https://doi.org/10.5281/zenodo.23224843)).
+
+[![](https://zenodo.org/badge/DOI/10.5281/zenodo.23224843.svg){fig-alt="DOI badge for version 1.0.0"}](https://doi.org/10.5281/zenodo.23224843)
 
 ## Supplemental Tables
 
@@ -45,6 +50,10 @@ describes every column.
 | `verbal.csv` | Word count, LIWC-22 categories, and sentiment ratings | 31&nbsp;KB | [<i class="bi bi-download"></i>](data/verbal.csv){.btn .btn-primary .btn-sm download="verbal.csv" aria-label="Download verbal.csv" title="Download verbal.csv"} |
 | `vocal.csv` | Prosodic and voice quality features | 37&nbsp;KB | [<i class="bi bi-download"></i>](data/vocal.csv){.btn .btn-primary .btn-sm download="vocal.csv" aria-label="Download vocal.csv" title="Download vocal.csv"} |
 | `visual.csv` | Facial action unit intensities and head pose and motion | 39&nbsp;KB | [<i class="bi bi-download"></i>](data/visual.csv){.btn .btn-primary .btn-sm download="visual.csv" aria-label="Download visual.csv" title="Download visual.csv"} |
+
+The complete v1.0.0 archive (data, code, and reports) can also be downloaded
+as a single file from Zenodo:
+[<i class="bi bi-download"></i> Download all (ZIP, 5.9&nbsp;MB)](https://zenodo.org/records/23224843/files/jmgirard/pilot-ptsd-markers-v1.0.0.zip?download=1){.btn .btn-outline-primary .btn-sm}
 
 These files, together with the analysis source code, are sufficient to
 reproduce every model, table, and figure in the analysis reports. The video,

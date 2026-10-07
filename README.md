@@ -1,5 +1,7 @@
 # PTSD Behavioral Markers: Supplemental Materials
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23224843.svg)](https://doi.org/10.5281/zenodo.23224843)
+
 Supplemental data, analysis reports, and source code for:
 
 > Yang, Y., Jun, D., Welch, B. M., Sylvia, A., Sprunger, J. G., & Girard, J. M. (2026). *A pilot study of visual, vocal, and verbal markers of PTSD* [Manuscript submitted for publication]. Department of Psychology, University of Kansas.
@@ -54,4 +56,9 @@ quarto render
 
 ## Citation
 
-Please cite the article above. See also [CITATION.cff](CITATION.cff).
+Please cite the article above. The version of these materials cited in the
+article is archived on Zenodo as **v1.0.0**
+([doi:10.5281/zenodo.23224843](https://doi.org/10.5281/zenodo.23224843)); the
+concept DOI [10.5281/zenodo.23224842](https://doi.org/10.5281/zenodo.23224842)
+always resolves to the latest archived version. See also
+[CITATION.cff](CITATION.cff).
