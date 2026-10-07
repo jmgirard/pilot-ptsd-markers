@@ -258,45 +258,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">backend =</span> <span class="st">"cmdstanr"</span></span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>      )</span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<p>Running MCMC with 4 parallel chains…</p>
-<p>Chain 4 finished in 113.6 seconds. Chain 1 finished in 115.6 seconds. Chain 3 finished in 118.4 seconds. Chain 2 finished in 121.3 seconds.</p>
-<p>All 4 chains finished successfully. Mean chain execution time: 117.2 seconds. Total execution time: 121.6 seconds.</p>
-<p>Running MCMC with 4 parallel chains…</p>
-<p>Chain 3 finished in 108.4 seconds. Chain 2 finished in 124.1 seconds. Chain 1 finished in 131.2 seconds. Chain 4 finished in 132.1 seconds.</p>
-<p>All 4 chains finished successfully. Mean chain execution time: 123.9 seconds. Total execution time: 132.3 seconds.</p>
-<p>Running MCMC with 4 parallel chains…</p>
-<p>Chain 2 finished in 63.7 seconds. Chain 3 finished in 65.9 seconds. Chain 4 finished in 66.1 seconds. Chain 1 finished in 70.2 seconds.</p>
-<p>All 4 chains finished successfully. Mean chain execution time: 66.5 seconds. Total execution time: 70.4 seconds.</p>
-<p>Running MCMC with 4 parallel chains…</p>
-<p>Chain 1 finished in 56.3 seconds. Chain 3 finished in 56.9 seconds. Chain 2 finished in 62.6 seconds. Chain 4 finished in 63.5 seconds.</p>
-<p>All 4 chains finished successfully. Mean chain execution time: 59.8 seconds. Total execution time: 63.8 seconds.</p>
-<p>Running MCMC with 4 parallel chains…</p>
-<p>Chain 1 finished in 69.8 seconds. Chain 3 finished in 69.7 seconds. Chain 2 finished in 74.1 seconds. Chain 4 finished in 74.1 seconds.</p>
-<p>All 4 chains finished successfully. Mean chain execution time: 71.9 seconds. Total execution time: 74.4 seconds.</p>
-<p>Running MCMC with 4 parallel chains…</p>
-<p>Chain 3 finished in 123.7 seconds. Chain 4 finished in 123.9 seconds. Chain 1 finished in 127.3 seconds. Chain 2 finished in 135.7 seconds.</p>
-<p>All 4 chains finished successfully. Mean chain execution time: 127.7 seconds. Total execution time: 135.9 seconds.</p>
-<p>Running MCMC with 4 parallel chains…</p>
-<p>Chain 4 finished in 124.7 seconds. Chain 2 finished in 127.3 seconds. Chain 1 finished in 132.2 seconds. Chain 3 finished in 136.2 seconds.</p>
-<p>All 4 chains finished successfully. Mean chain execution time: 130.1 seconds. Total execution time: 136.4 seconds.</p>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">iwalk</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  ob_models,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  \(model, name) {</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    thisr2 <span class="ot">&lt;-</span> <span class="fu">r2</span>(model)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"</span><span class="sc">\n\n</span><span class="st">#### "</span>, </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      name, </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sprintf</span>(<span class="st">"(R2C = %0.2f, R2M = %0.2f)"</span>, thisr2<span class="sc">$</span>R2_Bayes, thisr2<span class="sc">$</span>R2_Bayes_marginal),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    table_md <span class="ot">&lt;-</span> <span class="fu">print_md</span>(<span class="fu">model_parameters</span>(model))</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(table_md, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">iwalk</span>(</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  ob_models,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  \(model, name) {</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    thisr2 <span class="ot">&lt;-</span> <span class="fu">r2</span>(model)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>      <span class="st">"</span><span class="sc">\n\n</span><span class="st">#### "</span>, </span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>      name, </span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sprintf</span>(<span class="st">"(R2C = %0.2f, R2M = %0.2f)"</span>, thisr2<span class="sc">$</span>R2_Bayes, thisr2<span class="sc">$</span>R2_Bayes_marginal),</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>      <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    table_md <span class="ot">&lt;-</span> <span class="fu">print_md</span>(<span class="fu">model_parameters</span>(model))</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(table_md, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <section id="i-r2c-0.50-r2m-0.35" class="level4">
 <h4 class="anchored" data-anchor-id="i-r2c-0.50-r2m-0.35">i (R2C = 0.50, R2M = 0.35)</h4>
@@ -878,41 +855,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wc_model <span class="ot">&lt;-</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> WC <span class="sc">~</span> task <span class="sc">*</span> ptsd <span class="sc">+</span> demo_age <span class="sc">+</span> demo_sex <span class="sc">+</span> demo_nonwhite <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_verbal,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">negbinomial</span>(),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">set_prior</span>(<span class="st">"normal(0, 1)"</span>, <span class="at">class =</span> <span class="st">"b"</span>),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">2026</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">iter =</span> <span class="dv">4000</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">warmup =</span> <span class="dv">2000</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">refresh =</span> <span class="dv">0</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">"fits"</span>, <span class="st">"WC"</span>),</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>, <span class="at">max_treedepth =</span> <span class="dv">12</span>),</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Start sampling</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 3 finished in 13.0 seconds.
-Chain 4 finished in 13.0 seconds.
-Chain 2 finished in 13.2 seconds.
-Chain 1 finished in 13.7 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 13.2 seconds.
-Total execution time: 13.8 seconds.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">r2</span>(wc_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>wc_model <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> WC <span class="sc">~</span> task <span class="sc">*</span> ptsd <span class="sc">+</span> demo_age <span class="sc">+</span> demo_sex <span class="sc">+</span> demo_nonwhite <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_verbal,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">negbinomial</span>(),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">set_prior</span>(<span class="st">"normal(0, 1)"</span>, <span class="at">class =</span> <span class="st">"b"</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">iter =</span> <span class="dv">4000</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">warmup =</span> <span class="dv">2000</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">"fits"</span>, <span class="st">"WC"</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>, <span class="at">max_treedepth =</span> <span class="dv">12</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">r2</span>(wc_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># Bayesian R2 with Compatibility Interval
@@ -922,7 +882,7 @@ Total execution time: 13.8 seconds.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(wc_model) <span class="sc">|&gt;</span> <span class="fu">print_md</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(wc_model) <span class="sc">|&gt;</span> <span class="fu">print_md</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1012,58 +972,41 @@ Total execution time: 13.8 seconds.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sentiment_model <span class="ot">&lt;-</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> sentiment <span class="sc">~</span> task <span class="sc">*</span> ptsd <span class="sc">+</span> demo_age <span class="sc">+</span> demo_sex <span class="sc">+</span> demo_nonwhite <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_verbal,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">link =</span> <span class="st">"logit"</span>, <span class="at">link_disc =</span> <span class="st">"log"</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># wider prior: task and group effects are ~2-2.5 on the logit scale, so normal(0, 1) shrank them</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">set_prior</span>(<span class="st">"normal(0, 2.5)"</span>, <span class="at">class =</span> <span class="st">"b"</span>),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">2026</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">iter =</span> <span class="dv">4000</span>,</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">warmup =</span> <span class="dv">2000</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">refresh =</span> <span class="dv">0</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">"fits"</span>, <span class="st">"sentiment"</span>),</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">file_refit =</span> <span class="st">"on_change"</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>, <span class="at">max_treedepth =</span> <span class="dv">12</span>),</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Start sampling</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 finished in 27.1 seconds.
-Chain 2 finished in 27.3 seconds.
-Chain 4 finished in 28.3 seconds.
-Chain 3 finished in 28.5 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 27.8 seconds.
-Total execution time: 28.7 seconds.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>r2_latent <span class="ot">&lt;-</span> <span class="cf">function</span>(model, <span class="at">link_var =</span> pi<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">3</span>) {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  eta_fixed <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(model, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  var_fixed <span class="ot">&lt;-</span> <span class="fu">apply</span>(eta_fixed, <span class="dv">1</span>, var)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  var_re <span class="ot">&lt;-</span> <span class="fu">as_draws_matrix</span>(model, <span class="at">variable =</span> <span class="st">"sd_participant__Intercept"</span>)[, <span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  denom <span class="ot">&lt;-</span> var_fixed <span class="sc">+</span> var_re <span class="sc">+</span> link_var</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  r2c <span class="ot">&lt;-</span> (var_fixed <span class="sc">+</span> var_re) <span class="sc">/</span> denom</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  r2m <span class="ot">&lt;-</span> var_fixed <span class="sc">/</span> denom</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Statistic =</span> <span class="fu">c</span>(<span class="st">"R2 (conditional)"</span>, <span class="st">"R2 (marginal)"</span>),</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median  =</span> <span class="fu">c</span>(<span class="fu">median</span>(r2c), <span class="fu">median</span>(r2m)),</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_low  =</span> <span class="fu">c</span>(<span class="fu">quantile</span>(r2c, <span class="fl">0.025</span>), <span class="fu">quantile</span>(r2m, <span class="fl">0.025</span>)),</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_high =</span> <span class="fu">c</span>(<span class="fu">quantile</span>(r2c, <span class="fl">0.975</span>), <span class="fu">quantile</span>(r2m, <span class="fl">0.975</span>))</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">r2_latent</span>(sentiment_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sentiment_model <span class="ot">&lt;-</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> sentiment <span class="sc">~</span> task <span class="sc">*</span> ptsd <span class="sc">+</span> demo_age <span class="sc">+</span> demo_sex <span class="sc">+</span> demo_nonwhite <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_verbal,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">link =</span> <span class="st">"logit"</span>, <span class="at">link_disc =</span> <span class="st">"log"</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># wider prior: task and group effects are ~2-2.5 on the logit scale, so normal(0, 1) shrank them</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">set_prior</span>(<span class="st">"normal(0, 2.5)"</span>, <span class="at">class =</span> <span class="st">"b"</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">iter =</span> <span class="dv">4000</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">warmup =</span> <span class="dv">2000</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">"fits"</span>, <span class="st">"sentiment"</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">file_refit =</span> <span class="st">"on_change"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>, <span class="at">max_treedepth =</span> <span class="dv">12</span>),</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>r2_latent <span class="ot">&lt;-</span> <span class="cf">function</span>(model, <span class="at">link_var =</span> pi<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">3</span>) {</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  eta_fixed <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(model, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  var_fixed <span class="ot">&lt;-</span> <span class="fu">apply</span>(eta_fixed, <span class="dv">1</span>, var)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  var_re <span class="ot">&lt;-</span> <span class="fu">as_draws_matrix</span>(model, <span class="at">variable =</span> <span class="st">"sd_participant__Intercept"</span>)[, <span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  denom <span class="ot">&lt;-</span> var_fixed <span class="sc">+</span> var_re <span class="sc">+</span> link_var</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  r2c <span class="ot">&lt;-</span> (var_fixed <span class="sc">+</span> var_re) <span class="sc">/</span> denom</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  r2m <span class="ot">&lt;-</span> var_fixed <span class="sc">/</span> denom</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">Statistic =</span> <span class="fu">c</span>(<span class="st">"R2 (conditional)"</span>, <span class="st">"R2 (marginal)"</span>),</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median  =</span> <span class="fu">c</span>(<span class="fu">median</span>(r2c), <span class="fu">median</span>(r2m)),</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_low  =</span> <span class="fu">c</span>(<span class="fu">quantile</span>(r2c, <span class="fl">0.025</span>), <span class="fu">quantile</span>(r2m, <span class="fl">0.025</span>)),</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_high =</span> <span class="fu">c</span>(<span class="fu">quantile</span>(r2c, <span class="fl">0.975</span>), <span class="fu">quantile</span>(r2m, <span class="fl">0.975</span>))</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="fu">r2_latent</span>(sentiment_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
@@ -1074,7 +1017,7 @@ Total execution time: 28.7 seconds.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(sentiment_model) <span class="sc">|&gt;</span> <span class="fu">print_md</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(sentiment_model) <span class="sc">|&gt;</span> <span class="fu">print_md</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1196,51 +1139,51 @@ Total execution time: 28.7 seconds.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wc_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Word Count"</span> <span class="ot">=</span> wc_model)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sentiment_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Sentiment"</span> <span class="ot">=</span> sentiment_model)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>all_models <span class="ot">&lt;-</span> <span class="fu">c</span>(ob_models, wc_list, sentiment_list)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>extract_model_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(model, model_name) {</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe_posterior</span>(model, <span class="at">effects =</span> <span class="st">"fixed"</span>, <span class="at">component =</span> <span class="st">"conditional"</span>, <span class="at">test =</span> <span class="st">"pd"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(Parameter, <span class="st">"task|ptsd"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">stars =</span> <span class="fu">case_when</span>(</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        pd <span class="sc">&gt;=</span> <span class="fl">0.995</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        pd <span class="sc">&gt;=</span> <span class="fl">0.985</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        pd <span class="sc">&gt;=</span> <span class="fl">0.975</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span>        <span class="sc">~</span> <span class="st">""</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">formatted_stat =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f [%.2f, %.2f]%s"</span>, Median, CI_low, CI_high, stars),</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">Term =</span> <span class="fu">case_when</span>(</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(Parameter, <span class="st">":"</span>) <span class="sc">~</span> <span class="st">"Interaction"</span>,</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(Parameter, <span class="st">"task"</span>) <span class="sc">~</span> <span class="st">"Main_Task"</span>,</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(Parameter, <span class="st">"ptsd"</span>) <span class="sc">~</span> <span class="st">"Main_PTSD"</span>,</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> Parameter</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Term, formatted_stat) <span class="sc">|&gt;</span></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Term, <span class="at">values_from =</span> formatted_stat) <span class="sc">|&gt;</span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Feature =</span> model_name, <span class="at">.before =</span> <span class="dv">1</span>)</span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>table_data <span class="ot">&lt;-</span> <span class="fu">imap</span>(all_models, \(model, name) <span class="fu">extract_model_stats</span>(model, name)) <span class="sc">|&gt;</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>final_table <span class="ot">&lt;-</span> </span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>(table_data) <span class="sc">|&gt;</span></span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(</span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">Feature =</span> <span class="st">"Feature"</span>,</span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">Main_Task =</span> <span class="st">"Main Effect: Task"</span>,</span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">Main_PTSD =</span> <span class="st">"Main Effect: PTSD"</span>,</span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">Interaction =</span> <span class="st">"Task × PTSD Effect"</span></span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_footer_lines</span>(<span class="st">"Note: Estimates are median posterior values on the link scale (identity, log, or logit). Models control for age, sex, and race. Brackets indicate 95% Credible Intervals. * pd &gt; 97.5%, ** pd &gt; 98.5%, *** pd &gt; 99.5%. "</span>)</span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>final_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>wc_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Word Count"</span> <span class="ot">=</span> wc_model)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sentiment_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Sentiment"</span> <span class="ot">=</span> sentiment_model)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>all_models <span class="ot">&lt;-</span> <span class="fu">c</span>(ob_models, wc_list, sentiment_list)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>extract_model_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(model, model_name) {</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe_posterior</span>(model, <span class="at">effects =</span> <span class="st">"fixed"</span>, <span class="at">component =</span> <span class="st">"conditional"</span>, <span class="at">test =</span> <span class="st">"pd"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(Parameter, <span class="st">"task|ptsd"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">stars =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        pd <span class="sc">&gt;=</span> <span class="fl">0.995</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        pd <span class="sc">&gt;=</span> <span class="fl">0.985</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        pd <span class="sc">&gt;=</span> <span class="fl">0.975</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span>        <span class="sc">~</span> <span class="st">""</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">formatted_stat =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f [%.2f, %.2f]%s"</span>, Median, CI_low, CI_high, stars),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">Term =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(Parameter, <span class="st">":"</span>) <span class="sc">~</span> <span class="st">"Interaction"</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(Parameter, <span class="st">"task"</span>) <span class="sc">~</span> <span class="st">"Main_Task"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(Parameter, <span class="st">"ptsd"</span>) <span class="sc">~</span> <span class="st">"Main_PTSD"</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> Parameter</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Term, formatted_stat) <span class="sc">|&gt;</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Term, <span class="at">values_from =</span> formatted_stat) <span class="sc">|&gt;</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Feature =</span> model_name, <span class="at">.before =</span> <span class="dv">1</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>table_data <span class="ot">&lt;-</span> <span class="fu">imap</span>(all_models, \(model, name) <span class="fu">extract_model_stats</span>(model, name)) <span class="sc">|&gt;</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>final_table <span class="ot">&lt;-</span> </span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>(table_data) <span class="sc">|&gt;</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">Feature =</span> <span class="st">"Feature"</span>,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">Main_Task =</span> <span class="st">"Main Effect: Task"</span>,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">Main_PTSD =</span> <span class="st">"Main Effect: PTSD"</span>,</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">Interaction =</span> <span class="st">"Task × PTSD Effect"</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_footer_lines</span>(<span class="st">"Note: Estimates are median posterior values on the link scale (identity, log, or logit). Models control for age, sex, and race. Brackets indicate 95% Credible Intervals. * pd &gt; 97.5%, ** pd &gt; 98.5%, *** pd &gt; 99.5%. "</span>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>final_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="tabwid"><style>.cl-d8bad469{}.cl-9f1c1ce9{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6477613b{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-24fa9719{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dd2f750f{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2c279f04{width:1.631in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5cb1c25d{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71927738{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e39481{width:1.631in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-747e65a8{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-95cd865a{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab239653{width:1.631in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b260de18{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9b690723{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0a185e19{width:1.631in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-d8bad469"><thead><tr style="overflow-wrap:break-word;"><th class="cl-24fa9719"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Feature</span></p></th><th class="cl-dd2f750f"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Main Effect: Task</span></p></th><th class="cl-dd2f750f"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Main Effect: PTSD</span></p></th><th class="cl-2c279f04"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Task × PTSD Effect</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">i</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.08 [0.00, 0.17]*</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.13 [0.01, 0.25]*</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.07 [-0.10, 0.23]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">we</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.54 [-0.75, -0.34]***</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.03 [-0.32, 0.26]</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.19 [-0.58, 0.22]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">emo_neg</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.47 [-0.64, -0.30]***</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.25 [0.05, 0.47]**</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.51 [0.17, 0.85]***</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">emo_pos</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.26 [0.05, 0.46]**</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.11 [-0.13, 0.36]</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.32 [-0.10, 0.71]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">allnone</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.21 [0.06, 0.37]***</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.19 [0.01, 0.38]*</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.31 [0.00, 0.60]*</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">cogproc</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.32 [0.26, 0.39]***</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.09 [-0.17, 0.00]</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.02 [-0.10, 0.14]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Perception</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.19 [-0.27, -0.12]***</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.05 [-0.15, 0.05]</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.03 [-0.17, 0.12]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Word Count</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.04 [-0.04, 0.12]</span></p></td><td class="cl-71927738"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.21 [0.01, 0.40]*</span></p></td><td class="cl-c1e39481"><p class="cl-6477613b"><span class="cl-9f1c1ce9">0.11 [-0.06, 0.27]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-747e65a8"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Sentiment</span></p></td><td class="cl-95cd865a"><p class="cl-6477613b"><span class="cl-9f1c1ce9">2.92 [2.12, 3.93]***</span></p></td><td class="cl-95cd865a"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-2.61 [-3.85, -1.58]***</span></p></td><td class="cl-ab239653"><p class="cl-6477613b"><span class="cl-9f1c1ce9">-0.44 [-1.81, 0.94]</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-b260de18"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Note: Estimates are median posterior values on the link scale (identity, log, or logit). Models control for age, sex, and race. Brackets indicate 95% Credible Intervals. * pd &gt; 97.5%, ** pd &gt; 98.5%, *** pd &gt; 99.5%. </span></p></td></tr></tfoot></table></div>
@@ -1249,77 +1192,77 @@ Total execution time: 28.7 seconds.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">task =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>task),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ptsd =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>ptsd),</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">demo_age =</span> <span class="fu">mean</span>(df_verbal<span class="sc">$</span>demo_age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">demo_sex =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_sex)[<span class="dv">1</span>],</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">demo_nonwhite =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_nonwhite)[<span class="dv">1</span>]</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>extract_group_deltas <span class="ot">&lt;-</span> <span class="cf">function</span>(model, model_name) {</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  draws <span class="ot">&lt;-</span> <span class="fu">posterior_epred</span>(model, <span class="at">newdata =</span> nd, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">dim</span>(draws)) <span class="sc">==</span> <span class="dv">3</span>) {</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    draws_collapsed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">dim</span>(draws)[<span class="dv">1</span>], <span class="at">ncol =</span> <span class="fu">dim</span>(draws)[<span class="dv">2</span>])</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (cat <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(draws)[<span class="dv">3</span>]) {</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>      draws_collapsed <span class="ot">&lt;-</span> draws_collapsed <span class="sc">+</span> (draws[, , cat] <span class="sc">*</span> cat)</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    draws <span class="ot">&lt;-</span> draws_collapsed</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  diff_account <span class="ot">&lt;-</span> draws[, <span class="dv">3</span>] <span class="sc">-</span> draws[, <span class="dv">1</span>] <span class="co"># PTSD_Acc - Ctrl_Acc</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  diff_impact  <span class="ot">&lt;-</span> draws[, <span class="dv">4</span>] <span class="sc">-</span> draws[, <span class="dv">2</span>] <span class="co"># PTSD_Imp - Ctrl_Imp</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">Feature =</span> model_name,</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">Task =</span> <span class="st">"Account"</span>,</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">Estimate =</span> <span class="fu">median</span>(diff_account),</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_Low =</span> <span class="fu">quantile</span>(diff_account, <span class="fl">0.025</span>),</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_High =</span> <span class="fu">quantile</span>(diff_account, <span class="fl">0.975</span>),</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">pd =</span> <span class="fu">max</span>(<span class="fu">sum</span>(diff_account <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="fu">sum</span>(diff_account <span class="sc">&lt;</span> <span class="dv">0</span>)) <span class="sc">/</span> <span class="fu">length</span>(diff_account)</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">Feature =</span> model_name,</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">Task =</span> <span class="st">"Impact"</span>,</span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">Estimate =</span> <span class="fu">median</span>(diff_impact),</span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_Low =</span> <span class="fu">quantile</span>(diff_impact, <span class="fl">0.025</span>),</span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_High =</span> <span class="fu">quantile</span>(diff_impact, <span class="fl">0.975</span>),</span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">pd =</span> <span class="fu">max</span>(<span class="fu">sum</span>(diff_impact <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="fu">sum</span>(diff_impact <span class="sc">&lt;</span> <span class="dv">0</span>)) <span class="sc">/</span> <span class="fu">length</span>(diff_impact)</span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>group_delta_results <span class="ot">&lt;-</span> <span class="fu">imap</span>(all_models, \(model, name) {</span>
-<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_group_deltas</span>(model, name)</span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span> <span class="fu">list_rbind</span>()</span>
-<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>group_delta_table <span class="ot">&lt;-</span> group_delta_results <span class="sc">|&gt;</span></span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Feature =</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, Feature)) <span class="sc">|&gt;</span></span>
-<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colformat_double</span>(</span>
-<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"CI_Low"</span>, <span class="st">"CI_High"</span>), </span>
-<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">3</span></span>
-<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colformat_double</span>(</span>
-<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="st">"pd"</span>, </span>
-<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">3</span></span>
-<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(</span>
-<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">Feature =</span> <span class="st">"Feature"</span>,</span>
-<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">Task =</span> <span class="st">"Task"</span>,</span>
-<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">Estimate =</span> <span class="st">"PTSD Δ"</span>, <span class="co"># PTSD minus Control</span></span>
-<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_Low =</span> <span class="st">"Lower 95% CI"</span>,</span>
-<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_High =</span> <span class="st">"Upper 95% CI"</span>,</span>
-<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">pd =</span> <span class="st">"pd"</span></span>
-<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">italic</span>(<span class="at">j =</span> <span class="st">"pd"</span>, <span class="at">part =</span> <span class="st">"header"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">i =</span> <span class="sc">~</span> pd <span class="sc">&gt;</span> <span class="fl">0.975</span>, <span class="at">j =</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"pd"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_footer_lines</span>(<span class="st">"Note: Group Delta represents the estimated difference (PTSD - Control) on the response scale. pd = Probability of Direction. Bold rows indicate pd &gt; 0.975."</span>)</span>
-<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a>group_delta_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">task =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>task),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ptsd =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>ptsd),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">demo_age =</span> <span class="fu">mean</span>(df_verbal<span class="sc">$</span>demo_age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">demo_sex =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_sex)[<span class="dv">1</span>],</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">demo_nonwhite =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_nonwhite)[<span class="dv">1</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>extract_group_deltas <span class="ot">&lt;-</span> <span class="cf">function</span>(model, model_name) {</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  draws <span class="ot">&lt;-</span> <span class="fu">posterior_epred</span>(model, <span class="at">newdata =</span> nd, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">dim</span>(draws)) <span class="sc">==</span> <span class="dv">3</span>) {</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    draws_collapsed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">dim</span>(draws)[<span class="dv">1</span>], <span class="at">ncol =</span> <span class="fu">dim</span>(draws)[<span class="dv">2</span>])</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (cat <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(draws)[<span class="dv">3</span>]) {</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>      draws_collapsed <span class="ot">&lt;-</span> draws_collapsed <span class="sc">+</span> (draws[, , cat] <span class="sc">*</span> cat)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    draws <span class="ot">&lt;-</span> draws_collapsed</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  diff_account <span class="ot">&lt;-</span> draws[, <span class="dv">3</span>] <span class="sc">-</span> draws[, <span class="dv">1</span>] <span class="co"># PTSD_Acc - Ctrl_Acc</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  diff_impact  <span class="ot">&lt;-</span> draws[, <span class="dv">4</span>] <span class="sc">-</span> draws[, <span class="dv">2</span>] <span class="co"># PTSD_Imp - Ctrl_Imp</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">Feature =</span> model_name,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">Task =</span> <span class="st">"Account"</span>,</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">Estimate =</span> <span class="fu">median</span>(diff_account),</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_Low =</span> <span class="fu">quantile</span>(diff_account, <span class="fl">0.025</span>),</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_High =</span> <span class="fu">quantile</span>(diff_account, <span class="fl">0.975</span>),</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">pd =</span> <span class="fu">max</span>(<span class="fu">sum</span>(diff_account <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="fu">sum</span>(diff_account <span class="sc">&lt;</span> <span class="dv">0</span>)) <span class="sc">/</span> <span class="fu">length</span>(diff_account)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">Feature =</span> model_name,</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">Task =</span> <span class="st">"Impact"</span>,</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">Estimate =</span> <span class="fu">median</span>(diff_impact),</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_Low =</span> <span class="fu">quantile</span>(diff_impact, <span class="fl">0.025</span>),</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_High =</span> <span class="fu">quantile</span>(diff_impact, <span class="fl">0.975</span>),</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">pd =</span> <span class="fu">max</span>(<span class="fu">sum</span>(diff_impact <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="fu">sum</span>(diff_impact <span class="sc">&lt;</span> <span class="dv">0</span>)) <span class="sc">/</span> <span class="fu">length</span>(diff_impact)</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>group_delta_results <span class="ot">&lt;-</span> <span class="fu">imap</span>(all_models, \(model, name) {</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_group_deltas</span>(model, name)</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span> <span class="fu">list_rbind</span>()</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>group_delta_table <span class="ot">&lt;-</span> group_delta_results <span class="sc">|&gt;</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Feature =</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, Feature)) <span class="sc">|&gt;</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colformat_double</span>(</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"CI_Low"</span>, <span class="st">"CI_High"</span>), </span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">3</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colformat_double</span>(</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="st">"pd"</span>, </span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">3</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">Feature =</span> <span class="st">"Feature"</span>,</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">Task =</span> <span class="st">"Task"</span>,</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">Estimate =</span> <span class="st">"PTSD Δ"</span>, <span class="co"># PTSD minus Control</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_Low =</span> <span class="st">"Lower 95% CI"</span>,</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">CI_High =</span> <span class="st">"Upper 95% CI"</span>,</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">pd =</span> <span class="st">"pd"</span></span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">italic</span>(<span class="at">j =</span> <span class="st">"pd"</span>, <span class="at">part =</span> <span class="st">"header"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">i =</span> <span class="sc">~</span> pd <span class="sc">&gt;</span> <span class="fl">0.975</span>, <span class="at">j =</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"pd"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_footer_lines</span>(<span class="st">"Note: Group Delta represents the estimated difference (PTSD - Control) on the response scale. pd = Probability of Direction. Bold rows indicate pd &gt; 0.975."</span>)</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>group_delta_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="tabwid"><style>.cl-d8bad469{}.cl-9f1c1ce9{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-14f50f7a{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-31e46462{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6477613b{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a1958ec5{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-24fa9719{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b795eb87{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c78c0055{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-640f5cda{width:1.245in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9e1a7f2{width:0.668in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5cb1c25d{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7af62c71{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-538cdcaf{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-11ee1f01{width:1.245in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7202d4c{width:0.668in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-747e65a8{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f4ec4f6d{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-934a6d0f{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-244e4bc6{width:1.245in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc03f4e7{width:0.668in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b260de18{width:1.1in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e773af3f{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-60381974{width:0.837in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-18fb7106{width:1.245in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1036bec0{width:0.668in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-d8bad469"><thead><tr style="overflow-wrap:break-word;"><th class="cl-24fa9719"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Feature</span></p></th><th class="cl-b795eb87"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Task</span></p></th><th class="cl-c78c0055"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">PTSD Δ</span></p></th><th class="cl-640f5cda"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">Lower 95% CI</span></p></th><th class="cl-640f5cda"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">Upper 95% CI</span></p></th><th class="cl-b9e1a7f2"><p class="cl-a1958ec5"><span class="cl-14f50f7a">pd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">i</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.007</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.003</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.018</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.905</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">i</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-31e46462">0.012</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.002</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.024</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-31e46462">0.988</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">we</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.001</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.005</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.008</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.641</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">we</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.001</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.005</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.003</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.742</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">emo neg</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.000</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.004</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.004</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.509</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">emo neg</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-31e46462">0.005</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.002</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.010</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-31e46462">1.000</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">emo pos</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.000</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.003</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.002</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.609</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">emo pos</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.002</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.000</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.007</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.957</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">allnone</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.001</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.003</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.005</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.616</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">allnone</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-31e46462">0.007</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.002</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.014</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-31e46462">0.998</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">cogproc</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.011</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.025</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.002</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.952</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">cogproc</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.012</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.027</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.004</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.922</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Perception</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.003</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.015</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.008</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.727</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Perception</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.005</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.015</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.005</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.839</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Word Count</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">205.276</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-65.547</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">514.539</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">0.934</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Word Count</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-31e46462">358.073</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">65.794</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">685.117</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-31e46462">0.992</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5cb1c25d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Sentiment</span></p></td><td class="cl-7af62c71"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Account</span></p></td><td class="cl-538cdcaf"><p class="cl-a1958ec5"><span class="cl-31e46462">-0.733</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-1.085</span></p></td><td class="cl-11ee1f01"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.380</span></p></td><td class="cl-f7202d4c"><p class="cl-a1958ec5"><span class="cl-31e46462">1.000</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-747e65a8"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Sentiment</span></p></td><td class="cl-f4ec4f6d"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Impact</span></p></td><td class="cl-934a6d0f"><p class="cl-a1958ec5"><span class="cl-31e46462">-1.458</span></p></td><td class="cl-244e4bc6"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-1.928</span></p></td><td class="cl-244e4bc6"><p class="cl-a1958ec5"><span class="cl-9f1c1ce9">-0.919</span></p></td><td class="cl-cc03f4e7"><p class="cl-a1958ec5"><span class="cl-31e46462">1.000</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-b260de18"><p class="cl-6477613b"><span class="cl-9f1c1ce9">Note: Group Delta represents the estimated difference (PTSD - Control) on the response scale. pd = Probability of Direction. Bold rows indicate pd &gt; 0.975.</span></p></td></tr></tfoot></table></div>
@@ -1331,82 +1274,89 @@ Total execution time: 28.7 seconds.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>make_model_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(model, name, index) {</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  liwc_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"i"</span> <span class="ot">=</span> <span class="st">"First-Person Singular"</span>,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"we"</span> <span class="ot">=</span> <span class="st">"First-Person Plural"</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"emo_neg"</span> <span class="ot">=</span> <span class="st">"Negative Emotion"</span>,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"emo_pos"</span> <span class="ot">=</span> <span class="st">"Positive Emotion"</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"allnone"</span> <span class="ot">=</span> <span class="st">"All or None"</span>,</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cogproc"</span> <span class="ot">=</span> <span class="st">"Cognitive Processes"</span>,</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Perception"</span> <span class="ot">=</span> <span class="st">"Perceptual Processes"</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  pretty_name <span class="ot">&lt;-</span> <span class="cf">if</span>(name <span class="sc">%in%</span> <span class="fu">names</span>(liwc_labels)) liwc_labels[[name]] <span class="cf">else</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, name)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  final_title <span class="ot">&lt;-</span> <span class="cf">if</span>(index <span class="sc">&lt;=</span> <span class="dv">7</span>) <span class="fu">paste0</span>(<span class="st">"LIWC: "</span>, pretty_name) <span class="cf">else</span> pretty_name</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (name <span class="sc">==</span> <span class="st">"Sentiment"</span>) {</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    nd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">task =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>task),</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">ptsd =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>ptsd),</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">demo_age =</span> <span class="fu">mean</span>(df_verbal<span class="sc">$</span>demo_age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">demo_sex =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_sex)[<span class="dv">1</span>],</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">demo_nonwhite =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_nonwhite)[<span class="dv">1</span>]</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    draws <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">posterior_epred</span>(model, <span class="at">newdata =</span> nd, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    expected_values <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">dim</span>(draws)[<span class="dv">1</span>], <span class="at">ncol =</span> <span class="fu">dim</span>(draws)[<span class="dv">2</span>])</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (cat <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(draws)[<span class="dv">3</span>]) {</span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>      expected_values <span class="ot">&lt;-</span> expected_values <span class="sc">+</span> (draws[, , cat] <span class="sc">*</span> cat)</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    plot_data <span class="ot">&lt;-</span> nd <span class="sc">|&gt;</span></span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">Predicted =</span> <span class="fu">apply</span>(expected_values, <span class="dv">2</span>, median),</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">CI_low    =</span> <span class="fu">apply</span>(expected_values, <span class="dv">2</span>, quantile, <span class="at">probs =</span> <span class="fl">0.025</span>),</span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">CI_high   =</span> <span class="fu">apply</span>(expected_values, <span class="dv">2</span>, quantile, <span class="at">probs =</span> <span class="fl">0.975</span>)</span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>    plot_data <span class="ot">&lt;-</span> <span class="fu">estimate_relation</span>(model, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"task"</span>, <span class="st">"ptsd"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.data.frame</span>()</span>
-<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> task, <span class="at">y =</span> Predicted, </span>
-<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>                             <span class="at">color =</span> ptsd, <span class="at">shape =</span> ptsd, <span class="at">group =</span> ptsd)) <span class="sc">+</span></span>
-<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.3</span>)) <span class="sc">+</span></span>
-<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> CI_low, <span class="at">ymax =</span> CI_high), </span>
-<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>                    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.3</span>),</span>
-<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> final_title)</span>
-<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>  p <span class="sc">+</span> <span class="fu">labs</span>(</span>
-<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="cn">NULL</span>, </span>
-<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">shape =</span> <span class="st">"PTSD Status"</span>,</span>
-<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">"PTSD Status"</span></span>
-<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">seq_along</span>(all_models), \(i) {</span>
-<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> all_models[[i]]</span>
-<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>  name  <span class="ot">&lt;-</span> <span class="fu">names</span>(all_models)[i]</span>
-<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">make_model_plot</span>(model, name, i)</span>
-<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> <span class="fu">wrap_plots</span>(plot_list, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span> </span>
-<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'bottom'</span>)</span>
-<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>combined_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>make_model_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(model, name, index) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  liwc_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"i"</span> <span class="ot">=</span> <span class="st">"First-Person Singular"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"we"</span> <span class="ot">=</span> <span class="st">"First-Person Plural"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"emo_neg"</span> <span class="ot">=</span> <span class="st">"Negative Emotion"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"emo_pos"</span> <span class="ot">=</span> <span class="st">"Positive Emotion"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"allnone"</span> <span class="ot">=</span> <span class="st">"All or None"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cogproc"</span> <span class="ot">=</span> <span class="st">"Cognitive Processes"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Perception"</span> <span class="ot">=</span> <span class="st">"Perceptual Processes"</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  pretty_name <span class="ot">&lt;-</span> <span class="cf">if</span>(name <span class="sc">%in%</span> <span class="fu">names</span>(liwc_labels)) liwc_labels[[name]] <span class="cf">else</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, name)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  final_title <span class="ot">&lt;-</span> <span class="cf">if</span>(index <span class="sc">&lt;=</span> <span class="dv">7</span>) <span class="fu">paste0</span>(<span class="st">"LIWC: "</span>, pretty_name) <span class="cf">else</span> pretty_name</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (name <span class="sc">==</span> <span class="st">"Sentiment"</span>) {</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    nd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">task =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>task),</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">ptsd =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>ptsd),</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">demo_age =</span> <span class="fu">mean</span>(df_verbal<span class="sc">$</span>demo_age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">demo_sex =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_sex)[<span class="dv">1</span>],</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">demo_nonwhite =</span> <span class="fu">levels</span>(df_verbal<span class="sc">$</span>demo_nonwhite)[<span class="dv">1</span>]</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    draws <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">posterior_epred</span>(model, <span class="at">newdata =</span> nd, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    expected_values <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">dim</span>(draws)[<span class="dv">1</span>], <span class="at">ncol =</span> <span class="fu">dim</span>(draws)[<span class="dv">2</span>])</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (cat <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(draws)[<span class="dv">3</span>]) {</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      expected_values <span class="ot">&lt;-</span> expected_values <span class="sc">+</span> (draws[, , cat] <span class="sc">*</span> cat)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    plot_data <span class="ot">&lt;-</span> nd <span class="sc">|&gt;</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">Predicted =</span> <span class="fu">apply</span>(expected_values, <span class="dv">2</span>, median),</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">CI_low    =</span> <span class="fu">apply</span>(expected_values, <span class="dv">2</span>, quantile, <span class="at">probs =</span> <span class="fl">0.025</span>),</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">CI_high   =</span> <span class="fu">apply</span>(expected_values, <span class="dv">2</span>, quantile, <span class="at">probs =</span> <span class="fl">0.975</span>)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    plot_data <span class="ot">&lt;-</span> <span class="fu">estimate_relation</span>(model, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"task"</span>, <span class="st">"ptsd"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.data.frame</span>()</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label groups for the legend (the models code PTSD status numerically)</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> plot_data <span class="sc">|&gt;</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">ptsd =</span> <span class="fu">factor</span>(</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(<span class="fu">as.numeric</span>(<span class="fu">as.character</span>(ptsd)) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">"PTSD"</span>, <span class="st">"Control"</span>),</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"PTSD"</span>)</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> task, <span class="at">y =</span> Predicted, </span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>                             <span class="at">color =</span> ptsd, <span class="at">shape =</span> ptsd, <span class="at">group =</span> ptsd)) <span class="sc">+</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> CI_low, <span class="at">ymax =</span> CI_high), </span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>                    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.3</span>),</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> final_title)</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>  p <span class="sc">+</span> <span class="fu">labs</span>(</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="cn">NULL</span>, </span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">shape =</span> <span class="st">"Group"</span>,</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">"Group"</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">seq_along</span>(all_models), \(i) {</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> all_models[[i]]</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>  name  <span class="ot">&lt;-</span> <span class="fu">names</span>(all_models)[i]</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">make_model_plot</span>(model, name, i)</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> <span class="fu">wrap_plots</span>(plot_list, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span> </span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'bottom'</span>)</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>combined_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1417,7 +1367,7 @@ Total execution time: 28.7 seconds.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"verbal.pdf"</span>, <span class="at">width =</span> <span class="fl">6.5</span>, <span class="at">height =</span> <span class="fl">6.5</span>, <span class="at">units =</span> <span class="st">"in"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"verbal.pdf"</span>, <span class="at">width =</span> <span class="fl">6.5</span>, <span class="at">height =</span> <span class="fl">6.5</span>, <span class="at">units =</span> <span class="st">"in"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -1427,18 +1377,18 @@ Total execution time: 28.7 seconds.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(all_models),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  \(x) {</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (x <span class="sc">==</span> <span class="st">"Sentiment"</span>) {</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># performance::check_predictions() relabels ordinal draws with all six</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      <span class="co"># response levels and errors when a draw spans fewer, so use brms directly</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(brms<span class="sc">::</span><span class="fu">pp_check</span>(all_models[[x]], <span class="at">type =</span> <span class="st">"bars"</span>, <span class="at">ndraws =</span> <span class="dv">100</span>))</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(<span class="fu">check_predictions</span>(all_models[[x]], <span class="at">type =</span> <span class="st">"density"</span>, <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(all_models),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  \(x) {</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (x <span class="sc">==</span> <span class="st">"Sentiment"</span>) {</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># performance::check_predictions() relabels ordinal draws with all six</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      <span class="co"># response levels and errors when a draw spans fewer, so use brms directly</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(brms<span class="sc">::</span><span class="fu">pp_check</span>(all_models[[x]], <span class="at">type =</span> <span class="st">"bars"</span>, <span class="at">ndraws =</span> <span class="dv">100</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(<span class="fu">check_predictions</span>(all_models[[x]], <span class="at">type =</span> <span class="st">"density"</span>, <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>

@@ -358,6 +358,13 @@ make_model_plot <- function(model, name, index) {
   plot_data <- estimate_relation(model, by = c("task", "ptsd")) |>
     as.data.frame()
   
+  # label groups for the legend (the models code PTSD status numerically)
+  plot_data <- plot_data |>
+    mutate(ptsd = factor(
+      if_else(as.numeric(as.character(ptsd)) > 0, "PTSD", "Control"),
+      levels = c("Control", "PTSD")
+    ))
+
   p <- ggplot(plot_data, aes(x = task, y = Predicted, 
                              color = ptsd, shape = ptsd, group = ptsd)) +
     geom_line(position = position_dodge(width = 0.3)) +
@@ -368,8 +375,8 @@ make_model_plot <- function(model, name, index) {
   
   p + labs(
       y = NULL, x = NULL, 
-      shape = "PTSD Status",
-      color = "PTSD Status"
+      shape = "Group",
+      color = "Group"
     ) +
     theme_minimal(base_size = 8) +
     theme(

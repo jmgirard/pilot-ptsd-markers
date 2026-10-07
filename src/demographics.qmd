@@ -138,7 +138,7 @@ demo_all |>
   count(GRP, PTSD) |>
   pivot_wider(names_from = PTSD, values_from = n, values_fill = 0) |>
   mutate(
-    GRP = str_to_title(GRP),
+    GRP = if_else(GRP == "patient", "Clinic", "Prolific"),
     Total = PTSD + Control
   ) |>
   gt(rowname_col = "GRP") |>
@@ -336,7 +336,7 @@ table_1 |>
   tab_style(style = cell_text(indent = px(28)), locations = cells_body(columns = row, rows = type == "level")) |>
   tab_source_note(md(paste(
     sprintf(
-      "*Note.* The control group includes %d controls and %d patients who did not meet criteria for PTSD.",
+      "*Note.* The control group includes %d participants recruited through Prolific and %d recruited from the clinic who did not meet criteria for PTSD.",
       sum(demo_all$GRP == "control" & demo_all$PTSD == "Control"),
       sum(demo_all$GRP == "patient" & demo_all$PTSD == "Control")
     ),
