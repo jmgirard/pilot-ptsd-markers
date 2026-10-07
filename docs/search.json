@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Supplemental Materials",
+    "section": "",
+    "text": "This site hosts the supplemental data, analysis reports, and source code for:"
+  },
+  {
+    "objectID": "index.html#supplemental-tables",
+    "href": "index.html#supplemental-tables",
+    "title": "Supplemental Materials",
+    "section": "Supplemental Tables",
+    "text": "Supplemental Tables\n\n\n\nReport\nDescription\n\n\n\n\nSample Demographics\nDemographic and clinical characteristics by group, with group comparisons (Table 1)\n\n\nBehavioral Feature Descriptives\nMeans and standard deviations of all 27 behavioral features by group and task (Table S1)"
+  },
+  {
+    "objectID": "index.html#analysis-reports",
+    "href": "index.html#analysis-reports",
+    "title": "Supplemental Materials",
+    "section": "Analysis Reports",
+    "text": "Analysis Reports\nEach report is a rendered Quarto document containing the complete analysis code and output: model specifications and priors, full parameter tables, the group and interaction effects reported in the article, figures, and posterior predictive checks. The corresponding source files (.qmd) are available in the source folder.\n\n\n\nReport\nDescription\n\n\n\n\nVerbal Feature Analyses\nBayesian mixed models for word count, seven LIWC-22 categories, and LLM-rated sentiment (Table 2, Figure 1)\n\n\nVocal Feature Analyses\nBayesian mixed models for nine prosodic and voice quality features (Table 3, Figure 2)\n\n\nVisual Feature Analyses\nBayesian mixed models for five facial action units and four head pose and motion features (Table 4, Figure 3)"
+  },
+  {
+    "objectID": "index.html#data-availability",
+    "href": "index.html#data-availability",
+    "title": "Supplemental Materials",
+    "section": "Data Availability",
+    "text": "Data Availability\nThe deidentified behavioral features and model covariates analyzed in this work are openly available (CC BY 4.0). Each file has one row per participant and task, and participants are identified only by arbitrary codes (P001–P091) that are shared across files. The codebook describes every column.\n\n\n\nFile\nContents\nSize\n\n\n\n\n\nverbal.csv\nWord count, LIWC-22 categories, and sentiment ratings\n30 KB\n\n\n\nvocal.csv\nProsodic and voice quality features\n36 KB\n\n\n\nvisual.csv\nFacial action unit intensities and head pose and motion\n39 KB\n\n\n\n\nThese files, together with the analysis source code, are sufficient to reproduce every model, table, and figure in the analysis reports. The video, audio, and transcript data cannot be shared because they contain identifiable protected health information. The other participant-level demographic and clinical measures summarized in Table 1 are not shared to protect participant privacy; the Sample Demographics report shows the code used to produce that table."
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Supplemental Materials",
+    "section": "Contact",
+    "text": "Contact\nJeffrey M. Girard, Department of Psychology, University of Kansas — jmgirard@ku.edu"
+  }
+]

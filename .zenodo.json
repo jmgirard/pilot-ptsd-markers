@@ -1,0 +1,53 @@
+{
+  "title": "Supplemental materials for \"A Pilot Study of Visual, Vocal, and Verbal Markers of PTSD\"",
+  "upload_type": "dataset",
+  "description": "<p>Browse the analysis reports online at <a href=\"https://jmgirard.github.io/pilot-ptsd-markers/\">https://jmgirard.github.io/pilot-ptsd-markers/</a>. This record is the archived, citable copy.</p><p>Deidentified data, analysis code (Quarto source files), and rendered analysis reports supporting the article \"A Pilot Study of Visual, Vocal, and Verbal Markers of PTSD\". The data/ folder contains verbal (LIWC-22 and sentiment), vocal (prosody and voice quality), and visual (facial action unit and head pose) features extracted from two trauma-related speaking tasks completed by trauma-exposed adults with and without PTSD, together with the model covariates, and a codebook. These files reproduce every model, table, and figure in the analysis reports. Reports cover Bayesian mixed models for each modality, behavioral feature descriptives (Table S1), and sample demographics (Table 1).</p><p>The video, audio, and transcript data contain identifiable protected health information and are not included.</p><p>Data and rendered reports are licensed under CC BY 4.0; source code is licensed under the MIT License (see LICENSE and LICENSE-CC-BY.md in the archive).</p>",
+  "creators": [
+    {
+      "name": "Yang, Yuanyuan",
+      "affiliation": "University of Kansas",
+      "orcid": "0009-0007-3864-111X"
+    },
+    {
+      "name": "Jun, Daiil",
+      "affiliation": "University of Kansas",
+      "orcid": "0000-0002-5494-8417"
+    },
+    {
+      "name": "Welch, Brett M.",
+      "affiliation": "University of Houston",
+      "orcid": "0000-0001-7267-6235"
+    },
+    {
+      "name": "Sylvia, Allison",
+      "affiliation": "University of Cincinnati College of Medicine"
+    },
+    {
+      "name": "Sprunger, Joel G.",
+      "affiliation": "University of Cincinnati College of Medicine",
+      "orcid": "0000-0003-4057-2583"
+    },
+    {
+      "name": "Girard, Jeffrey M.",
+      "affiliation": "University of Kansas",
+      "orcid": "0000-0002-7359-3746"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "keywords": [
+    "posttraumatic stress disorder",
+    "behavioral markers",
+    "multimodal",
+    "speech",
+    "facial expression",
+    "Bayesian mixed models"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://jmgirard.github.io/pilot-ptsd-markers/",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    }
+  ]
+}

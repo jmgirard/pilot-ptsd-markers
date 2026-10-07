@@ -1,0 +1,30 @@
+project:
+  type: website
+  output-dir: docs
+  # Only the landing page is rendered; the analysis reports are pre-rendered
+  # HTML (see src/ for their sources and README.md for how to reproduce them)
+  render:
+    - index.qmd
+  resources:
+    - "analyses/*.html"
+    - "analyses/*_files/**"
+    - "src/*.qmd"
+    - "data/*.csv"
+    - ".nojekyll"
+
+website:
+  title: "PTSD Behavioral Markers: Supplemental Materials"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+    right:
+      - icon: github
+        href: https://github.com/jmgirard/pilot-ptsd-markers
+  page-footer:
+    center: "Code: [MIT](https://github.com/jmgirard/pilot-ptsd-markers/blob/main/LICENSE) · Content: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
+
+format:
+  html:
+    theme: cosmo
+    toc: true

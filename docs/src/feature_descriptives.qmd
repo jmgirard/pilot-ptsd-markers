@@ -1,0 +1,131 @@
+---
+title: "Behavioral Feature Descriptives"
+subtitle: "Supplemental Table S1"
+author: "Jeffrey Girard"
+date: "2026-10-07"
+format:
+  html:
+    code-fold: true
+    toc: true
+---
+
+## Setup
+
+```{r}
+#| message: false
+#| label: setup
+
+library(tidyverse)
+library(gt)
+```
+
+```{r}
+read_features <- function(modality) {
+  read.csv(file.path("..", "data", paste0(modality, ".csv"))) |>
+    as_tibble()
+}
+
+id_cols <- c("participant", "source", "ptsd", "demo_age", "demo_sex", "demo_nonwhite", "task")
+
+df_features <-
+  read_features("verbal") |>
+  full_join(read_features("vocal"), by = id_cols) |>
+  full_join(read_features("visual"), by = id_cols) |>
+  mutate(
+    group = factor(ptsd, levels = c(1, 0), labels = c("PTSD", "Control")),
+    task = factor(task, levels = c("Account", "Impact"))
+  )
+
+# Feature labels, display precision, and modality, in table order
+spec <- tribble(
+  ~var,          ~label,                                  ~digits, ~modality,
+  "WC",          "Total Word Count",                      0,       "Verbal",
+  "i",           "1st Person Singular Pronouns (%)",      2,       "Verbal",
+  "we",          "1st Person Plural Pronouns (%)",        2,       "Verbal",
+  "emo_neg",     "Negative Emotion Words (%)",            2,       "Verbal",
+  "emo_pos",     "Positive Emotion Words (%)",            2,       "Verbal",
+  "allnone",     "All-or-None Words (%)",                 2,       "Verbal",
+  "cogproc",     "Cognitive Process Words (%)",           2,       "Verbal",
+  "Perception",  "Perception Words (%)",                  2,       "Verbal",
+  "sentiment",   "Sentiment",                             2,       "Verbal",
+  "SD_Loudness", "SD Loudness",                           2,       "Vocal",
+  "SD_Pitch",    "SD Pitch (Hz)",                         1,       "Vocal",
+  "PSR",         "Pseudo-Syllable Rate (per s)",          2,       "Vocal",
+  "M_Voiced",    "Mean Voiced Regions (s)",               3,       "Vocal",
+  "M_Unvoiced",  "Mean Unvoiced Regions (s)",             3,       "Vocal",
+  "SD_Voiced",   "SD Voiced Regions (s)",                 3,       "Vocal",
+  "SD_Unvoiced", "SD Unvoiced Regions (s)",               3,       "Vocal",
+  "CPPS",        "CPPS (dB)",                             2,       "Vocal",
+  "H1H2",        "H1-H2 (dB)",                            2,       "Vocal",
+  "AU04",        "AU4 Brow Lowerer",                      2,       "Visual",
+  "AU12",        "AU12 Lip Corner Puller",                2,       "Visual",
+  "AU15",        "AU15 Lip Corner Depressor",             2,       "Visual",
+  "AU17",        "AU17 Chin Raiser",                      2,       "Visual",
+  "AU20",        "AU20 Lip Stretcher",                    2,       "Visual",
+  "PoseX",       "Head Pose Rx, Pitch (rad)",             2,       "Visual",
+  "PoseY",       "Head Pose Ry, Yaw (rad)",               2,       "Visual",
+  "DiffX",       "Head Motion Rx, Pitch (rad)",           3,       "Visual",
+  "DiffY",       "Head Motion Ry, Yaw (rad)",             3,       "Visual"
+)
+```
+
+## Sample Size
+
+```{r}
+df_features |>
+  summarize(
+    .by = c(group, task),
+    Participants = n_distinct(participant)
+  ) |>
+  arrange(group, task) |>
+  gt()
+```
+
+## Table S1
+
+```{r}
+cell_stats <-
+  df_features |>
+  pivot_longer(all_of(spec$var), names_to = "var") |>
+  summarize(
+    .by = c(var, group, task),
+    m = mean(value, na.rm = TRUE),
+    s = sd(value, na.rm = TRUE)
+  ) |>
+  left_join(spec, by = "var") |>
+  mutate(cell = sprintf("%.*f (%.*f)", digits, m, digits, s))
+
+table_s1 <-
+  cell_stats |>
+  select(modality, var, label, group, task, cell) |>
+  pivot_wider(names_from = c(group, task), values_from = cell, names_sep = "_") |>
+  arrange(match(var, spec$var)) |>
+  select(modality, label, PTSD_Account, Control_Account, PTSD_Impact, Control_Impact)
+
+n_group <- df_features |> distinct(participant, group) |> count(group) |> deframe()
+
+table_s1 |>
+  gt(groupname_col = "modality", rowname_col = "label") |>
+  tab_header(
+    title = "Table S1",
+    subtitle = "Means and Standard Deviations for Behavioral Features by Group and Task"
+  ) |>
+  tab_spanner(label = "Trauma Account", columns = c(PTSD_Account, Control_Account)) |>
+  tab_spanner(label = "Impact Statement", columns = c(PTSD_Impact, Control_Impact)) |>
+  cols_label(
+    PTSD_Account = sprintf("PTSD (n = %d)", n_group[["PTSD"]]),
+    Control_Account = sprintf("Control (n = %d)", n_group[["Control"]]),
+    PTSD_Impact = sprintf("PTSD (n = %d)", n_group[["PTSD"]]),
+    Control_Impact = sprintf("Control (n = %d)", n_group[["Control"]])
+  ) |>
+  cols_align(align = "center", columns = -label) |>
+  tab_source_note(md(paste(
+    "*Note.* Values are *M* (*SD*) in each feature's original units.",
+    "LIWC-22 categories are percentages of total words.",
+    "Sentiment is the LLM-predicted rating of each transcript (1 = very negative, 7 = very positive).",
+    "Action unit (AU) values are OpenFace intensity estimates (0–5) averaged over frames.",
+    "Head pose values are mean rotations and head motion values are the root mean square of",
+    "successive frame-to-frame differences in rotation, in radians.",
+    "The models analyze LIWC percentages divided by 100 and AU intensities divided by 5."
+  )))
+```

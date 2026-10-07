@@ -1,0 +1,345 @@
+---
+title: "Vocal Feature Analyses"
+author: "Jeffrey Girard"
+date: "2026-10-05"
+format: 
+  html:
+    code-fold: true
+    toc: true
+    toc-depth: 4
+---
+
+## Setup
+
+### Packages
+
+```{r}
+#| message: false
+#| label: setup
+
+library(tidyverse)
+library(easystats)
+library(brms)
+library(flextable)
+library(patchwork)
+```
+
+### Data
+
+```{r}
+# Deidentified features (one row per participant and task); see ../data/README.md
+df_vocal <-
+  # base R's parser restores every stored value exactly (readr's can differ in the last digit)
+  read.csv(file.path("..", "data", "vocal.csv")) |>
+  as_tibble() |>
+  mutate(
+    participant = factor(participant),
+    source = factor(source, levels = c("patient", "control")),
+    ptsd = factor(ptsd, levels = c(0, 1)),
+    demo_sex = factor(demo_sex, levels = c("Male", "Female")),
+    demo_nonwhite = factor(demo_nonwhite, levels = c(FALSE, TRUE)),
+    task = factor(task, levels = c("Account", "Impact"))
+  ) |>
+  arrange(participant, task)
+
+# Effect-code every two-level factor (first level = -0.5, second = +0.5) so each main effect is averaged
+# over the other factors (e.g., group = PTSD - Control averaged across tasks); interactions and predictions are unchanged
+for (v in c("task", "ptsd", "demo_sex", "demo_nonwhite")) contrasts(df_vocal[[v]]) <- c(-0.5, 0.5)
+dir.create("fits", showWarnings = FALSE)
+
+# High-ICC models whose between-person (group) coefficient mixed slowly at 4000 iterations
+long_run <- c("CPPS", "H1H2", "M_Voiced", "SD_Voiced", "PoseX", "AU15")
+
+df_vocal |>
+  select(SD_Loudness:H1H2) |> 
+  pivot_longer(cols = everything()) |> 
+  ggplot(aes(x = value)) + 
+  facet_wrap(~name, scales = "free") + 
+  geom_histogram(bins = 30)
+```
+
+## Run Models
+
+### Gaussian Models
+
+```{r}
+#| results: asis
+#| message: false
+
+gaussian_features <- c("CPPS", "H1H2")
+
+gaussian_models <- 
+  gaussian_features |>
+  set_names() |>
+  map(
+    \(feature) {
+      model_formula <- as.formula(
+        paste(feature, "~ task * ptsd + demo_age + demo_sex + demo_nonwhite + (1 | participant)")
+      )
+      brm(
+        formula = model_formula,
+        data = df_vocal,
+        prior = set_prior("normal(0, 1)", class = "b"),
+        seed = 2026,
+        chains = 4,
+        cores = 4,
+        iter = if (feature %in% long_run) 8000 else 4000,
+        warmup = 2000,
+        refresh = 0,
+        file = file.path("fits", feature),
+        control = list(adapt_delta = 0.95, max_treedepth = 12),
+        backend = "cmdstanr"
+      )
+    }
+  )
+
+
+iwalk(
+  gaussian_models,
+  \(model, name) {
+    thisr2 <- r2(model)
+    cat(
+      "\n\n#### ", 
+      name, 
+      sprintf("(R2C = %0.2f, R2M = %0.2f)", thisr2$R2_Bayes, thisr2$R2_Bayes_marginal),
+      "\n\n"
+    )
+    table_md <- print_md(model_parameters(model))
+    cat(table_md, sep = "\n")
+  }
+)
+```
+
+### Lognormal Models
+
+```{r}
+#| results: asis
+#| message: false
+
+lognormal_features <- c("SD_Loudness", "SD_Pitch", "PSR", "M_Voiced", 
+                       "M_Unvoiced", "SD_Voiced", "SD_Unvoiced")
+
+lognormal_models <- 
+  lognormal_features |>
+  set_names() |>
+  map(
+    \(feature) {
+      model_formula <- as.formula(
+        paste(feature, "~ task * ptsd + demo_age + demo_sex + demo_nonwhite + (1 | participant)")
+      )
+      brm(
+        formula = model_formula,
+        data = df_vocal,
+        family = lognormal(),
+        prior = set_prior("normal(0, 1)", class = "b"),
+        seed = 2026,
+        chains = 4,
+        cores = 4,
+        iter = if (feature %in% long_run) 8000 else 4000,
+        warmup = 2000,
+        refresh = 0,
+        file = file.path("fits", feature),
+        control = list(adapt_delta = 0.95, max_treedepth = 12),
+        backend = "cmdstanr"
+      )
+    }
+  )
+
+
+iwalk(
+  lognormal_models,
+  \(model, name) {
+    thisr2 <- r2(model)
+    cat(
+      "\n\n#### ", 
+      name, 
+      sprintf("(R2C = %0.2f, R2M = %0.2f)", thisr2$R2_Bayes, thisr2$R2_Bayes_marginal),
+      "\n\n"
+    )
+    table_md <- print_md(model_parameters(model))
+    cat(table_md, sep = "\n")
+  }
+)
+```
+
+## Results Tables
+
+```{r}
+#| message: false
+
+all_models <- c(gaussian_models, lognormal_models)
+
+extract_model_stats <- function(model, model_name) {
+  describe_posterior(model, effects = "fixed", component = "conditional", test = "pd") |>
+    as_tibble() |>
+    filter(str_detect(Parameter, "task|ptsd")) |>
+    mutate(
+      stars = case_when(
+        pd >= 0.995 ~ "***",
+        pd >= 0.985 ~ "**",
+        pd >= 0.975 ~ "*",
+        TRUE        ~ ""
+      ),
+      formatted_stat = sprintf("%.2f [%.2f, %.2f]%s", Median, CI_low, CI_high, stars),
+      
+      Term = case_when(
+        str_detect(Parameter, ":") ~ "Interaction",
+        str_detect(Parameter, "task") ~ "Main_Task",
+        str_detect(Parameter, "ptsd") ~ "Main_PTSD",
+        TRUE ~ Parameter
+      )
+    ) |>
+    select(Term, formatted_stat) |>
+    pivot_wider(names_from = Term, values_from = formatted_stat) |>
+    mutate(Feature = model_name, .before = 1)
+}
+
+table_data <- imap(all_models, \(model, name) extract_model_stats(model, name)) |>
+  list_rbind()
+
+final_table <- 
+  flextable(table_data) |>
+  set_header_labels(
+    Feature = "Feature",
+    Main_Task = "Main Effect: Task",
+    Main_PTSD = "Main Effect: PTSD",
+    Interaction = "Task × PTSD Effect"
+  ) |>
+  autofit() |>
+  add_footer_lines("Note: Estimates are median posterior values on the link scale (log or logit). Models control for age and sex. Brackets indicate 95% Credible Intervals. * pd > 97.5%, ** pd > 98.5%, *** pd > 99.5%. ")
+
+final_table
+```
+
+```{r}
+nd <- expand.grid(
+  task = levels(df_vocal$task),
+  ptsd = levels(df_vocal$ptsd),
+  demo_age = mean(df_vocal$demo_age, na.rm = TRUE),
+  demo_sex = levels(df_vocal$demo_sex)[1],
+  demo_nonwhite = levels(df_vocal$demo_nonwhite)[1]
+)
+
+extract_group_deltas <- function(model, model_name) {
+  draws <- posterior_epred(model, newdata = nd, re_formula = NA)
+  diff_account <- draws[, 3] - draws[, 1] # PTSD_Acc - Ctrl_Acc
+  diff_impact  <- draws[, 4] - draws[, 2] # PTSD_Imp - Ctrl_Imp
+  
+  bind_rows(
+    tibble(
+      Feature = model_name,
+      Task = "Account",
+      Estimate = median(diff_account),
+      CI_Low = quantile(diff_account, 0.025),
+      CI_High = quantile(diff_account, 0.975),
+      pd = max(sum(diff_account > 0), sum(diff_account < 0)) / length(diff_account)
+    ),
+    tibble(
+      Feature = model_name,
+      Task = "Impact",
+      Estimate = median(diff_impact),
+      CI_Low = quantile(diff_impact, 0.025),
+      CI_High = quantile(diff_impact, 0.975),
+      pd = max(sum(diff_impact > 0), sum(diff_impact < 0)) / length(diff_impact)
+    )
+  )
+}
+
+group_delta_results <- imap(all_models, \(model, name) {
+  extract_group_deltas(model, name)
+}) |> list_rbind()
+
+group_delta_table <- 
+  group_delta_results |>
+  mutate(Feature = gsub("_", " ", Feature)) |>
+  flextable() |>
+  colformat_double(
+    j = c("Estimate", "CI_Low", "CI_High"), 
+    digits = 3
+  ) |>
+  colformat_double(
+    j = "pd", 
+    digits = 3
+  ) |>
+  set_header_labels(
+    Feature = "Feature",
+    Task = "Task",
+    Estimate = "PTSD Δ", # PTSD minus Control
+    CI_Low = "Lower 95% CI",
+    CI_High = "Upper 95% CI",
+    pd = "pd"
+  ) |>
+  autofit() |>
+  italic(j = "pd", part = "header") |>
+  bold(i = ~ pd > 0.975, j = c("Estimate", "pd")) |>
+  add_footer_lines("Note: Group Delta represents the estimated difference (PTSD - Control) on the response scale. pd = Probability of Direction. Bold rows indicate pd > 0.975.")
+
+group_delta_table
+```
+
+## Results Figures
+
+```{r}
+#| fig-width: 6.5
+#| fig-height: 6.5
+
+make_model_plot <- function(model, name, index) {
+  final_title <- str_replace(name, "_", " ")
+  plot_data <- estimate_relation(model, by = c("task", "ptsd")) |>
+    as.data.frame()
+  
+  p <- ggplot(plot_data, aes(x = task, y = Predicted, 
+                             color = ptsd, shape = ptsd, group = ptsd)) +
+    geom_line(position = position_dodge(width = 0.3)) +
+    geom_pointrange(aes(ymin = CI_low, ymax = CI_high), 
+                    position = position_dodge(width = 0.3),
+                    size = 0.4) +
+    labs(title = final_title)
+  
+  p + labs(
+      y = NULL, x = NULL, 
+      shape = "PTSD Status",
+      color = "PTSD Status"
+    ) +
+    theme_minimal(base_size = 8) +
+    theme(
+      legend.position = "none",
+      plot.title = element_text(size = 9, face = "bold"),
+      axis.text.x = element_text(size = 8),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank()
+    )
+}
+
+plot_list <- map(seq_along(all_models), \(i) {
+  model <- all_models[[i]]
+  name  <- names(all_models)[i]
+  make_model_plot(model, name, i)
+})
+
+combined_plot <- 
+  wrap_plots(plot_list, ncol = 3) +
+  plot_layout(guides = "collect") & 
+  theme(legend.position = 'bottom')
+
+combined_plot
+
+ggsave("vocal.pdf", width = 6.5, height = 6.5, units = "in")
+```
+
+## Diagnostics
+
+```{=html}
+<details><summary>Click to show figures</summary>
+```
+
+```{r}
+#| message: false
+#| warning: false
+
+walk(all_models, \(x) print(check_predictions(x, type = "density", allow_new_levels = TRUE)))
+```
+
+```{=html}
+</details>
+```

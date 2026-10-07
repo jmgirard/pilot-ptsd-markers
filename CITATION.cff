@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite the article below."
+title: "Supplemental materials for \"A Pilot Study of Visual, Vocal, and Verbal Markers of PTSD\""
+type: dataset
+authors:
+  - family-names: Yang
+    given-names: Yuanyuan
+    orcid: "https://orcid.org/0009-0007-3864-111X"
+    affiliation: "University of Kansas"
+  - family-names: Jun
+    given-names: Daiil
+    orcid: "https://orcid.org/0000-0002-5494-8417"
+    affiliation: "University of Kansas"
+  - family-names: Welch
+    given-names: Brett M.
+    orcid: "https://orcid.org/0000-0001-7267-6235"
+    affiliation: "University of Houston"
+  - family-names: Sylvia
+    given-names: Allison
+    affiliation: "University of Cincinnati College of Medicine"
+  - family-names: Sprunger
+    given-names: Joel G.
+    orcid: "https://orcid.org/0000-0003-4057-2583"
+    affiliation: "University of Cincinnati College of Medicine"
+  - family-names: Girard
+    given-names: Jeffrey M.
+    orcid: "https://orcid.org/0000-0002-7359-3746"
+    affiliation: "University of Kansas"
+version: 1.0.0
+license: CC-BY-4.0
+repository-code: "https://github.com/jmgirard/pilot-ptsd-markers"
+url: "https://jmgirard.github.io/pilot-ptsd-markers/"
+keywords:
+  - posttraumatic stress disorder
+  - behavioral markers
+  - multimodal
+  - speech
+  - facial expression
+preferred-citation:
+  type: unpublished
+  title: "A Pilot Study of Visual, Vocal, and Verbal Markers of PTSD"
+  authors:
+    - family-names: Yang
+      given-names: Yuanyuan
+      orcid: "https://orcid.org/0009-0007-3864-111X"
+    - family-names: Jun
+      given-names: Daiil
+      orcid: "https://orcid.org/0000-0002-5494-8417"
+    - family-names: Welch
+      given-names: Brett M.
+      orcid: "https://orcid.org/0000-0001-7267-6235"
+    - family-names: Sylvia
+      given-names: Allison
+    - family-names: Sprunger
+      given-names: Joel G.
+      orcid: "https://orcid.org/0000-0003-4057-2583"
+    - family-names: Girard
+      given-names: Jeffrey M.
+      orcid: "https://orcid.org/0000-0002-7359-3746"
+  year: 2026
+  notes: "Manuscript submitted for publication"
