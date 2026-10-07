@@ -48,6 +48,11 @@
       "identifier": "https://jmgirard.github.io/pilot-ptsd-markers/",
       "relation": "isDocumentedBy",
       "scheme": "url"
+    },
+    {
+      "identifier": "https://osf.io/preprints/psyarxiv/34v5z_v2",
+      "relation": "isSupplementTo",
+      "scheme": "url"
     }
   ]
 }
