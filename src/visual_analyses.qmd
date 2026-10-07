@@ -35,7 +35,7 @@ df_visual <-
   as_tibble() |>
   mutate(
     participant = factor(participant),
-    source = factor(source, levels = c("patient", "control")),
+    source = factor(source, levels = c("clinic", "prolific")),
     ptsd = factor(ptsd, levels = c(0, 1)),
     demo_sex = factor(demo_sex, levels = c("Male", "Female")),
     demo_nonwhite = factor(demo_nonwhite, levels = c(FALSE, TRUE)),

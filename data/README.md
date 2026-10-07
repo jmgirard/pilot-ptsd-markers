@@ -18,7 +18,7 @@ All three files begin with these columns.
 | Column | Description |
 |---|---|
 | `participant` | Participant code (`P001`–`P092`) |
-| `source` | Recruitment source: `patient` (PTSD specialty clinic waitlist) or `control` (Prolific). Four participants recruited as patients did not meet PTSD criteria on the CAPS-5 and were analyzed as controls. |
+| `source` | Recruitment source: `clinic` (PTSD specialty clinic waitlist) or `prolific` (Prolific). Four participants recruited from the clinic did not meet PTSD criteria on the CAPS-5 and were analyzed as controls. |
 | `ptsd` | Diagnostic group from the CAPS-5: `1` = PTSD, `0` = control |
 | `demo_age` | Age in years |
 | `demo_sex` | Sex: `Male` or `Female` |
