@@ -212,37 +212,22 @@ final_table
 ```
 
 ```{r}
-nd <- expand.grid(
-  task = levels(df_vocal$task),
-  ptsd = levels(df_vocal$ptsd),
-  demo_age = mean(df_vocal$demo_age, na.rm = TRUE),
-  demo_sex = levels(df_vocal$demo_sex)[1],
-  demo_nonwhite = levels(df_vocal$demo_nonwhite)[1]
-)
-
+# Simple group effects (PTSD - Control) within each task on the response scale,
+# averaged over sex and race (equal weights, matching the effect coding) at the
+# mean age, with random intercepts at zero
 extract_group_deltas <- function(model, model_name) {
-  draws <- posterior_epred(model, newdata = nd, re_formula = NA)
-  diff_account <- draws[, 3] - draws[, 1] # PTSD_Acc - Ctrl_Acc
-  diff_impact  <- draws[, 4] - draws[, 2] # PTSD_Imp - Ctrl_Imp
-  
-  bind_rows(
-    tibble(
+  ec <- estimate_contrasts(model, contrast = "ptsd", by = "task", re_formula = NA) |>
+    as.data.frame()
+  stopifnot(all(ec$Level1 == "1" & ec$Level2 == "0"))  # PTSD minus Control
+  ec |>
+    transmute(
       Feature = model_name,
-      Task = "Account",
-      Estimate = median(diff_account),
-      CI_Low = quantile(diff_account, 0.025),
-      CI_High = quantile(diff_account, 0.975),
-      pd = max(sum(diff_account > 0), sum(diff_account < 0)) / length(diff_account)
-    ),
-    tibble(
-      Feature = model_name,
-      Task = "Impact",
-      Estimate = median(diff_impact),
-      CI_Low = quantile(diff_impact, 0.025),
-      CI_High = quantile(diff_impact, 0.975),
-      pd = max(sum(diff_impact > 0), sum(diff_impact < 0)) / length(diff_impact)
+      Task = as.character(task),
+      Estimate = Median,
+      CI_Low = CI_low,
+      CI_High = CI_high,
+      pd
     )
-  )
 }
 
 group_delta_results <- imap(all_models, \(model, name) {
@@ -272,7 +257,7 @@ group_delta_table <-
   autofit() |>
   italic(j = "pd", part = "header") |>
   bold(i = ~ pd > 0.975, j = c("Estimate", "pd")) |>
-  add_footer_lines("Note: Group Delta represents the estimated difference (PTSD - Control) on the response scale. pd = Probability of Direction. Bold rows indicate pd > 0.975.")
+  add_footer_lines("Note: PTSD Δ is the estimated difference (PTSD - Control) on the response scale, averaged over sex and race at the mean age. pd = Probability of Direction. Bold rows indicate pd > 0.975.")
 
 group_delta_table
 ```
@@ -283,38 +268,28 @@ group_delta_table
 #| fig-width: 6.5
 #| fig-height: 6.5
 
-make_model_plot <- function(model, name, index) {
-  final_title <- str_replace(name, "_", " ")
-  # Group-by-task means averaged over sex and race (equal weights, matching the
-  # effect coding of the reported effects) at the mean age, with random
-  # intercepts at zero
-  plot_data <- estimate_means(model, by = c("task", "ptsd"), re_formula = NA) |>
-    as.data.frame() |>
-    rename(Predicted = Median)
-  
-  # label groups for the legend (the models code PTSD status numerically)
-  plot_data <- plot_data |>
-    mutate(ptsd = factor(
-      if_else(as.numeric(as.character(ptsd)) > 0, "PTSD", "Control"),
-      levels = c("Control", "PTSD")
-    ))
+plot_titles <- str_replace(names(all_models), "_", " ")
 
-  p <- ggplot(plot_data, aes(x = task, y = Predicted, 
-                             color = ptsd, shape = ptsd, group = ptsd)) +
-    geom_line(position = position_dodge(width = 0.3)) +
-    geom_pointrange(aes(ymin = CI_low, ymax = CI_high), 
-                    position = position_dodge(width = 0.3),
-                    size = 0.4) +
-    labs(title = final_title)
-  
-  p + labs(
-      y = NULL, x = NULL, 
-      shape = "Group",
-      color = "Group"
+# Plot the simple group effects from the table above: PTSD minus Control within
+# each task, with 95% credible intervals; filled points have pd > 97.5%
+make_model_plot <- function(name, title) {
+  d <- group_delta_results |>
+    filter(Feature == name) |>
+    mutate(
+      Task = factor(Task, levels = c("Account", "Impact")),
+      credible = factor(pd > 0.975, levels = c(FALSE, TRUE), labels = c("No", "Yes"))
+    )
+  ggplot(d, aes(x = Task, y = Estimate, group = 1)) +
+    geom_hline(yintercept = 0, linetype = "dashed", color = "grey50") +
+    geom_line(color = "grey40") +
+    geom_pointrange(
+      aes(ymin = CI_Low, ymax = CI_High, fill = credible),
+      shape = 21, size = 0.4, color = "grey20", show.legend = TRUE
     ) +
+    scale_fill_manual(values = c(No = "white", Yes = "black"), limits = c("No", "Yes"), drop = FALSE) +
+    labs(title = title, x = NULL, y = "PTSD − Control Difference (95% CI)", fill = "pd > 97.5%") +
     theme_minimal(base_size = 8) +
     theme(
-      legend.position = "none",
       plot.title = element_text(size = 9, face = "bold"),
       axis.text.x = element_text(size = 8),
       panel.grid.minor = element_blank(),
@@ -322,16 +297,11 @@ make_model_plot <- function(model, name, index) {
     )
 }
 
-plot_list <- map(seq_along(all_models), \(i) {
-  model <- all_models[[i]]
-  name  <- names(all_models)[i]
-  make_model_plot(model, name, i)
-})
+plot_list <- map2(names(all_models), plot_titles, make_model_plot)
 
-combined_plot <- 
-  wrap_plots(plot_list, ncol = 3) +
-  plot_layout(guides = "collect") & 
-  theme(legend.position = 'bottom')
+combined_plot <- wrap_plots(plot_list, ncol = 3) +
+  plot_layout(guides = "collect", axis_titles = "collect") &
+  theme(legend.position = "bottom")
 
 combined_plot
 
