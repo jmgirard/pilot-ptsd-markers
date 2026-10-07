@@ -1,13 +1,13 @@
 # Data
 
 Deidentified behavioral features and model covariates analyzed in the
-article. Each file has one row per participant × task (91 participants × 2
-tasks = 182 rows) and contains exactly the observations that entered the
+article. Each file has one row per participant × task (92 participants × 2
+tasks = 184 rows) and contains exactly the observations that entered the
 models. There are no missing values.
 
 These files contain no names, dates, locations, recordings, transcripts, or
 study record numbers. Participants are identified only by arbitrary codes
-(`P001`–`P091`) that link rows across the three files. The video, audio, and
+(`P001`–`P092`) that link rows across the three files. The video, audio, and
 transcript data cannot be shared because they contain identifiable protected
 health information.
 
@@ -17,12 +17,12 @@ All three files begin with these columns.
 
 | Column | Description |
 |---|---|
-| `participant` | Participant code (`P001`–`P091`) |
+| `participant` | Participant code (`P001`–`P092`) |
 | `source` | Recruitment source: `patient` (PTSD specialty clinic waitlist) or `control` (Prolific). Four participants recruited as patients did not meet PTSD criteria on the CAPS-5 and were analyzed as controls. |
 | `ptsd` | Diagnostic group from the CAPS-5: `1` = PTSD, `0` = control |
 | `demo_age` | Age in years |
 | `demo_sex` | Sex: `Male` or `Female` |
-| `demo_nonwhite` | Race other than White: `TRUE` or `FALSE` |
+| `demo_nonwhite` | Race other than White: `TRUE` or `FALSE` (one participant who selected "Hispanic" as their race is coded `TRUE`) |
 | `task` | Behavioral task: `Account` (trauma account) or `Impact` (impact statement) |
 
 ## `verbal.csv`

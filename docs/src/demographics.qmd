@@ -56,8 +56,12 @@ demo_all <-
     read_redcap("CMBA-Patients_2022-12-05_1438.csv", "patient"),
     read_redcap("CMBA-Control_2023-03-10_1522.csv", "control")
   ) |>
-  # participants who completed the behavioral tasks
-  filter(!is.na(suds_account)) |>
+  # participants who completed the behavioral tasks and diagnostic interview
+  filter(!is.na(suds_account), !is.na(caps_mnth_ptsd)) |>
+  # participant 199 completed the session, but their recording was never
+  # segmented into tasks, so they have no behavioral features and are not
+  # analyzed
+  filter(record_id != "199") |>
   transmute(
     record_id,
     GRP = factor(group),
@@ -117,14 +121,11 @@ demo_all <-
     SUDS_Account = parse_number(suds_account),
     SUDS_Impact = parse_number(suds_impact)
   ) |>
-  mutate(
-    Race = if_else(
-      condition = Race == "Hispanic" & Ethnicity == "Hispanic or Latino",
-      true = "White",
-      false = Race
-    ),
-    across(Race:Sex, \(x) fct_na_value_to_level(x, "Unknown"))
-  )
+  # one participant selected "Hispanic" as their race; they are reported as
+  # such here and coded as nonwhite in the analyses
+  mutate(across(Race:Sex, \(x) fct_na_value_to_level(x, "Unknown")))
+
+stopifnot(nrow(demo_all) == 92)
 
 ```
 
@@ -230,14 +231,18 @@ comparisons |>
   ) |>
   cols_align(align = "center", columns = -c(variable, test)) |>
   tab_source_note(md(paste(
-    "Ethnicity excludes \"Unknown\" (n = 1) and income excludes \"Prefer not to say\" (n = 9).",
+    sprintf(
+      "Ethnicity excludes \"Unknown\" (n = %d) and income excludes \"Prefer not to say\" (n = %d).",
+      sum(demo_all$Ethnicity == "Unknown"), sum(demo_all$Income == "Prefer not to say")
+    ),
     "*V* = Cramér's *V*; *r* = rank-biserial correlation, positive when values are higher in the PTSD group.",
     "Income was compared as ordered brackets.",
     "CAPS-5 was not tested because it defined the groups."
   )))
 ```
 
-The proportion declining to report income also differed by group:
+Because the income test excludes participants who declined to report income,
+we also compared the rate of declining by group:
 
 ```{r}
 income_nonresponse <- table(
@@ -336,6 +341,7 @@ table_1 |>
       sum(demo_all$GRP == "patient" & demo_all$PTSD == "Control")
     ),
     "Percentages are column percentages within each group.",
+    if (any(demo_all$Race == "Hispanic")) "One participant selected Hispanic as their race (coded as nonwhite in the analyses)." else "",
     "Sex was compared with a chi-square test, and race and ethnicity with Fisher's exact test",
     "because some expected cell counts were below 5; effect sizes are Cramér's *V*.",
     "Income (as ordered brackets) and continuous variables were compared with Mann-Whitney *U* tests;",

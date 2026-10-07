@@ -187,75 +187,76 @@ Note
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_redcap</span>(<span class="st">"CMBA-Patients_2022-12-05_1438.csv"</span>, <span class="st">"patient"</span>),</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_redcap</span>(<span class="st">"CMBA-Control_2023-03-10_1522.csv"</span>, <span class="st">"control"</span>)</span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># participants who completed the behavioral tasks</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(suds_account)) <span class="sc">|&gt;</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    record_id,</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">GRP =</span> <span class="fu">factor</span>(group),</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">Race =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(race),</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">"American Indian"</span>,</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Asian"</span>,</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Black"</span>,</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic"</span>,</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"More than one race"</span>,</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"White"</span>,</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ethnicity =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(ethnicity),</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Not Hispanic or Latino"</span>,</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic or Latino"</span>,</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(sex),</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Male"</span>,</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Female"</span>,</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Intersex"</span>,</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth female, now male)"</span>,</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth male, now female)"</span>,</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">Income =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(income),</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">"&lt; $10,000"</span>,</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$10,000-19,999"</span>,</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$20,000-39,999"</span>,</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$40,000-79,999"</span>,</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$80,000-169,999"</span>,</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$170,000+"</span>,</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age =</span> <span class="fu">as.numeric</span>(age),</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">Education =</span> <span class="fu">as.numeric</span>(education),</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">PHQ9 =</span> <span class="fu">parse_number</span>(phq_total),</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">PCL5 =</span> <span class="fu">parse_number</span>(pcl5_m_total),</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">CAPS5 =</span> <span class="fu">parse_number</span>(caps_mnth_total),</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">PTSD =</span> <span class="fu">factor</span>(caps_mnth_ptsd, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"PTSD"</span>, <span class="st">"Control"</span>)),</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Account =</span> <span class="fu">parse_number</span>(suds_account),</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Impact =</span> <span class="fu">parse_number</span>(suds_impact)</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">Race =</span> <span class="fu">if_else</span>(</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>      <span class="at">condition =</span> Race <span class="sc">==</span> <span class="st">"Hispanic"</span> <span class="sc">&amp;</span> Ethnicity <span class="sc">==</span> <span class="st">"Hispanic or Latino"</span>,</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>      <span class="at">true =</span> <span class="st">"White"</span>,</span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>      <span class="at">false =</span> Race</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(Race<span class="sc">:</span>Sex, \(x) <span class="fu">fct_na_value_to_level</span>(x, <span class="st">"Unknown"</span>))</span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># participants who completed the behavioral tasks and diagnostic interview</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(suds_account), <span class="sc">!</span><span class="fu">is.na</span>(caps_mnth_ptsd)) <span class="sc">|&gt;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># participant 199 completed the session, but their recording was never</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># segmented into tasks, so they have no behavioral features and are not</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># analyzed</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(record_id <span class="sc">!=</span> <span class="st">"199"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    record_id,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">GRP =</span> <span class="fu">factor</span>(group),</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">Race =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(race),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"American Indian"</span>,</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Asian"</span>,</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Black"</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic"</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"More than one race"</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">"White"</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ethnicity =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(ethnicity),</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Not Hispanic or Latino"</span>,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic or Latino"</span>,</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(sex),</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Male"</span>,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Female"</span>,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Intersex"</span>,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth female, now male)"</span>,</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth male, now female)"</span>,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">Income =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(income),</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        <span class="st">"&lt; $10,000"</span>,</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$10,000-19,999"</span>,</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$20,000-39,999"</span>,</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$40,000-79,999"</span>,</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$80,000-169,999"</span>,</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$170,000+"</span>,</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age =</span> <span class="fu">as.numeric</span>(age),</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">Education =</span> <span class="fu">as.numeric</span>(education),</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">PHQ9 =</span> <span class="fu">parse_number</span>(phq_total),</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">PCL5 =</span> <span class="fu">parse_number</span>(pcl5_m_total),</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">CAPS5 =</span> <span class="fu">parse_number</span>(caps_mnth_total),</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">PTSD =</span> <span class="fu">factor</span>(caps_mnth_ptsd, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"PTSD"</span>, <span class="st">"Control"</span>)),</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Account =</span> <span class="fu">parse_number</span>(suds_account),</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Impact =</span> <span class="fu">parse_number</span>(suds_impact)</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>  <span class="co"># one participant selected "Hispanic" as their race; they are reported as</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>  <span class="co"># such here and coded as nonwhite in the analyses</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Race<span class="sc">:</span>Sex, \(x) <span class="fu">fct_na_value_to_level</span>(x, <span class="st">"Unknown"</span>)))</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(demo_all) <span class="sc">==</span> <span class="dv">92</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -280,23 +281,23 @@ Note
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"center"</span>, <span class="at">columns =</span> <span class="fu">c</span>(PTSD, Control, Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="ovntrxwany" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ovntrxwany table {
+<div id="sekjsidvel" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sekjsidvel table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ovntrxwany thead, #ovntrxwany tbody, #ovntrxwany tfoot, #ovntrxwany tr, #ovntrxwany td, #ovntrxwany th {
+#sekjsidvel thead, #sekjsidvel tbody, #sekjsidvel tfoot, #sekjsidvel tr, #sekjsidvel td, #sekjsidvel th {
   border-style: none;
 }
 
-#ovntrxwany p {
+#sekjsidvel p {
   margin: 0;
   padding: 0;
 }
 
-#ovntrxwany .gt_table {
+#sekjsidvel .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -322,12 +323,12 @@ Note
   border-left-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_caption {
+#sekjsidvel .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ovntrxwany .gt_title {
+#sekjsidvel .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -339,7 +340,7 @@ Note
   border-bottom-width: 0;
 }
 
-#ovntrxwany .gt_subtitle {
+#sekjsidvel .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -351,7 +352,7 @@ Note
   border-top-width: 0;
 }
 
-#ovntrxwany .gt_heading {
+#sekjsidvel .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -363,13 +364,13 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_bottom_border {
+#sekjsidvel .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_col_headings {
+#sekjsidvel .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -384,7 +385,7 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_col_heading {
+#sekjsidvel .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -404,7 +405,7 @@ Note
   overflow-x: hidden;
 }
 
-#ovntrxwany .gt_column_spanner_outer {
+#sekjsidvel .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -416,15 +417,15 @@ Note
   padding-right: 4px;
 }
 
-#ovntrxwany .gt_column_spanner_outer:first-child {
+#sekjsidvel .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ovntrxwany .gt_column_spanner_outer:last-child {
+#sekjsidvel .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ovntrxwany .gt_column_spanner {
+#sekjsidvel .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -436,11 +437,11 @@ Note
   width: 100%;
 }
 
-#ovntrxwany .gt_spanner_row {
+#sekjsidvel .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ovntrxwany .gt_group_heading {
+#sekjsidvel .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -466,7 +467,7 @@ Note
   text-align: left;
 }
 
-#ovntrxwany .gt_empty_group_heading {
+#sekjsidvel .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -481,15 +482,15 @@ Note
   vertical-align: middle;
 }
 
-#ovntrxwany .gt_from_md > :first-child {
+#sekjsidvel .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ovntrxwany .gt_from_md > :last-child {
+#sekjsidvel .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ovntrxwany .gt_row {
+#sekjsidvel .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -508,7 +509,7 @@ Note
   overflow-x: hidden;
 }
 
-#ovntrxwany .gt_stub {
+#sekjsidvel .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -521,7 +522,7 @@ Note
   padding-right: 5px;
 }
 
-#ovntrxwany .gt_stub_row_group {
+#sekjsidvel .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -535,15 +536,15 @@ Note
   vertical-align: top;
 }
 
-#ovntrxwany .gt_row_group_first td {
+#sekjsidvel .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ovntrxwany .gt_row_group_first th {
+#sekjsidvel .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ovntrxwany .gt_summary_row {
+#sekjsidvel .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -553,16 +554,16 @@ Note
   padding-right: 5px;
 }
 
-#ovntrxwany .gt_first_summary_row {
+#sekjsidvel .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_first_summary_row.thick {
+#sekjsidvel .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ovntrxwany .gt_last_summary_row {
+#sekjsidvel .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -572,7 +573,7 @@ Note
   border-bottom-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_grand_summary_row {
+#sekjsidvel .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -582,7 +583,7 @@ Note
   padding-right: 5px;
 }
 
-#ovntrxwany .gt_first_grand_summary_row {
+#sekjsidvel .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -592,7 +593,7 @@ Note
   border-top-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_last_grand_summary_row_top {
+#sekjsidvel .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -602,11 +603,11 @@ Note
   border-bottom-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_striped {
+#sekjsidvel .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ovntrxwany .gt_table_body {
+#sekjsidvel .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -615,7 +616,7 @@ Note
   border-bottom-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_footnotes {
+#sekjsidvel .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -629,7 +630,7 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_footnote {
+#sekjsidvel .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -638,7 +639,7 @@ Note
   padding-right: 5px;
 }
 
-#ovntrxwany .gt_sourcenotes {
+#sekjsidvel .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -652,7 +653,7 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#ovntrxwany .gt_sourcenote {
+#sekjsidvel .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -660,72 +661,72 @@ Note
   padding-right: 5px;
 }
 
-#ovntrxwany .gt_left {
+#sekjsidvel .gt_left {
   text-align: left;
 }
 
-#ovntrxwany .gt_center {
+#sekjsidvel .gt_center {
   text-align: center;
 }
 
-#ovntrxwany .gt_right {
+#sekjsidvel .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ovntrxwany .gt_font_normal {
+#sekjsidvel .gt_font_normal {
   font-weight: normal;
 }
 
-#ovntrxwany .gt_font_bold {
+#sekjsidvel .gt_font_bold {
   font-weight: bold;
 }
 
-#ovntrxwany .gt_font_italic {
+#sekjsidvel .gt_font_italic {
   font-style: italic;
 }
 
-#ovntrxwany .gt_super {
+#sekjsidvel .gt_super {
   font-size: 65%;
 }
 
-#ovntrxwany .gt_footnote_marks {
+#sekjsidvel .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ovntrxwany .gt_asterisk {
+#sekjsidvel .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ovntrxwany .gt_indent_1 {
+#sekjsidvel .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ovntrxwany .gt_indent_2 {
+#sekjsidvel .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ovntrxwany .gt_indent_3 {
+#sekjsidvel .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ovntrxwany .gt_indent_4 {
+#sekjsidvel .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ovntrxwany .gt_indent_5 {
+#sekjsidvel .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ovntrxwany .katex-display {
+#sekjsidvel .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ovntrxwany div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#sekjsidvel div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -759,15 +760,15 @@ Diagnostic group (CAPS-5)
 </tr>
 <tr class="even">
 <th id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Patient</th>
-<td class="gt_row gt_center" headers="stub_1_2 PTSD">49</td>
+<td class="gt_row gt_center" headers="stub_1_2 PTSD">48</td>
 <td class="gt_row gt_center" headers="stub_1_2 Control">4</td>
-<td class="gt_row gt_center" headers="stub_1_2 Total">53</td>
+<td class="gt_row gt_center" headers="stub_1_2 Total">52</td>
 </tr>
 <tr class="odd">
 <th id="grand_summary_stub_1" class="gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" data-quarto-table-cell-role="th" scope="row">Total</th>
-<td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 PTSD">49</td>
+<td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 PTSD">48</td>
 <td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 Control">44</td>
-<td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 Total">93</td>
+<td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 Total">92</td>
 </tr>
 </tbody>
 </table>
@@ -862,30 +863,33 @@ Diagnostic group (CAPS-5)
 <span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"center"</span>, <span class="at">columns =</span> <span class="sc">-</span><span class="fu">c</span>(variable, test)) <span class="sc">|&gt;</span></span>
 <span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(<span class="fu">md</span>(<span class="fu">paste</span>(</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Ethnicity excludes </span><span class="sc">\"</span><span class="st">Unknown</span><span class="sc">\"</span><span class="st"> (n = 1) and income excludes </span><span class="sc">\"</span><span class="st">Prefer not to say</span><span class="sc">\"</span><span class="st"> (n = 9)."</span>,</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"*V* = Cramér's *V*; *r* = rank-biserial correlation, positive when values are higher in the PTSD group."</span>,</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Income was compared as ordered brackets."</span>,</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CAPS-5 was not tested because it defined the groups."</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>  )))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sprintf</span>(</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Ethnicity excludes </span><span class="sc">\"</span><span class="st">Unknown</span><span class="sc">\"</span><span class="st"> (n = %d) and income excludes </span><span class="sc">\"</span><span class="st">Prefer not to say</span><span class="sc">\"</span><span class="st"> (n = %d)."</span>,</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(demo_all<span class="sc">$</span>Ethnicity <span class="sc">==</span> <span class="st">"Unknown"</span>), <span class="fu">sum</span>(demo_all<span class="sc">$</span>Income <span class="sc">==</span> <span class="st">"Prefer not to say"</span>)</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">"*V* = Cramér's *V*; *r* = rank-biserial correlation, positive when values are higher in the PTSD group."</span>,</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Income was compared as ordered brackets."</span>,</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CAPS-5 was not tested because it defined the groups."</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  )))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="amthnytamm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#amthnytamm table {
+<div id="uwtwfguuxb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uwtwfguuxb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#amthnytamm thead, #amthnytamm tbody, #amthnytamm tfoot, #amthnytamm tr, #amthnytamm td, #amthnytamm th {
+#uwtwfguuxb thead, #uwtwfguuxb tbody, #uwtwfguuxb tfoot, #uwtwfguuxb tr, #uwtwfguuxb td, #uwtwfguuxb th {
   border-style: none;
 }
 
-#amthnytamm p {
+#uwtwfguuxb p {
   margin: 0;
   padding: 0;
 }
 
-#amthnytamm .gt_table {
+#uwtwfguuxb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -911,12 +915,12 @@ Diagnostic group (CAPS-5)
   border-left-color: #D3D3D3;
 }
 
-#amthnytamm .gt_caption {
+#uwtwfguuxb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#amthnytamm .gt_title {
+#uwtwfguuxb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -928,7 +932,7 @@ Diagnostic group (CAPS-5)
   border-bottom-width: 0;
 }
 
-#amthnytamm .gt_subtitle {
+#uwtwfguuxb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -940,7 +944,7 @@ Diagnostic group (CAPS-5)
   border-top-width: 0;
 }
 
-#amthnytamm .gt_heading {
+#uwtwfguuxb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -952,13 +956,13 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#amthnytamm .gt_bottom_border {
+#uwtwfguuxb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#amthnytamm .gt_col_headings {
+#uwtwfguuxb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -973,7 +977,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#amthnytamm .gt_col_heading {
+#uwtwfguuxb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -993,7 +997,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#amthnytamm .gt_column_spanner_outer {
+#uwtwfguuxb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1005,15 +1009,15 @@ Diagnostic group (CAPS-5)
   padding-right: 4px;
 }
 
-#amthnytamm .gt_column_spanner_outer:first-child {
+#uwtwfguuxb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#amthnytamm .gt_column_spanner_outer:last-child {
+#uwtwfguuxb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#amthnytamm .gt_column_spanner {
+#uwtwfguuxb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1025,11 +1029,11 @@ Diagnostic group (CAPS-5)
   width: 100%;
 }
 
-#amthnytamm .gt_spanner_row {
+#uwtwfguuxb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#amthnytamm .gt_group_heading {
+#uwtwfguuxb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1055,7 +1059,7 @@ Diagnostic group (CAPS-5)
   text-align: left;
 }
 
-#amthnytamm .gt_empty_group_heading {
+#uwtwfguuxb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1070,15 +1074,15 @@ Diagnostic group (CAPS-5)
   vertical-align: middle;
 }
 
-#amthnytamm .gt_from_md > :first-child {
+#uwtwfguuxb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#amthnytamm .gt_from_md > :last-child {
+#uwtwfguuxb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#amthnytamm .gt_row {
+#uwtwfguuxb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1097,7 +1101,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#amthnytamm .gt_stub {
+#uwtwfguuxb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1110,7 +1114,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#amthnytamm .gt_stub_row_group {
+#uwtwfguuxb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1124,15 +1128,15 @@ Diagnostic group (CAPS-5)
   vertical-align: top;
 }
 
-#amthnytamm .gt_row_group_first td {
+#uwtwfguuxb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#amthnytamm .gt_row_group_first th {
+#uwtwfguuxb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#amthnytamm .gt_summary_row {
+#uwtwfguuxb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1142,16 +1146,16 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#amthnytamm .gt_first_summary_row {
+#uwtwfguuxb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#amthnytamm .gt_first_summary_row.thick {
+#uwtwfguuxb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#amthnytamm .gt_last_summary_row {
+#uwtwfguuxb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1161,7 +1165,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#amthnytamm .gt_grand_summary_row {
+#uwtwfguuxb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1171,7 +1175,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#amthnytamm .gt_first_grand_summary_row {
+#uwtwfguuxb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1181,7 +1185,7 @@ Diagnostic group (CAPS-5)
   border-top-color: #D3D3D3;
 }
 
-#amthnytamm .gt_last_grand_summary_row_top {
+#uwtwfguuxb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1191,11 +1195,11 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#amthnytamm .gt_striped {
+#uwtwfguuxb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#amthnytamm .gt_table_body {
+#uwtwfguuxb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1204,7 +1208,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#amthnytamm .gt_footnotes {
+#uwtwfguuxb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1218,7 +1222,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#amthnytamm .gt_footnote {
+#uwtwfguuxb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1227,7 +1231,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#amthnytamm .gt_sourcenotes {
+#uwtwfguuxb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1241,7 +1245,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#amthnytamm .gt_sourcenote {
+#uwtwfguuxb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1249,72 +1253,72 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#amthnytamm .gt_left {
+#uwtwfguuxb .gt_left {
   text-align: left;
 }
 
-#amthnytamm .gt_center {
+#uwtwfguuxb .gt_center {
   text-align: center;
 }
 
-#amthnytamm .gt_right {
+#uwtwfguuxb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#amthnytamm .gt_font_normal {
+#uwtwfguuxb .gt_font_normal {
   font-weight: normal;
 }
 
-#amthnytamm .gt_font_bold {
+#uwtwfguuxb .gt_font_bold {
   font-weight: bold;
 }
 
-#amthnytamm .gt_font_italic {
+#uwtwfguuxb .gt_font_italic {
   font-style: italic;
 }
 
-#amthnytamm .gt_super {
+#uwtwfguuxb .gt_super {
   font-size: 65%;
 }
 
-#amthnytamm .gt_footnote_marks {
+#uwtwfguuxb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#amthnytamm .gt_asterisk {
+#uwtwfguuxb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#amthnytamm .gt_indent_1 {
+#uwtwfguuxb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#amthnytamm .gt_indent_2 {
+#uwtwfguuxb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#amthnytamm .gt_indent_3 {
+#uwtwfguuxb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#amthnytamm .gt_indent_4 {
+#uwtwfguuxb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#amthnytamm .gt_indent_5 {
+#uwtwfguuxb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#amthnytamm .katex-display {
+#uwtwfguuxb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#amthnytamm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uwtwfguuxb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1344,28 +1348,28 @@ Diagnostic group (CAPS-5)
 <tr class="odd">
 <th id="stub_1_1" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Sex</th>
 <td class="gt_row gt_left" headers="stub_1_1 test">Chi-square</td>
-<td class="gt_row gt_center" headers="stub_1_1 statistic">χ²(1) = 20.73</td>
+<td class="gt_row gt_center" headers="stub_1_1 statistic">χ²(1) = 20.18</td>
 <td class="gt_row gt_center" headers="stub_1_1 p">&lt; .001</td>
 <td class="gt_row gt_center" headers="stub_1_1 es_name">V = .47</td>
-<td class="gt_row gt_center" headers="stub_1_1 n">93</td>
-<td class="gt_row gt_center" headers="stub_1_1 min_expected">14.7</td>
+<td class="gt_row gt_center" headers="stub_1_1 n">92</td>
+<td class="gt_row gt_center" headers="stub_1_1 min_expected">14.8</td>
 </tr>
 <tr class="even">
 <th id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Race</th>
 <td class="gt_row gt_left" headers="stub_1_2 test">Fisher's exact</td>
 <td class="gt_row gt_center" headers="stub_1_2 statistic"></td>
-<td class="gt_row gt_center" headers="stub_1_2 p">.010</td>
-<td class="gt_row gt_center" headers="stub_1_2 es_name">V = .33</td>
-<td class="gt_row gt_center" headers="stub_1_2 n">93</td>
-<td class="gt_row gt_center" headers="stub_1_2 min_expected">1.4</td>
+<td class="gt_row gt_center" headers="stub_1_2 p">.016</td>
+<td class="gt_row gt_center" headers="stub_1_2 es_name">V = .34</td>
+<td class="gt_row gt_center" headers="stub_1_2 n">92</td>
+<td class="gt_row gt_center" headers="stub_1_2 min_expected">0.5</td>
 </tr>
 <tr class="odd">
 <th id="stub_1_3" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Ethnicity</th>
 <td class="gt_row gt_left" headers="stub_1_3 test">Fisher's exact</td>
 <td class="gt_row gt_center" headers="stub_1_3 statistic"></td>
-<td class="gt_row gt_center" headers="stub_1_3 p">.478</td>
+<td class="gt_row gt_center" headers="stub_1_3 p">.484</td>
 <td class="gt_row gt_center" headers="stub_1_3 es_name">V = .11</td>
-<td class="gt_row gt_center" headers="stub_1_3 n">92</td>
+<td class="gt_row gt_center" headers="stub_1_3 n">91</td>
 <td class="gt_row gt_center" headers="stub_1_3 min_expected">0.5</td>
 </tr>
 <tr class="even">
@@ -1381,56 +1385,56 @@ Diagnostic group (CAPS-5)
 <tr class="odd">
 <th id="stub_1_5" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Age (years)</th>
 <td class="gt_row gt_left" headers="stub_1_5 test">Mann-Whitney U</td>
-<td class="gt_row gt_center" headers="stub_1_5 statistic">U = 635.0</td>
+<td class="gt_row gt_center" headers="stub_1_5 statistic">U = 601.0</td>
 <td class="gt_row gt_center" headers="stub_1_5 p">&lt; .001</td>
-<td class="gt_row gt_center" headers="stub_1_5 es_name">r = −.41</td>
-<td class="gt_row gt_center" headers="stub_1_5 n">93</td>
+<td class="gt_row gt_center" headers="stub_1_5 es_name">r = −.43</td>
+<td class="gt_row gt_center" headers="stub_1_5 n">92</td>
 <td class="gt_row gt_center" headers="stub_1_5 min_expected"><br>
 </td>
 </tr>
 <tr class="even">
 <th id="stub_1_6" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Education (years)</th>
 <td class="gt_row gt_left" headers="stub_1_6 test">Mann-Whitney U</td>
-<td class="gt_row gt_center" headers="stub_1_6 statistic">U = 613.0</td>
+<td class="gt_row gt_center" headers="stub_1_6 statistic">U = 605.5</td>
 <td class="gt_row gt_center" headers="stub_1_6 p">&lt; .001</td>
 <td class="gt_row gt_center" headers="stub_1_6 es_name">r = −.43</td>
-<td class="gt_row gt_center" headers="stub_1_6 n">93</td>
+<td class="gt_row gt_center" headers="stub_1_6 n">92</td>
 <td class="gt_row gt_center" headers="stub_1_6 min_expected"><br>
 </td>
 </tr>
 <tr class="odd">
 <th id="stub_1_7" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">SUDS, Account</th>
 <td class="gt_row gt_left" headers="stub_1_7 test">Mann-Whitney U</td>
-<td class="gt_row gt_center" headers="stub_1_7 statistic">U = 1735.0</td>
+<td class="gt_row gt_center" headers="stub_1_7 statistic">U = 1696.5</td>
 <td class="gt_row gt_center" headers="stub_1_7 p">&lt; .001</td>
 <td class="gt_row gt_center" headers="stub_1_7 es_name">r = .61</td>
-<td class="gt_row gt_center" headers="stub_1_7 n">93</td>
+<td class="gt_row gt_center" headers="stub_1_7 n">92</td>
 <td class="gt_row gt_center" headers="stub_1_7 min_expected"><br>
 </td>
 </tr>
 <tr class="even">
 <th id="stub_1_8" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">SUDS, Impact</th>
 <td class="gt_row gt_left" headers="stub_1_8 test">Mann-Whitney U</td>
-<td class="gt_row gt_center" headers="stub_1_8 statistic">U = 1752.5</td>
+<td class="gt_row gt_center" headers="stub_1_8 statistic">U = 1708.5</td>
 <td class="gt_row gt_center" headers="stub_1_8 p">&lt; .001</td>
-<td class="gt_row gt_center" headers="stub_1_8 es_name">r = .63</td>
-<td class="gt_row gt_center" headers="stub_1_8 n">93</td>
+<td class="gt_row gt_center" headers="stub_1_8 es_name">r = .62</td>
+<td class="gt_row gt_center" headers="stub_1_8 n">92</td>
 <td class="gt_row gt_center" headers="stub_1_8 min_expected"><br>
 </td>
 </tr>
 <tr class="odd">
 <th id="stub_1_9" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">PCL-5</th>
 <td class="gt_row gt_left" headers="stub_1_9 test">Mann-Whitney U</td>
-<td class="gt_row gt_center" headers="stub_1_9 statistic">U = 2117.5</td>
+<td class="gt_row gt_center" headers="stub_1_9 statistic">U = 2076.5</td>
 <td class="gt_row gt_center" headers="stub_1_9 p">&lt; .001</td>
-<td class="gt_row gt_center" headers="stub_1_9 es_name">r = .96</td>
-<td class="gt_row gt_center" headers="stub_1_9 n">93</td>
+<td class="gt_row gt_center" headers="stub_1_9 es_name">r = .97</td>
+<td class="gt_row gt_center" headers="stub_1_9 n">92</td>
 <td class="gt_row gt_center" headers="stub_1_9 min_expected"><br>
 </td>
 </tr>
 </tbody><tfoot>
 <tr class="gt_sourcenotes odd">
-<td colspan="7" class="gt_sourcenote">Ethnicity excludes “Unknown” (n = 1) and income excludes “Prefer not to say” (n = 9). <em>V</em> = Cramér’s <em>V</em>; <em>r</em> = rank-biserial correlation, positive when values are higher in the PTSD group. Income was compared as ordered brackets. CAPS-5 was not tested because it defined the groups.</td>
+<td colspan="7" class="gt_sourcenote">Ethnicity excludes “Unknown” (n = 1) and income excludes “Prefer not to say” (n = 8). <em>V</em> = Cramér’s <em>V</em>; <em>r</em> = rank-biserial correlation, positive when values are higher in the PTSD group. Income was compared as ordered brackets. CAPS-5 was not tested because it defined the groups.</td>
 </tr>
 </tfoot>
 
@@ -1439,7 +1443,7 @@ Diagnostic group (CAPS-5)
 </div>
 </div>
 </div>
-<p>The proportion declining to report income also differed by group:</p>
+<p>Because the income test excludes participants who declined to report income, we also compared the rate of declining by group:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1460,23 +1464,23 @@ Diagnostic group (CAPS-5)
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="wkcapuslvq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wkcapuslvq table {
+<div id="yhxbggkszp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yhxbggkszp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wkcapuslvq thead, #wkcapuslvq tbody, #wkcapuslvq tfoot, #wkcapuslvq tr, #wkcapuslvq td, #wkcapuslvq th {
+#yhxbggkszp thead, #yhxbggkszp tbody, #yhxbggkszp tfoot, #yhxbggkszp tr, #yhxbggkszp td, #yhxbggkszp th {
   border-style: none;
 }
 
-#wkcapuslvq p {
+#yhxbggkszp p {
   margin: 0;
   padding: 0;
 }
 
-#wkcapuslvq .gt_table {
+#yhxbggkszp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1502,12 +1506,12 @@ Diagnostic group (CAPS-5)
   border-left-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_caption {
+#yhxbggkszp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wkcapuslvq .gt_title {
+#yhxbggkszp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1519,7 +1523,7 @@ Diagnostic group (CAPS-5)
   border-bottom-width: 0;
 }
 
-#wkcapuslvq .gt_subtitle {
+#yhxbggkszp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1531,7 +1535,7 @@ Diagnostic group (CAPS-5)
   border-top-width: 0;
 }
 
-#wkcapuslvq .gt_heading {
+#yhxbggkszp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1543,13 +1547,13 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_bottom_border {
+#yhxbggkszp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_col_headings {
+#yhxbggkszp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1564,7 +1568,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_col_heading {
+#yhxbggkszp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1584,7 +1588,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#wkcapuslvq .gt_column_spanner_outer {
+#yhxbggkszp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1596,15 +1600,15 @@ Diagnostic group (CAPS-5)
   padding-right: 4px;
 }
 
-#wkcapuslvq .gt_column_spanner_outer:first-child {
+#yhxbggkszp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wkcapuslvq .gt_column_spanner_outer:last-child {
+#yhxbggkszp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wkcapuslvq .gt_column_spanner {
+#yhxbggkszp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1616,11 +1620,11 @@ Diagnostic group (CAPS-5)
   width: 100%;
 }
 
-#wkcapuslvq .gt_spanner_row {
+#yhxbggkszp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wkcapuslvq .gt_group_heading {
+#yhxbggkszp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1646,7 +1650,7 @@ Diagnostic group (CAPS-5)
   text-align: left;
 }
 
-#wkcapuslvq .gt_empty_group_heading {
+#yhxbggkszp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1661,15 +1665,15 @@ Diagnostic group (CAPS-5)
   vertical-align: middle;
 }
 
-#wkcapuslvq .gt_from_md > :first-child {
+#yhxbggkszp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wkcapuslvq .gt_from_md > :last-child {
+#yhxbggkszp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wkcapuslvq .gt_row {
+#yhxbggkszp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1688,7 +1692,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#wkcapuslvq .gt_stub {
+#yhxbggkszp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1701,7 +1705,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#wkcapuslvq .gt_stub_row_group {
+#yhxbggkszp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1715,15 +1719,15 @@ Diagnostic group (CAPS-5)
   vertical-align: top;
 }
 
-#wkcapuslvq .gt_row_group_first td {
+#yhxbggkszp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wkcapuslvq .gt_row_group_first th {
+#yhxbggkszp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wkcapuslvq .gt_summary_row {
+#yhxbggkszp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1733,16 +1737,16 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#wkcapuslvq .gt_first_summary_row {
+#yhxbggkszp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_first_summary_row.thick {
+#yhxbggkszp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wkcapuslvq .gt_last_summary_row {
+#yhxbggkszp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1752,7 +1756,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_grand_summary_row {
+#yhxbggkszp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1762,7 +1766,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#wkcapuslvq .gt_first_grand_summary_row {
+#yhxbggkszp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1772,7 +1776,7 @@ Diagnostic group (CAPS-5)
   border-top-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_last_grand_summary_row_top {
+#yhxbggkszp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1782,11 +1786,11 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_striped {
+#yhxbggkszp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wkcapuslvq .gt_table_body {
+#yhxbggkszp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1795,7 +1799,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_footnotes {
+#yhxbggkszp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1809,7 +1813,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_footnote {
+#yhxbggkszp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1818,7 +1822,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#wkcapuslvq .gt_sourcenotes {
+#yhxbggkszp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1832,7 +1836,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#wkcapuslvq .gt_sourcenote {
+#yhxbggkszp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1840,72 +1844,72 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#wkcapuslvq .gt_left {
+#yhxbggkszp .gt_left {
   text-align: left;
 }
 
-#wkcapuslvq .gt_center {
+#yhxbggkszp .gt_center {
   text-align: center;
 }
 
-#wkcapuslvq .gt_right {
+#yhxbggkszp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wkcapuslvq .gt_font_normal {
+#yhxbggkszp .gt_font_normal {
   font-weight: normal;
 }
 
-#wkcapuslvq .gt_font_bold {
+#yhxbggkszp .gt_font_bold {
   font-weight: bold;
 }
 
-#wkcapuslvq .gt_font_italic {
+#yhxbggkszp .gt_font_italic {
   font-style: italic;
 }
 
-#wkcapuslvq .gt_super {
+#yhxbggkszp .gt_super {
   font-size: 65%;
 }
 
-#wkcapuslvq .gt_footnote_marks {
+#yhxbggkszp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wkcapuslvq .gt_asterisk {
+#yhxbggkszp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wkcapuslvq .gt_indent_1 {
+#yhxbggkszp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wkcapuslvq .gt_indent_2 {
+#yhxbggkszp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wkcapuslvq .gt_indent_3 {
+#yhxbggkszp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wkcapuslvq .gt_indent_4 {
+#yhxbggkszp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wkcapuslvq .gt_indent_5 {
+#yhxbggkszp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wkcapuslvq .katex-display {
+#yhxbggkszp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wkcapuslvq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yhxbggkszp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1926,12 +1930,12 @@ Diagnostic group (CAPS-5)
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Declined to report income">Yes</td>
-<td class="gt_row gt_center" headers="PTSD">8</td>
+<td class="gt_row gt_center" headers="PTSD">7</td>
 <td class="gt_row gt_center" headers="Control">1</td>
 </tr>
 </tbody><tfoot>
 <tr class="gt_sourcenotes odd">
-<td colspan="3" class="gt_sourcenote">Fisher's exact test, p = .033</td>
+<td colspan="3" class="gt_sourcenote">Fisher's exact test, p = .061</td>
 </tr>
 </tfoot>
 
@@ -2022,34 +2026,35 @@ Diagnostic group (CAPS-5)
 <span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(demo_all<span class="sc">$</span>GRP <span class="sc">==</span> <span class="st">"patient"</span> <span class="sc">&amp;</span> demo_all<span class="sc">$</span>PTSD <span class="sc">==</span> <span class="st">"Control"</span>)</span>
 <span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Percentages are column percentages within each group."</span>,</span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sex was compared with a chi-square test, and race and ethnicity with Fisher's exact test"</span>,</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"because some expected cell counts were below 5; effect sizes are Cramér's *V*."</span>,</span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Income (as ordered brackets) and continuous variables were compared with Mann-Whitney *U* tests;"</span>,</span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"effect sizes are rank-biserial correlations (*r*), positive when values are higher in the PTSD group."</span>,</span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Tests of ethnicity and income excluded </span><span class="sc">\"</span><span class="st">Unknown</span><span class="sc">\"</span><span class="st"> and </span><span class="sc">\"</span><span class="st">Prefer not to say</span><span class="sc">\"</span><span class="st"> responses, respectively."</span>,</span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CAPS-5 was not tested because it defined the groups."</span>,</span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SUDS = Subjective Units of Distress Scale, rated after the trauma account and impact statement tasks;"</span>,</span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PCL-5 = PTSD Checklist for DSM-5; CAPS-5 = Clinician-Administered PTSD Scale for DSM-5 total severity."</span></span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>  )))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">any</span>(demo_all<span class="sc">$</span>Race <span class="sc">==</span> <span class="st">"Hispanic"</span>)) <span class="st">"One participant selected Hispanic as their race (coded as nonwhite in the analyses)."</span> <span class="cf">else</span> <span class="st">""</span>,</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sex was compared with a chi-square test, and race and ethnicity with Fisher's exact test"</span>,</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"because some expected cell counts were below 5; effect sizes are Cramér's *V*."</span>,</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Income (as ordered brackets) and continuous variables were compared with Mann-Whitney *U* tests;"</span>,</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"effect sizes are rank-biserial correlations (*r*), positive when values are higher in the PTSD group."</span>,</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Tests of ethnicity and income excluded </span><span class="sc">\"</span><span class="st">Unknown</span><span class="sc">\"</span><span class="st"> and </span><span class="sc">\"</span><span class="st">Prefer not to say</span><span class="sc">\"</span><span class="st"> responses, respectively."</span>,</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CAPS-5 was not tested because it defined the groups."</span>,</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SUDS = Subjective Units of Distress Scale, rated after the trauma account and impact statement tasks;"</span>,</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PCL-5 = PTSD Checklist for DSM-5; CAPS-5 = Clinician-Administered PTSD Scale for DSM-5 total severity."</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>  )))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="byfcjuxfrs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#byfcjuxfrs table {
+<div id="stnkoqmqfq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#stnkoqmqfq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#byfcjuxfrs thead, #byfcjuxfrs tbody, #byfcjuxfrs tfoot, #byfcjuxfrs tr, #byfcjuxfrs td, #byfcjuxfrs th {
+#stnkoqmqfq thead, #stnkoqmqfq tbody, #stnkoqmqfq tfoot, #stnkoqmqfq tr, #stnkoqmqfq td, #stnkoqmqfq th {
   border-style: none;
 }
 
-#byfcjuxfrs p {
+#stnkoqmqfq p {
   margin: 0;
   padding: 0;
 }
 
-#byfcjuxfrs .gt_table {
+#stnkoqmqfq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2075,12 +2080,12 @@ Diagnostic group (CAPS-5)
   border-left-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_caption {
+#stnkoqmqfq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#byfcjuxfrs .gt_title {
+#stnkoqmqfq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2092,7 +2097,7 @@ Diagnostic group (CAPS-5)
   border-bottom-width: 0;
 }
 
-#byfcjuxfrs .gt_subtitle {
+#stnkoqmqfq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2104,7 +2109,7 @@ Diagnostic group (CAPS-5)
   border-top-width: 0;
 }
 
-#byfcjuxfrs .gt_heading {
+#stnkoqmqfq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2116,13 +2121,13 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_bottom_border {
+#stnkoqmqfq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_col_headings {
+#stnkoqmqfq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2137,7 +2142,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_col_heading {
+#stnkoqmqfq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2157,7 +2162,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#byfcjuxfrs .gt_column_spanner_outer {
+#stnkoqmqfq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2169,15 +2174,15 @@ Diagnostic group (CAPS-5)
   padding-right: 4px;
 }
 
-#byfcjuxfrs .gt_column_spanner_outer:first-child {
+#stnkoqmqfq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#byfcjuxfrs .gt_column_spanner_outer:last-child {
+#stnkoqmqfq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#byfcjuxfrs .gt_column_spanner {
+#stnkoqmqfq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2189,11 +2194,11 @@ Diagnostic group (CAPS-5)
   width: 100%;
 }
 
-#byfcjuxfrs .gt_spanner_row {
+#stnkoqmqfq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#byfcjuxfrs .gt_group_heading {
+#stnkoqmqfq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2219,7 +2224,7 @@ Diagnostic group (CAPS-5)
   text-align: left;
 }
 
-#byfcjuxfrs .gt_empty_group_heading {
+#stnkoqmqfq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2234,15 +2239,15 @@ Diagnostic group (CAPS-5)
   vertical-align: middle;
 }
 
-#byfcjuxfrs .gt_from_md > :first-child {
+#stnkoqmqfq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#byfcjuxfrs .gt_from_md > :last-child {
+#stnkoqmqfq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#byfcjuxfrs .gt_row {
+#stnkoqmqfq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2261,7 +2266,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#byfcjuxfrs .gt_stub {
+#stnkoqmqfq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2274,7 +2279,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#byfcjuxfrs .gt_stub_row_group {
+#stnkoqmqfq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2288,15 +2293,15 @@ Diagnostic group (CAPS-5)
   vertical-align: top;
 }
 
-#byfcjuxfrs .gt_row_group_first td {
+#stnkoqmqfq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#byfcjuxfrs .gt_row_group_first th {
+#stnkoqmqfq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#byfcjuxfrs .gt_summary_row {
+#stnkoqmqfq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2306,16 +2311,16 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#byfcjuxfrs .gt_first_summary_row {
+#stnkoqmqfq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_first_summary_row.thick {
+#stnkoqmqfq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#byfcjuxfrs .gt_last_summary_row {
+#stnkoqmqfq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2325,7 +2330,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_grand_summary_row {
+#stnkoqmqfq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2335,7 +2340,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#byfcjuxfrs .gt_first_grand_summary_row {
+#stnkoqmqfq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2345,7 +2350,7 @@ Diagnostic group (CAPS-5)
   border-top-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_last_grand_summary_row_top {
+#stnkoqmqfq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2355,11 +2360,11 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_striped {
+#stnkoqmqfq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#byfcjuxfrs .gt_table_body {
+#stnkoqmqfq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2368,7 +2373,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_footnotes {
+#stnkoqmqfq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2382,7 +2387,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_footnote {
+#stnkoqmqfq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2391,7 +2396,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#byfcjuxfrs .gt_sourcenotes {
+#stnkoqmqfq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2405,7 +2410,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#byfcjuxfrs .gt_sourcenote {
+#stnkoqmqfq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2413,72 +2418,72 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#byfcjuxfrs .gt_left {
+#stnkoqmqfq .gt_left {
   text-align: left;
 }
 
-#byfcjuxfrs .gt_center {
+#stnkoqmqfq .gt_center {
   text-align: center;
 }
 
-#byfcjuxfrs .gt_right {
+#stnkoqmqfq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#byfcjuxfrs .gt_font_normal {
+#stnkoqmqfq .gt_font_normal {
   font-weight: normal;
 }
 
-#byfcjuxfrs .gt_font_bold {
+#stnkoqmqfq .gt_font_bold {
   font-weight: bold;
 }
 
-#byfcjuxfrs .gt_font_italic {
+#stnkoqmqfq .gt_font_italic {
   font-style: italic;
 }
 
-#byfcjuxfrs .gt_super {
+#stnkoqmqfq .gt_super {
   font-size: 65%;
 }
 
-#byfcjuxfrs .gt_footnote_marks {
+#stnkoqmqfq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#byfcjuxfrs .gt_asterisk {
+#stnkoqmqfq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#byfcjuxfrs .gt_indent_1 {
+#stnkoqmqfq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#byfcjuxfrs .gt_indent_2 {
+#stnkoqmqfq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#byfcjuxfrs .gt_indent_3 {
+#stnkoqmqfq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#byfcjuxfrs .gt_indent_4 {
+#stnkoqmqfq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#byfcjuxfrs .gt_indent_5 {
+#stnkoqmqfq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#byfcjuxfrs .katex-display {
+#stnkoqmqfq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#byfcjuxfrs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#stnkoqmqfq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2501,8 +2506,8 @@ Diagnostic group (CAPS-5)
     </tr>
     <tr class="gt_col_headings gt_spanner_row">
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="row"></th>
-      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="PTSD (n = 49)">
-        <div class="gt_column_spanner">PTSD (n = 49)</div>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="PTSD (n = 48)">
+        <div class="gt_column_spanner">PTSD (n = 48)</div>
       </th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Control (n = 44)">
         <div class="gt_column_spanner">Control (n = 44)</div>
@@ -2534,14 +2539,14 @@ Diagnostic group (CAPS-5)
 <td headers="es" class="gt_row gt_center"><span data-qmd-base64="KlYqID0gLjQ3"><span class="gt_from_md"><em>V</em> = .47</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Male</td>
 <td headers="c1" class="gt_row gt_center">6</td>
-<td headers="c2" class="gt_row gt_center">12.2%</td>
+<td headers="c2" class="gt_row gt_center">12.5%</td>
 <td headers="c3" class="gt_row gt_center">25</td>
 <td headers="c4" class="gt_row gt_center">56.8%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Female</td>
-<td headers="c1" class="gt_row gt_center">43</td>
-<td headers="c2" class="gt_row gt_center">87.8%</td>
+<td headers="c1" class="gt_row gt_center">42</td>
+<td headers="c2" class="gt_row gt_center">87.5%</td>
 <td headers="c3" class="gt_row gt_center">19</td>
 <td headers="c4" class="gt_row gt_center">43.2%</td>
 <td headers="p" class="gt_row gt_center"></td>
@@ -2551,8 +2556,8 @@ Diagnostic group (CAPS-5)
 <td headers="c2" class="gt_row gt_center"></td>
 <td headers="c3" class="gt_row gt_center"></td>
 <td headers="c4" class="gt_row gt_center"></td>
-<td headers="p" class="gt_row gt_center">.010</td>
-<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KlYqID0gLjMz"><span class="gt_from_md"><em>V</em> = .33</span></span></td></tr>
+<td headers="p" class="gt_row gt_center">.016</td>
+<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KlYqID0gLjM0"><span class="gt_from_md"><em>V</em> = .34</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Asian</td>
 <td headers="c1" class="gt_row gt_center">0</td>
 <td headers="c2" class="gt_row gt_center">0.0%</td>
@@ -2561,24 +2566,31 @@ Diagnostic group (CAPS-5)
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Black</td>
-<td headers="c1" class="gt_row gt_center">6</td>
-<td headers="c2" class="gt_row gt_center">12.2%</td>
+<td headers="c1" class="gt_row gt_center">5</td>
+<td headers="c2" class="gt_row gt_center">10.4%</td>
+<td headers="c3" class="gt_row gt_center">1</td>
+<td headers="c4" class="gt_row gt_center">2.3%</td>
+<td headers="p" class="gt_row gt_center"></td>
+<td headers="es" class="gt_row gt_center"></td></tr>
+    <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Hispanic</td>
+<td headers="c1" class="gt_row gt_center">0</td>
+<td headers="c2" class="gt_row gt_center">0.0%</td>
 <td headers="c3" class="gt_row gt_center">1</td>
 <td headers="c4" class="gt_row gt_center">2.3%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">More than one race</td>
 <td headers="c1" class="gt_row gt_center">4</td>
-<td headers="c2" class="gt_row gt_center">8.2%</td>
+<td headers="c2" class="gt_row gt_center">8.3%</td>
 <td headers="c3" class="gt_row gt_center">0</td>
 <td headers="c4" class="gt_row gt_center">0.0%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">White</td>
 <td headers="c1" class="gt_row gt_center">39</td>
-<td headers="c2" class="gt_row gt_center">79.6%</td>
-<td headers="c3" class="gt_row gt_center">40</td>
-<td headers="c4" class="gt_row gt_center">90.9%</td>
+<td headers="c2" class="gt_row gt_center">81.2%</td>
+<td headers="c3" class="gt_row gt_center">39</td>
+<td headers="c4" class="gt_row gt_center">88.6%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 12px;">Ethnicity</td>
@@ -2586,11 +2598,11 @@ Diagnostic group (CAPS-5)
 <td headers="c2" class="gt_row gt_center"></td>
 <td headers="c3" class="gt_row gt_center"></td>
 <td headers="c4" class="gt_row gt_center"></td>
-<td headers="p" class="gt_row gt_center">.478</td>
+<td headers="p" class="gt_row gt_center">.484</td>
 <td headers="es" class="gt_row gt_center"><span data-qmd-base64="KlYqID0gLjEx"><span class="gt_from_md"><em>V</em> = .11</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Not Hispanic or Latino</td>
-<td headers="c1" class="gt_row gt_center">48</td>
-<td headers="c2" class="gt_row gt_center">98.0%</td>
+<td headers="c1" class="gt_row gt_center">47</td>
+<td headers="c2" class="gt_row gt_center">97.9%</td>
 <td headers="c3" class="gt_row gt_center">43</td>
 <td headers="c4" class="gt_row gt_center">97.7%</td>
 <td headers="p" class="gt_row gt_center"></td>
@@ -2604,7 +2616,7 @@ Diagnostic group (CAPS-5)
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Unknown</td>
 <td headers="c1" class="gt_row gt_center">1</td>
-<td headers="c2" class="gt_row gt_center">2.0%</td>
+<td headers="c2" class="gt_row gt_center">2.1%</td>
 <td headers="c3" class="gt_row gt_center">0</td>
 <td headers="c4" class="gt_row gt_center">0.0%</td>
 <td headers="p" class="gt_row gt_center"></td>
@@ -2618,49 +2630,49 @@ Diagnostic group (CAPS-5)
 <td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0g4oiSLjMw"><span class="gt_from_md"><em>r</em> = −.30</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">&lt; $10,000</td>
 <td headers="c1" class="gt_row gt_center">6</td>
-<td headers="c2" class="gt_row gt_center">12.2%</td>
+<td headers="c2" class="gt_row gt_center">12.5%</td>
 <td headers="c3" class="gt_row gt_center">2</td>
 <td headers="c4" class="gt_row gt_center">4.5%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">$10,000-19,999</td>
 <td headers="c1" class="gt_row gt_center">2</td>
-<td headers="c2" class="gt_row gt_center">4.1%</td>
+<td headers="c2" class="gt_row gt_center">4.2%</td>
 <td headers="c3" class="gt_row gt_center">1</td>
 <td headers="c4" class="gt_row gt_center">2.3%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">$20,000-39,999</td>
 <td headers="c1" class="gt_row gt_center">8</td>
-<td headers="c2" class="gt_row gt_center">16.3%</td>
+<td headers="c2" class="gt_row gt_center">16.7%</td>
 <td headers="c3" class="gt_row gt_center">5</td>
 <td headers="c4" class="gt_row gt_center">11.4%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">$40,000-79,999</td>
 <td headers="c1" class="gt_row gt_center">13</td>
-<td headers="c2" class="gt_row gt_center">26.5%</td>
+<td headers="c2" class="gt_row gt_center">27.1%</td>
 <td headers="c3" class="gt_row gt_center">13</td>
 <td headers="c4" class="gt_row gt_center">29.5%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">$80,000-169,999</td>
 <td headers="c1" class="gt_row gt_center">10</td>
-<td headers="c2" class="gt_row gt_center">20.4%</td>
+<td headers="c2" class="gt_row gt_center">20.8%</td>
 <td headers="c3" class="gt_row gt_center">16</td>
 <td headers="c4" class="gt_row gt_center">36.4%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">$170,000+</td>
 <td headers="c1" class="gt_row gt_center">2</td>
-<td headers="c2" class="gt_row gt_center">4.1%</td>
+<td headers="c2" class="gt_row gt_center">4.2%</td>
 <td headers="c3" class="gt_row gt_center">6</td>
 <td headers="c4" class="gt_row gt_center">13.6%</td>
 <td headers="p" class="gt_row gt_center"></td>
 <td headers="es" class="gt_row gt_center"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 28px;">Prefer not to say</td>
-<td headers="c1" class="gt_row gt_center">8</td>
-<td headers="c2" class="gt_row gt_center">16.3%</td>
+<td headers="c1" class="gt_row gt_center">7</td>
+<td headers="c2" class="gt_row gt_center">14.6%</td>
 <td headers="c3" class="gt_row gt_center">1</td>
 <td headers="c4" class="gt_row gt_center">2.3%</td>
 <td headers="p" class="gt_row gt_center"></td>
@@ -2673,43 +2685,43 @@ Diagnostic group (CAPS-5)
 <td headers="p" class="gt_row gt_center" style="font-weight: bold;"></td>
 <td headers="es" class="gt_row gt_center" style="font-weight: bold;"></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 12px;">Age (years)</td>
-<td headers="c1" class="gt_row gt_center">36.76</td>
-<td headers="c2" class="gt_row gt_center">11.48</td>
+<td headers="c1" class="gt_row gt_center">36.23</td>
+<td headers="c2" class="gt_row gt_center">10.99</td>
 <td headers="c3" class="gt_row gt_center">48.05</td>
 <td headers="c4" class="gt_row gt_center">15.47</td>
 <td headers="p" class="gt_row gt_center">&lt; .001</td>
-<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0g4oiSLjQx"><span class="gt_from_md"><em>r</em> = −.41</span></span></td></tr>
+<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0g4oiSLjQz"><span class="gt_from_md"><em>r</em> = −.43</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 12px;">Education (years)</td>
 <td headers="c1" class="gt_row gt_center">14.31</td>
-<td headers="c2" class="gt_row gt_center">2.30</td>
+<td headers="c2" class="gt_row gt_center">2.33</td>
 <td headers="c3" class="gt_row gt_center">16.18</td>
 <td headers="c4" class="gt_row gt_center">2.19</td>
 <td headers="p" class="gt_row gt_center">&lt; .001</td>
 <td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0g4oiSLjQz"><span class="gt_from_md"><em>r</em> = −.43</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 12px;">SUDS, Account</td>
-<td headers="c1" class="gt_row gt_center">78.73</td>
-<td headers="c2" class="gt_row gt_center">12.04</td>
+<td headers="c1" class="gt_row gt_center">78.71</td>
+<td headers="c2" class="gt_row gt_center">12.16</td>
 <td headers="c3" class="gt_row gt_center">52.68</td>
 <td headers="c4" class="gt_row gt_center">25.87</td>
 <td headers="p" class="gt_row gt_center">&lt; .001</td>
 <td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0gLjYx"><span class="gt_from_md"><em>r</em> = .61</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 12px;">SUDS, Impact</td>
-<td headers="c1" class="gt_row gt_center">73.20</td>
-<td headers="c2" class="gt_row gt_center">19.79</td>
+<td headers="c1" class="gt_row gt_center">72.65</td>
+<td headers="c2" class="gt_row gt_center">19.60</td>
 <td headers="c3" class="gt_row gt_center">42.39</td>
 <td headers="c4" class="gt_row gt_center">26.80</td>
 <td headers="p" class="gt_row gt_center">&lt; .001</td>
-<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0gLjYz"><span class="gt_from_md"><em>r</em> = .63</span></span></td></tr>
+<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0gLjYy"><span class="gt_from_md"><em>r</em> = .62</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 12px;">PCL-5</td>
-<td headers="c1" class="gt_row gt_center">52.16</td>
-<td headers="c2" class="gt_row gt_center">13.15</td>
+<td headers="c1" class="gt_row gt_center">52.60</td>
+<td headers="c2" class="gt_row gt_center">12.92</td>
 <td headers="c3" class="gt_row gt_center">8.20</td>
 <td headers="c4" class="gt_row gt_center">11.68</td>
 <td headers="p" class="gt_row gt_center">&lt; .001</td>
-<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0gLjk2"><span class="gt_from_md"><em>r</em> = .96</span></span></td></tr>
+<td headers="es" class="gt_row gt_center"><span data-qmd-base64="KnIqID0gLjk3"><span class="gt_from_md"><em>r</em> = .97</span></span></td></tr>
     <tr><td headers="row" class="gt_row gt_left" style="text-indent: 12px;">CAPS-5</td>
-<td headers="c1" class="gt_row gt_center">36.41</td>
-<td headers="c2" class="gt_row gt_center">7.28</td>
+<td headers="c1" class="gt_row gt_center">36.54</td>
+<td headers="c2" class="gt_row gt_center">7.30</td>
 <td headers="c3" class="gt_row gt_center">4.20</td>
 <td headers="c4" class="gt_row gt_center">5.80</td>
 <td headers="p" class="gt_row gt_center">—</td>
@@ -2717,7 +2729,7 @@ Diagnostic group (CAPS-5)
   </tbody>
   <tfoot>
     <tr class="gt_sourcenotes">
-      <td class="gt_sourcenote" colspan="7"><span data-qmd-base64="Kk5vdGUuKiBUaGUgY29udHJvbCBncm91cCBpbmNsdWRlcyA0MCBjb250cm9scyBhbmQgNCBwYXRpZW50cyB3aG8gZGlkIG5vdCBtZWV0IGNyaXRlcmlhIGZvciBQVFNELiBQZXJjZW50YWdlcyBhcmUgY29sdW1uIHBlcmNlbnRhZ2VzIHdpdGhpbiBlYWNoIGdyb3VwLiBTZXggd2FzIGNvbXBhcmVkIHdpdGggYSBjaGktc3F1YXJlIHRlc3QsIGFuZCByYWNlIGFuZCBldGhuaWNpdHkgd2l0aCBGaXNoZXIncyBleGFjdCB0ZXN0IGJlY2F1c2Ugc29tZSBleHBlY3RlZCBjZWxsIGNvdW50cyB3ZXJlIGJlbG93IDU7IGVmZmVjdCBzaXplcyBhcmUgQ3JhbcOpcidzICpWKi4gSW5jb21lIChhcyBvcmRlcmVkIGJyYWNrZXRzKSBhbmQgY29udGludW91cyB2YXJpYWJsZXMgd2VyZSBjb21wYXJlZCB3aXRoIE1hbm4tV2hpdG5leSAqVSogdGVzdHM7IGVmZmVjdCBzaXplcyBhcmUgcmFuay1iaXNlcmlhbCBjb3JyZWxhdGlvbnMgKCpyKiksIHBvc2l0aXZlIHdoZW4gdmFsdWVzIGFyZSBoaWdoZXIgaW4gdGhlIFBUU0QgZ3JvdXAuIFRlc3RzIG9mIGV0aG5pY2l0eSBhbmQgaW5jb21lIGV4Y2x1ZGVkICJVbmtub3duIiBhbmQgIlByZWZlciBub3QgdG8gc2F5IiByZXNwb25zZXMsIHJlc3BlY3RpdmVseS4gQ0FQUy01IHdhcyBub3QgdGVzdGVkIGJlY2F1c2UgaXQgZGVmaW5lZCB0aGUgZ3JvdXBzLiBTVURTID0gU3ViamVjdGl2ZSBVbml0cyBvZiBEaXN0cmVzcyBTY2FsZSwgcmF0ZWQgYWZ0ZXIgdGhlIHRyYXVtYSBhY2NvdW50IGFuZCBpbXBhY3Qgc3RhdGVtZW50IHRhc2tzOyBQQ0wtNSA9IFBUU0QgQ2hlY2tsaXN0IGZvciBEU00tNTsgQ0FQUy01ID0gQ2xpbmljaWFuLUFkbWluaXN0ZXJlZCBQVFNEIFNjYWxlIGZvciBEU00tNSB0b3RhbCBzZXZlcml0eS4="><span class="gt_from_md"><em>Note.</em> The control group includes 40 controls and 4 patients who did not meet criteria for PTSD. Percentages are column percentages within each group. Sex was compared with a chi-square test, and race and ethnicity with Fisher’s exact test because some expected cell counts were below 5; effect sizes are Cramér’s <em>V</em>. Income (as ordered brackets) and continuous variables were compared with Mann-Whitney <em>U</em> tests; effect sizes are rank-biserial correlations (<em>r</em>), positive when values are higher in the PTSD group. Tests of ethnicity and income excluded “Unknown” and “Prefer not to say” responses, respectively. CAPS-5 was not tested because it defined the groups. SUDS = Subjective Units of Distress Scale, rated after the trauma account and impact statement tasks; PCL-5 = PTSD Checklist for DSM-5; CAPS-5 = Clinician-Administered PTSD Scale for DSM-5 total severity.</span></span></td>
+      <td class="gt_sourcenote" colspan="7"><span data-qmd-base64="Kk5vdGUuKiBUaGUgY29udHJvbCBncm91cCBpbmNsdWRlcyA0MCBjb250cm9scyBhbmQgNCBwYXRpZW50cyB3aG8gZGlkIG5vdCBtZWV0IGNyaXRlcmlhIGZvciBQVFNELiBQZXJjZW50YWdlcyBhcmUgY29sdW1uIHBlcmNlbnRhZ2VzIHdpdGhpbiBlYWNoIGdyb3VwLiBPbmUgcGFydGljaXBhbnQgc2VsZWN0ZWQgSGlzcGFuaWMgYXMgdGhlaXIgcmFjZSAoY29kZWQgYXMgbm9ud2hpdGUgaW4gdGhlIGFuYWx5c2VzKS4gU2V4IHdhcyBjb21wYXJlZCB3aXRoIGEgY2hpLXNxdWFyZSB0ZXN0LCBhbmQgcmFjZSBhbmQgZXRobmljaXR5IHdpdGggRmlzaGVyJ3MgZXhhY3QgdGVzdCBiZWNhdXNlIHNvbWUgZXhwZWN0ZWQgY2VsbCBjb3VudHMgd2VyZSBiZWxvdyA1OyBlZmZlY3Qgc2l6ZXMgYXJlIENyYW3DqXIncyAqViouIEluY29tZSAoYXMgb3JkZXJlZCBicmFja2V0cykgYW5kIGNvbnRpbnVvdXMgdmFyaWFibGVzIHdlcmUgY29tcGFyZWQgd2l0aCBNYW5uLVdoaXRuZXkgKlUqIHRlc3RzOyBlZmZlY3Qgc2l6ZXMgYXJlIHJhbmstYmlzZXJpYWwgY29ycmVsYXRpb25zICgqciopLCBwb3NpdGl2ZSB3aGVuIHZhbHVlcyBhcmUgaGlnaGVyIGluIHRoZSBQVFNEIGdyb3VwLiBUZXN0cyBvZiBldGhuaWNpdHkgYW5kIGluY29tZSBleGNsdWRlZCAiVW5rbm93biIgYW5kICJQcmVmZXIgbm90IHRvIHNheSIgcmVzcG9uc2VzLCByZXNwZWN0aXZlbHkuIENBUFMtNSB3YXMgbm90IHRlc3RlZCBiZWNhdXNlIGl0IGRlZmluZWQgdGhlIGdyb3Vwcy4gU1VEUyA9IFN1YmplY3RpdmUgVW5pdHMgb2YgRGlzdHJlc3MgU2NhbGUsIHJhdGVkIGFmdGVyIHRoZSB0cmF1bWEgYWNjb3VudCBhbmQgaW1wYWN0IHN0YXRlbWVudCB0YXNrczsgUENMLTUgPSBQVFNEIENoZWNrbGlzdCBmb3IgRFNNLTU7IENBUFMtNSA9IENsaW5pY2lhbi1BZG1pbmlzdGVyZWQgUFRTRCBTY2FsZSBmb3IgRFNNLTUgdG90YWwgc2V2ZXJpdHku"><span class="gt_from_md"><em>Note.</em> The control group includes 40 controls and 4 patients who did not meet criteria for PTSD. Percentages are column percentages within each group. One participant selected Hispanic as their race (coded as nonwhite in the analyses). Sex was compared with a chi-square test, and race and ethnicity with Fisher’s exact test because some expected cell counts were below 5; effect sizes are Cramér’s <em>V</em>. Income (as ordered brackets) and continuous variables were compared with Mann-Whitney <em>U</em> tests; effect sizes are rank-biserial correlations (<em>r</em>), positive when values are higher in the PTSD group. Tests of ethnicity and income excluded “Unknown” and “Prefer not to say” responses, respectively. CAPS-5 was not tested because it defined the groups. SUDS = Subjective Units of Distress Scale, rated after the trauma account and impact statement tasks; PCL-5 = PTSD Checklist for DSM-5; CAPS-5 = Clinician-Administered PTSD Scale for DSM-5 total severity.</span></span></td>
     </tr>
   </tfoot>
 </table>

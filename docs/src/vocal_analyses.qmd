@@ -206,7 +206,7 @@ final_table <-
     Interaction = "Task × PTSD Effect"
   ) |>
   autofit() |>
-  add_footer_lines("Note: Estimates are median posterior values on the link scale (log or logit). Models control for age and sex. Brackets indicate 95% Credible Intervals. * pd > 97.5%, ** pd > 98.5%, *** pd > 99.5%. ")
+  add_footer_lines("Note: Estimates are median posterior values on the link scale (identity, log, or logit). Models control for age, sex, and race. Brackets indicate 95% Credible Intervals. * pd > 97.5%, ** pd > 98.5%, *** pd > 99.5%. ")
 
 final_table
 ```
