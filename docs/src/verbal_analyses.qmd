@@ -337,31 +337,29 @@ make_model_plot <- function(model, name, index) {
   pretty_name <- if(name %in% names(liwc_labels)) liwc_labels[[name]] else gsub("_", " ", name)
   final_title <- if(index <= 7) paste0("LIWC: ", pretty_name) else pretty_name
   
+  # Group-by-task means averaged over sex and race (equal weights, matching the
+  # effect coding of the reported effects) at the mean age, with random
+  # intercepts at zero
   if (name == "Sentiment") {
-    nd <- expand.grid(
-      task = levels(df_verbal$task),
-      ptsd = levels(df_verbal$ptsd),
-      demo_age = mean(df_verbal$demo_age, na.rm = TRUE),
-      demo_sex = levels(df_verbal$demo_sex)[1],
-      demo_nonwhite = levels(df_verbal$demo_nonwhite)[1]
-    )
-    
-    draws <- brms::posterior_epred(model, newdata = nd, re_formula = NA)
-    
-    expected_values <- matrix(0, nrow = dim(draws)[1], ncol = dim(draws)[2])
-    for (cat in 1:dim(draws)[3]) {
-      expected_values <- expected_values + (draws[, , cat] * cat)
-    }
-    
-    plot_data <- nd |>
-      mutate(
-        Predicted = apply(expected_values, 2, median),
-        CI_low    = apply(expected_values, 2, quantile, probs = 0.025),
-        CI_high   = apply(expected_values, 2, quantile, probs = 0.975)
+    # estimate_means() returns rating probabilities for the ordinal model, so
+    # convert each posterior draw to the expected rating
+    probs <- estimate_means(model, by = c("task", "ptsd"), re_formula = NA, keep_iterations = TRUE) |>
+      as.data.frame()
+    iters <- grep("^iter_", names(probs), value = TRUE)
+    plot_data <- probs |>
+      mutate(Response = as.numeric(as.character(Response))) |>
+      summarize(.by = c(task, ptsd), across(all_of(iters), \(p) sum(Response * p))) |>
+      pivot_longer(all_of(iters)) |>
+      summarize(
+        .by = c(task, ptsd),
+        Predicted = median(value),
+        CI_low = quantile(value, 0.025),
+        CI_high = quantile(value, 0.975)
       )
   } else {
-    plot_data <- estimate_relation(model, by = c("task", "ptsd")) |>
-      as.data.frame()
+    plot_data <- estimate_means(model, by = c("task", "ptsd"), re_formula = NA) |>
+      as.data.frame() |>
+      rename(Predicted = Median)
   }
   
   # label groups for the legend (the models code PTSD status numerically)

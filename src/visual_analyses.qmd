@@ -355,8 +355,12 @@ plot_titles <- c(
 
 make_model_plot <- function(model, name, index) {
   final_title <- plot_titles[index]
-  plot_data <- estimate_relation(model, by = c("task", "ptsd")) |>
-    as.data.frame()
+  # Group-by-task means averaged over sex and race (equal weights, matching the
+  # effect coding of the reported effects) at the mean age, with random
+  # intercepts at zero
+  plot_data <- estimate_means(model, by = c("task", "ptsd"), re_formula = NA) |>
+    as.data.frame() |>
+    rename(Predicted = Median)
   
   # label groups for the legend (the models code PTSD status numerically)
   plot_data <- plot_data |>
