@@ -163,100 +163,103 @@ Note
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Restricted REDCap exports (not shared)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>redcap_dir <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"CMBA_REDCAP_DIR"</span>, r<span class="st">"(Z:\CMBA_PTSD\1_RAWDATA</span><span class="sc">\r</span><span class="st">edCAP)"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>redcap_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"record_id"</span>, <span class="st">"race"</span>, <span class="st">"ethnicity"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span>, <span class="st">"income"</span>, <span class="st">"education"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"phq_total"</span>, <span class="st">"pcl5_m_total"</span>, <span class="st">"caps_mnth_total"</span>, <span class="st">"caps_mnth_ptsd"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"suds_account"</span>, <span class="st">"suds_impact"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>read_redcap <span class="ot">&lt;-</span> <span class="cf">function</span>(file, group) {</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(redcap_dir, file),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(redcap_vars)) <span class="sc">|&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">.by =</span> record_id,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">group =</span> group,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">first</span>(x, <span class="at">na_rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>demo_all <span class="ot">&lt;-</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_redcap</span>(<span class="st">"CMBA-Patients_2022-12-05_1438.csv"</span>, <span class="st">"clinic"</span>),</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_redcap</span>(<span class="st">"CMBA-Control_2023-03-10_1522.csv"</span>, <span class="st">"prolific"</span>)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># participants who completed the behavioral tasks and diagnostic interview</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(suds_account), <span class="sc">!</span><span class="fu">is.na</span>(caps_mnth_ptsd)) <span class="sc">|&gt;</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># participant 199 completed the session, but their recording was never</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># segmented into tasks, so they have no behavioral features and are not</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># analyzed</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(record_id <span class="sc">!=</span> <span class="st">"199"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    record_id,</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">GRP =</span> <span class="fu">factor</span>(group),</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">Race =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(race),</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"American Indian"</span>,</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Asian"</span>,</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Black"</span>,</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic"</span>,</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"More than one race"</span>,</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">"White"</span>,</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ethnicity =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(ethnicity),</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Not Hispanic or Latino"</span>,</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic or Latino"</span>,</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(sex),</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Male"</span>,</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Female"</span>,</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Intersex"</span>,</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth female, now male)"</span>,</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth male, now female)"</span>,</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">Income =</span> <span class="fu">factor</span>(</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(income),</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        <span class="st">"&lt; $10,000"</span>,</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$10,000-19,999"</span>,</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$20,000-39,999"</span>,</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$40,000-79,999"</span>,</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$80,000-169,999"</span>,</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$170,000+"</span>,</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age =</span> <span class="fu">as.numeric</span>(age),</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">Education =</span> <span class="fu">as.numeric</span>(education),</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">PHQ9 =</span> <span class="fu">parse_number</span>(phq_total),</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">PCL5 =</span> <span class="fu">parse_number</span>(pcl5_m_total),</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">CAPS5 =</span> <span class="fu">parse_number</span>(caps_mnth_total),</span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">PTSD =</span> <span class="fu">factor</span>(caps_mnth_ptsd, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"PTSD"</span>, <span class="st">"Control"</span>)),</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Account =</span> <span class="fu">parse_number</span>(suds_account),</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Impact =</span> <span class="fu">parse_number</span>(suds_impact)</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>  <span class="co"># one participant selected "Hispanic" as their race; they are reported as</span></span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>  <span class="co"># such here and coded as nonwhite in the analyses</span></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Race<span class="sc">:</span>Sex, \(x) <span class="fu">fct_na_value_to_level</span>(x, <span class="st">"Unknown"</span>)))</span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(demo_all) <span class="sc">==</span> <span class="dv">92</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restricted key linking study record IDs to the participant codes in the</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># shared data (not shared); it lists exactly the participants in the analyses</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>analyzed_ids <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.getenv</span>(<span class="st">"CMBA_KEY_FILE"</span>, r<span class="st">"(X:\CMBA_PTSD\Journal2026\participant_key_PRIVATE.csv)"</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)<span class="sc">$</span>original_id</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>redcap_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"record_id"</span>, <span class="st">"race"</span>, <span class="st">"ethnicity"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span>, <span class="st">"income"</span>, <span class="st">"education"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"phq_total"</span>, <span class="st">"pcl5_m_total"</span>, <span class="st">"caps_mnth_total"</span>, <span class="st">"caps_mnth_ptsd"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"suds_account"</span>, <span class="st">"suds_impact"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>read_redcap <span class="ot">&lt;-</span> <span class="cf">function</span>(file, group) {</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(redcap_dir, file),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(redcap_vars)) <span class="sc">|&gt;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">.by =</span> record_id,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">group =</span> group,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">first</span>(x, <span class="at">na_rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>demo_all <span class="ot">&lt;-</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_redcap</span>(<span class="st">"CMBA-Patients_2022-12-05_1438.csv"</span>, <span class="st">"clinic"</span>),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_redcap</span>(<span class="st">"CMBA-Control_2023-03-10_1522.csv"</span>, <span class="st">"prolific"</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># participants included in the analyses</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(record_id <span class="sc">%in%</span> analyzed_ids) <span class="sc">|&gt;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    record_id,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">GRP =</span> <span class="fu">factor</span>(group),</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">Race =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(race),</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"American Indian"</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Asian"</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Black"</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic"</span>,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="st">"More than one race"</span>,</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        <span class="st">"White"</span>,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ethnicity =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(ethnicity),</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Not Hispanic or Latino"</span>,</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hispanic or Latino"</span>,</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unknown"</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(sex),</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Male"</span>,</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Female"</span>,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Intersex"</span>,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth female, now male)"</span>,</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Transgender (sex assigned at birth male, now female)"</span>,</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">Income =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(income),</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>        <span class="st">"&lt; $10,000"</span>,</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$10,000-19,999"</span>,</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$20,000-39,999"</span>,</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$40,000-79,999"</span>,</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$80,000-169,999"</span>,</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$170,000+"</span>,</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prefer not to say"</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age =</span> <span class="fu">as.numeric</span>(age),</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">Education =</span> <span class="fu">as.numeric</span>(education),</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">PHQ9 =</span> <span class="fu">parse_number</span>(phq_total),</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">PCL5 =</span> <span class="fu">parse_number</span>(pcl5_m_total),</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">CAPS5 =</span> <span class="fu">parse_number</span>(caps_mnth_total),</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">PTSD =</span> <span class="fu">factor</span>(caps_mnth_ptsd, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"PTSD"</span>, <span class="st">"Control"</span>)),</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Account =</span> <span class="fu">parse_number</span>(suds_account),</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUDS_Impact =</span> <span class="fu">parse_number</span>(suds_impact)</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>  <span class="co"># one participant selected "Hispanic" as their race; they are reported as</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>  <span class="co"># such here and coded as nonwhite in the analyses</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Race<span class="sc">:</span>Sex, \(x) <span class="fu">fct_na_value_to_level</span>(x, <span class="st">"Unknown"</span>)))</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(demo_all) <span class="sc">==</span> <span class="dv">92</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -281,23 +284,23 @@ Note
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"center"</span>, <span class="at">columns =</span> <span class="fu">c</span>(PTSD, Control, Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="smhccxdafa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#smhccxdafa table {
+<div id="mjclicqfkj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mjclicqfkj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#smhccxdafa thead, #smhccxdafa tbody, #smhccxdafa tfoot, #smhccxdafa tr, #smhccxdafa td, #smhccxdafa th {
+#mjclicqfkj thead, #mjclicqfkj tbody, #mjclicqfkj tfoot, #mjclicqfkj tr, #mjclicqfkj td, #mjclicqfkj th {
   border-style: none;
 }
 
-#smhccxdafa p {
+#mjclicqfkj p {
   margin: 0;
   padding: 0;
 }
 
-#smhccxdafa .gt_table {
+#mjclicqfkj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -323,12 +326,12 @@ Note
   border-left-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_caption {
+#mjclicqfkj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#smhccxdafa .gt_title {
+#mjclicqfkj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -340,7 +343,7 @@ Note
   border-bottom-width: 0;
 }
 
-#smhccxdafa .gt_subtitle {
+#mjclicqfkj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -352,7 +355,7 @@ Note
   border-top-width: 0;
 }
 
-#smhccxdafa .gt_heading {
+#mjclicqfkj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -364,13 +367,13 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_bottom_border {
+#mjclicqfkj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_col_headings {
+#mjclicqfkj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -385,7 +388,7 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_col_heading {
+#mjclicqfkj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -405,7 +408,7 @@ Note
   overflow-x: hidden;
 }
 
-#smhccxdafa .gt_column_spanner_outer {
+#mjclicqfkj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -417,15 +420,15 @@ Note
   padding-right: 4px;
 }
 
-#smhccxdafa .gt_column_spanner_outer:first-child {
+#mjclicqfkj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#smhccxdafa .gt_column_spanner_outer:last-child {
+#mjclicqfkj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#smhccxdafa .gt_column_spanner {
+#mjclicqfkj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -437,11 +440,11 @@ Note
   width: 100%;
 }
 
-#smhccxdafa .gt_spanner_row {
+#mjclicqfkj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#smhccxdafa .gt_group_heading {
+#mjclicqfkj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -467,7 +470,7 @@ Note
   text-align: left;
 }
 
-#smhccxdafa .gt_empty_group_heading {
+#mjclicqfkj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -482,15 +485,15 @@ Note
   vertical-align: middle;
 }
 
-#smhccxdafa .gt_from_md > :first-child {
+#mjclicqfkj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#smhccxdafa .gt_from_md > :last-child {
+#mjclicqfkj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#smhccxdafa .gt_row {
+#mjclicqfkj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -509,7 +512,7 @@ Note
   overflow-x: hidden;
 }
 
-#smhccxdafa .gt_stub {
+#mjclicqfkj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -522,7 +525,7 @@ Note
   padding-right: 5px;
 }
 
-#smhccxdafa .gt_stub_row_group {
+#mjclicqfkj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -536,15 +539,15 @@ Note
   vertical-align: top;
 }
 
-#smhccxdafa .gt_row_group_first td {
+#mjclicqfkj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#smhccxdafa .gt_row_group_first th {
+#mjclicqfkj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#smhccxdafa .gt_summary_row {
+#mjclicqfkj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -554,16 +557,16 @@ Note
   padding-right: 5px;
 }
 
-#smhccxdafa .gt_first_summary_row {
+#mjclicqfkj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_first_summary_row.thick {
+#mjclicqfkj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#smhccxdafa .gt_last_summary_row {
+#mjclicqfkj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -573,7 +576,7 @@ Note
   border-bottom-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_grand_summary_row {
+#mjclicqfkj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -583,7 +586,7 @@ Note
   padding-right: 5px;
 }
 
-#smhccxdafa .gt_first_grand_summary_row {
+#mjclicqfkj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -593,7 +596,7 @@ Note
   border-top-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_last_grand_summary_row_top {
+#mjclicqfkj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -603,11 +606,11 @@ Note
   border-bottom-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_striped {
+#mjclicqfkj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#smhccxdafa .gt_table_body {
+#mjclicqfkj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -616,7 +619,7 @@ Note
   border-bottom-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_footnotes {
+#mjclicqfkj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -630,7 +633,7 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_footnote {
+#mjclicqfkj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -639,7 +642,7 @@ Note
   padding-right: 5px;
 }
 
-#smhccxdafa .gt_sourcenotes {
+#mjclicqfkj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -653,7 +656,7 @@ Note
   border-right-color: #D3D3D3;
 }
 
-#smhccxdafa .gt_sourcenote {
+#mjclicqfkj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -661,72 +664,72 @@ Note
   padding-right: 5px;
 }
 
-#smhccxdafa .gt_left {
+#mjclicqfkj .gt_left {
   text-align: left;
 }
 
-#smhccxdafa .gt_center {
+#mjclicqfkj .gt_center {
   text-align: center;
 }
 
-#smhccxdafa .gt_right {
+#mjclicqfkj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#smhccxdafa .gt_font_normal {
+#mjclicqfkj .gt_font_normal {
   font-weight: normal;
 }
 
-#smhccxdafa .gt_font_bold {
+#mjclicqfkj .gt_font_bold {
   font-weight: bold;
 }
 
-#smhccxdafa .gt_font_italic {
+#mjclicqfkj .gt_font_italic {
   font-style: italic;
 }
 
-#smhccxdafa .gt_super {
+#mjclicqfkj .gt_super {
   font-size: 65%;
 }
 
-#smhccxdafa .gt_footnote_marks {
+#mjclicqfkj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#smhccxdafa .gt_asterisk {
+#mjclicqfkj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#smhccxdafa .gt_indent_1 {
+#mjclicqfkj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#smhccxdafa .gt_indent_2 {
+#mjclicqfkj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#smhccxdafa .gt_indent_3 {
+#mjclicqfkj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#smhccxdafa .gt_indent_4 {
+#mjclicqfkj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#smhccxdafa .gt_indent_5 {
+#mjclicqfkj .gt_indent_5 {
   text-indent: 25px;
 }
 
-#smhccxdafa .katex-display {
+#mjclicqfkj .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#smhccxdafa div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mjclicqfkj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -873,23 +876,23 @@ Diagnostic group (CAPS-5)
 <span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  )))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="rudssatjxz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rudssatjxz table {
+<div id="uundddlfyy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uundddlfyy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rudssatjxz thead, #rudssatjxz tbody, #rudssatjxz tfoot, #rudssatjxz tr, #rudssatjxz td, #rudssatjxz th {
+#uundddlfyy thead, #uundddlfyy tbody, #uundddlfyy tfoot, #uundddlfyy tr, #uundddlfyy td, #uundddlfyy th {
   border-style: none;
 }
 
-#rudssatjxz p {
+#uundddlfyy p {
   margin: 0;
   padding: 0;
 }
 
-#rudssatjxz .gt_table {
+#uundddlfyy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -915,12 +918,12 @@ Diagnostic group (CAPS-5)
   border-left-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_caption {
+#uundddlfyy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rudssatjxz .gt_title {
+#uundddlfyy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -932,7 +935,7 @@ Diagnostic group (CAPS-5)
   border-bottom-width: 0;
 }
 
-#rudssatjxz .gt_subtitle {
+#uundddlfyy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -944,7 +947,7 @@ Diagnostic group (CAPS-5)
   border-top-width: 0;
 }
 
-#rudssatjxz .gt_heading {
+#uundddlfyy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -956,13 +959,13 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_bottom_border {
+#uundddlfyy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_col_headings {
+#uundddlfyy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -977,7 +980,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_col_heading {
+#uundddlfyy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -997,7 +1000,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#rudssatjxz .gt_column_spanner_outer {
+#uundddlfyy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1009,15 +1012,15 @@ Diagnostic group (CAPS-5)
   padding-right: 4px;
 }
 
-#rudssatjxz .gt_column_spanner_outer:first-child {
+#uundddlfyy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rudssatjxz .gt_column_spanner_outer:last-child {
+#uundddlfyy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rudssatjxz .gt_column_spanner {
+#uundddlfyy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1029,11 +1032,11 @@ Diagnostic group (CAPS-5)
   width: 100%;
 }
 
-#rudssatjxz .gt_spanner_row {
+#uundddlfyy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rudssatjxz .gt_group_heading {
+#uundddlfyy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1059,7 +1062,7 @@ Diagnostic group (CAPS-5)
   text-align: left;
 }
 
-#rudssatjxz .gt_empty_group_heading {
+#uundddlfyy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1074,15 +1077,15 @@ Diagnostic group (CAPS-5)
   vertical-align: middle;
 }
 
-#rudssatjxz .gt_from_md > :first-child {
+#uundddlfyy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rudssatjxz .gt_from_md > :last-child {
+#uundddlfyy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rudssatjxz .gt_row {
+#uundddlfyy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1101,7 +1104,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#rudssatjxz .gt_stub {
+#uundddlfyy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1114,7 +1117,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#rudssatjxz .gt_stub_row_group {
+#uundddlfyy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1128,15 +1131,15 @@ Diagnostic group (CAPS-5)
   vertical-align: top;
 }
 
-#rudssatjxz .gt_row_group_first td {
+#uundddlfyy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rudssatjxz .gt_row_group_first th {
+#uundddlfyy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rudssatjxz .gt_summary_row {
+#uundddlfyy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1146,16 +1149,16 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#rudssatjxz .gt_first_summary_row {
+#uundddlfyy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_first_summary_row.thick {
+#uundddlfyy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rudssatjxz .gt_last_summary_row {
+#uundddlfyy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1165,7 +1168,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_grand_summary_row {
+#uundddlfyy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1175,7 +1178,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#rudssatjxz .gt_first_grand_summary_row {
+#uundddlfyy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1185,7 +1188,7 @@ Diagnostic group (CAPS-5)
   border-top-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_last_grand_summary_row_top {
+#uundddlfyy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1195,11 +1198,11 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_striped {
+#uundddlfyy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rudssatjxz .gt_table_body {
+#uundddlfyy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1208,7 +1211,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_footnotes {
+#uundddlfyy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1222,7 +1225,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_footnote {
+#uundddlfyy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1231,7 +1234,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#rudssatjxz .gt_sourcenotes {
+#uundddlfyy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1245,7 +1248,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#rudssatjxz .gt_sourcenote {
+#uundddlfyy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1253,72 +1256,72 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#rudssatjxz .gt_left {
+#uundddlfyy .gt_left {
   text-align: left;
 }
 
-#rudssatjxz .gt_center {
+#uundddlfyy .gt_center {
   text-align: center;
 }
 
-#rudssatjxz .gt_right {
+#uundddlfyy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rudssatjxz .gt_font_normal {
+#uundddlfyy .gt_font_normal {
   font-weight: normal;
 }
 
-#rudssatjxz .gt_font_bold {
+#uundddlfyy .gt_font_bold {
   font-weight: bold;
 }
 
-#rudssatjxz .gt_font_italic {
+#uundddlfyy .gt_font_italic {
   font-style: italic;
 }
 
-#rudssatjxz .gt_super {
+#uundddlfyy .gt_super {
   font-size: 65%;
 }
 
-#rudssatjxz .gt_footnote_marks {
+#uundddlfyy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rudssatjxz .gt_asterisk {
+#uundddlfyy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rudssatjxz .gt_indent_1 {
+#uundddlfyy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rudssatjxz .gt_indent_2 {
+#uundddlfyy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rudssatjxz .gt_indent_3 {
+#uundddlfyy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rudssatjxz .gt_indent_4 {
+#uundddlfyy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rudssatjxz .gt_indent_5 {
+#uundddlfyy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rudssatjxz .katex-display {
+#uundddlfyy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rudssatjxz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uundddlfyy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1464,23 +1467,23 @@ Diagnostic group (CAPS-5)
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="iduvmsdgiw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#iduvmsdgiw table {
+<div id="kvfwqkyrtp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kvfwqkyrtp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iduvmsdgiw thead, #iduvmsdgiw tbody, #iduvmsdgiw tfoot, #iduvmsdgiw tr, #iduvmsdgiw td, #iduvmsdgiw th {
+#kvfwqkyrtp thead, #kvfwqkyrtp tbody, #kvfwqkyrtp tfoot, #kvfwqkyrtp tr, #kvfwqkyrtp td, #kvfwqkyrtp th {
   border-style: none;
 }
 
-#iduvmsdgiw p {
+#kvfwqkyrtp p {
   margin: 0;
   padding: 0;
 }
 
-#iduvmsdgiw .gt_table {
+#kvfwqkyrtp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1506,12 +1509,12 @@ Diagnostic group (CAPS-5)
   border-left-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_caption {
+#kvfwqkyrtp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iduvmsdgiw .gt_title {
+#kvfwqkyrtp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1523,7 +1526,7 @@ Diagnostic group (CAPS-5)
   border-bottom-width: 0;
 }
 
-#iduvmsdgiw .gt_subtitle {
+#kvfwqkyrtp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1535,7 +1538,7 @@ Diagnostic group (CAPS-5)
   border-top-width: 0;
 }
 
-#iduvmsdgiw .gt_heading {
+#kvfwqkyrtp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1547,13 +1550,13 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_bottom_border {
+#kvfwqkyrtp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_col_headings {
+#kvfwqkyrtp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1568,7 +1571,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_col_heading {
+#kvfwqkyrtp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1588,7 +1591,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#iduvmsdgiw .gt_column_spanner_outer {
+#kvfwqkyrtp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1600,15 +1603,15 @@ Diagnostic group (CAPS-5)
   padding-right: 4px;
 }
 
-#iduvmsdgiw .gt_column_spanner_outer:first-child {
+#kvfwqkyrtp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iduvmsdgiw .gt_column_spanner_outer:last-child {
+#kvfwqkyrtp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iduvmsdgiw .gt_column_spanner {
+#kvfwqkyrtp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1620,11 +1623,11 @@ Diagnostic group (CAPS-5)
   width: 100%;
 }
 
-#iduvmsdgiw .gt_spanner_row {
+#kvfwqkyrtp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iduvmsdgiw .gt_group_heading {
+#kvfwqkyrtp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1650,7 +1653,7 @@ Diagnostic group (CAPS-5)
   text-align: left;
 }
 
-#iduvmsdgiw .gt_empty_group_heading {
+#kvfwqkyrtp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1665,15 +1668,15 @@ Diagnostic group (CAPS-5)
   vertical-align: middle;
 }
 
-#iduvmsdgiw .gt_from_md > :first-child {
+#kvfwqkyrtp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iduvmsdgiw .gt_from_md > :last-child {
+#kvfwqkyrtp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iduvmsdgiw .gt_row {
+#kvfwqkyrtp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1692,7 +1695,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#iduvmsdgiw .gt_stub {
+#kvfwqkyrtp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1705,7 +1708,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#iduvmsdgiw .gt_stub_row_group {
+#kvfwqkyrtp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1719,15 +1722,15 @@ Diagnostic group (CAPS-5)
   vertical-align: top;
 }
 
-#iduvmsdgiw .gt_row_group_first td {
+#kvfwqkyrtp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iduvmsdgiw .gt_row_group_first th {
+#kvfwqkyrtp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iduvmsdgiw .gt_summary_row {
+#kvfwqkyrtp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1737,16 +1740,16 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#iduvmsdgiw .gt_first_summary_row {
+#kvfwqkyrtp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_first_summary_row.thick {
+#kvfwqkyrtp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iduvmsdgiw .gt_last_summary_row {
+#kvfwqkyrtp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1756,7 +1759,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_grand_summary_row {
+#kvfwqkyrtp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1766,7 +1769,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#iduvmsdgiw .gt_first_grand_summary_row {
+#kvfwqkyrtp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1776,7 +1779,7 @@ Diagnostic group (CAPS-5)
   border-top-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_last_grand_summary_row_top {
+#kvfwqkyrtp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1786,11 +1789,11 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_striped {
+#kvfwqkyrtp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#iduvmsdgiw .gt_table_body {
+#kvfwqkyrtp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1799,7 +1802,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_footnotes {
+#kvfwqkyrtp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1813,7 +1816,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_footnote {
+#kvfwqkyrtp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1822,7 +1825,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#iduvmsdgiw .gt_sourcenotes {
+#kvfwqkyrtp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1836,7 +1839,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#iduvmsdgiw .gt_sourcenote {
+#kvfwqkyrtp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1844,72 +1847,72 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#iduvmsdgiw .gt_left {
+#kvfwqkyrtp .gt_left {
   text-align: left;
 }
 
-#iduvmsdgiw .gt_center {
+#kvfwqkyrtp .gt_center {
   text-align: center;
 }
 
-#iduvmsdgiw .gt_right {
+#kvfwqkyrtp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iduvmsdgiw .gt_font_normal {
+#kvfwqkyrtp .gt_font_normal {
   font-weight: normal;
 }
 
-#iduvmsdgiw .gt_font_bold {
+#kvfwqkyrtp .gt_font_bold {
   font-weight: bold;
 }
 
-#iduvmsdgiw .gt_font_italic {
+#kvfwqkyrtp .gt_font_italic {
   font-style: italic;
 }
 
-#iduvmsdgiw .gt_super {
+#kvfwqkyrtp .gt_super {
   font-size: 65%;
 }
 
-#iduvmsdgiw .gt_footnote_marks {
+#kvfwqkyrtp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iduvmsdgiw .gt_asterisk {
+#kvfwqkyrtp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iduvmsdgiw .gt_indent_1 {
+#kvfwqkyrtp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iduvmsdgiw .gt_indent_2 {
+#kvfwqkyrtp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iduvmsdgiw .gt_indent_3 {
+#kvfwqkyrtp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iduvmsdgiw .gt_indent_4 {
+#kvfwqkyrtp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iduvmsdgiw .gt_indent_5 {
+#kvfwqkyrtp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#iduvmsdgiw .katex-display {
+#kvfwqkyrtp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#iduvmsdgiw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kvfwqkyrtp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2038,23 +2041,23 @@ Diagnostic group (CAPS-5)
 <span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>  )))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fprjugnxel" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fprjugnxel table {
+<div id="uolnujusgi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uolnujusgi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fprjugnxel thead, #fprjugnxel tbody, #fprjugnxel tfoot, #fprjugnxel tr, #fprjugnxel td, #fprjugnxel th {
+#uolnujusgi thead, #uolnujusgi tbody, #uolnujusgi tfoot, #uolnujusgi tr, #uolnujusgi td, #uolnujusgi th {
   border-style: none;
 }
 
-#fprjugnxel p {
+#uolnujusgi p {
   margin: 0;
   padding: 0;
 }
 
-#fprjugnxel .gt_table {
+#uolnujusgi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2080,12 +2083,12 @@ Diagnostic group (CAPS-5)
   border-left-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_caption {
+#uolnujusgi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fprjugnxel .gt_title {
+#uolnujusgi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2097,7 +2100,7 @@ Diagnostic group (CAPS-5)
   border-bottom-width: 0;
 }
 
-#fprjugnxel .gt_subtitle {
+#uolnujusgi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2109,7 +2112,7 @@ Diagnostic group (CAPS-5)
   border-top-width: 0;
 }
 
-#fprjugnxel .gt_heading {
+#uolnujusgi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2121,13 +2124,13 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_bottom_border {
+#uolnujusgi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_col_headings {
+#uolnujusgi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2142,7 +2145,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_col_heading {
+#uolnujusgi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2162,7 +2165,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#fprjugnxel .gt_column_spanner_outer {
+#uolnujusgi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2174,15 +2177,15 @@ Diagnostic group (CAPS-5)
   padding-right: 4px;
 }
 
-#fprjugnxel .gt_column_spanner_outer:first-child {
+#uolnujusgi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fprjugnxel .gt_column_spanner_outer:last-child {
+#uolnujusgi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fprjugnxel .gt_column_spanner {
+#uolnujusgi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2194,11 +2197,11 @@ Diagnostic group (CAPS-5)
   width: 100%;
 }
 
-#fprjugnxel .gt_spanner_row {
+#uolnujusgi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fprjugnxel .gt_group_heading {
+#uolnujusgi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2224,7 +2227,7 @@ Diagnostic group (CAPS-5)
   text-align: left;
 }
 
-#fprjugnxel .gt_empty_group_heading {
+#uolnujusgi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2239,15 +2242,15 @@ Diagnostic group (CAPS-5)
   vertical-align: middle;
 }
 
-#fprjugnxel .gt_from_md > :first-child {
+#uolnujusgi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fprjugnxel .gt_from_md > :last-child {
+#uolnujusgi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fprjugnxel .gt_row {
+#uolnujusgi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2266,7 +2269,7 @@ Diagnostic group (CAPS-5)
   overflow-x: hidden;
 }
 
-#fprjugnxel .gt_stub {
+#uolnujusgi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2279,7 +2282,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#fprjugnxel .gt_stub_row_group {
+#uolnujusgi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2293,15 +2296,15 @@ Diagnostic group (CAPS-5)
   vertical-align: top;
 }
 
-#fprjugnxel .gt_row_group_first td {
+#uolnujusgi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fprjugnxel .gt_row_group_first th {
+#uolnujusgi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fprjugnxel .gt_summary_row {
+#uolnujusgi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2311,16 +2314,16 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#fprjugnxel .gt_first_summary_row {
+#uolnujusgi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_first_summary_row.thick {
+#uolnujusgi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fprjugnxel .gt_last_summary_row {
+#uolnujusgi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2330,7 +2333,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_grand_summary_row {
+#uolnujusgi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2340,7 +2343,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#fprjugnxel .gt_first_grand_summary_row {
+#uolnujusgi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2350,7 +2353,7 @@ Diagnostic group (CAPS-5)
   border-top-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_last_grand_summary_row_top {
+#uolnujusgi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2360,11 +2363,11 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_striped {
+#uolnujusgi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fprjugnxel .gt_table_body {
+#uolnujusgi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2373,7 +2376,7 @@ Diagnostic group (CAPS-5)
   border-bottom-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_footnotes {
+#uolnujusgi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2387,7 +2390,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_footnote {
+#uolnujusgi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2396,7 +2399,7 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#fprjugnxel .gt_sourcenotes {
+#uolnujusgi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2410,7 +2413,7 @@ Diagnostic group (CAPS-5)
   border-right-color: #D3D3D3;
 }
 
-#fprjugnxel .gt_sourcenote {
+#uolnujusgi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2418,72 +2421,72 @@ Diagnostic group (CAPS-5)
   padding-right: 5px;
 }
 
-#fprjugnxel .gt_left {
+#uolnujusgi .gt_left {
   text-align: left;
 }
 
-#fprjugnxel .gt_center {
+#uolnujusgi .gt_center {
   text-align: center;
 }
 
-#fprjugnxel .gt_right {
+#uolnujusgi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fprjugnxel .gt_font_normal {
+#uolnujusgi .gt_font_normal {
   font-weight: normal;
 }
 
-#fprjugnxel .gt_font_bold {
+#uolnujusgi .gt_font_bold {
   font-weight: bold;
 }
 
-#fprjugnxel .gt_font_italic {
+#uolnujusgi .gt_font_italic {
   font-style: italic;
 }
 
-#fprjugnxel .gt_super {
+#uolnujusgi .gt_super {
   font-size: 65%;
 }
 
-#fprjugnxel .gt_footnote_marks {
+#uolnujusgi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fprjugnxel .gt_asterisk {
+#uolnujusgi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fprjugnxel .gt_indent_1 {
+#uolnujusgi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fprjugnxel .gt_indent_2 {
+#uolnujusgi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fprjugnxel .gt_indent_3 {
+#uolnujusgi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fprjugnxel .gt_indent_4 {
+#uolnujusgi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fprjugnxel .gt_indent_5 {
+#uolnujusgi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fprjugnxel .katex-display {
+#uolnujusgi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fprjugnxel div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uolnujusgi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

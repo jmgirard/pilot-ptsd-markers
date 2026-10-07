@@ -32,6 +32,13 @@ library(gt)
 # Restricted REDCap exports (not shared)
 redcap_dir <- Sys.getenv("CMBA_REDCAP_DIR", r"(Z:\CMBA_PTSD\1_RAWDATA\redCAP)")
 
+# Restricted key linking study record IDs to the participant codes in the
+# shared data (not shared); it lists exactly the participants in the analyses
+analyzed_ids <- read_csv(
+  Sys.getenv("CMBA_KEY_FILE", r"(X:\CMBA_PTSD\Journal2026\participant_key_PRIVATE.csv)"),
+  col_types = cols(.default = col_character())
+)$original_id
+
 redcap_vars <- c(
   "record_id", "race", "ethnicity", "sex", "age", "income", "education",
   "phq_total", "pcl5_m_total", "caps_mnth_total", "caps_mnth_ptsd",
@@ -56,12 +63,8 @@ demo_all <-
     read_redcap("CMBA-Patients_2022-12-05_1438.csv", "clinic"),
     read_redcap("CMBA-Control_2023-03-10_1522.csv", "prolific")
   ) |>
-  # participants who completed the behavioral tasks and diagnostic interview
-  filter(!is.na(suds_account), !is.na(caps_mnth_ptsd)) |>
-  # participant 199 completed the session, but their recording was never
-  # segmented into tasks, so they have no behavioral features and are not
-  # analyzed
-  filter(record_id != "199") |>
+  # participants included in the analyses
+  filter(record_id %in% analyzed_ids) |>
   transmute(
     record_id,
     GRP = factor(group),
