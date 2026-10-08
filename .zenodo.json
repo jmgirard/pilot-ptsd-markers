@@ -50,9 +50,9 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://osf.io/preprints/psyarxiv/34v5z_v2",
+      "identifier": "10.5281/zenodo.23245323",
       "relation": "isSupplementTo",
-      "scheme": "url"
+      "scheme": "doi"
     }
   ]
 }

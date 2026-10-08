@@ -6,7 +6,7 @@ Supplemental data, analysis reports, and source code for:
 
 > Yang, Y., Jun, D., Welch, B. M., Sylvia, A., Sprunger, J. G., & Girard, J. M. (2026). *A pilot study of visual, vocal, and verbal markers of PTSD* [Manuscript submitted for publication]. Department of Psychology, University of Kansas.
 
-Preprint: https://osf.io/preprints/psyarxiv/34v5z_v2
+Preprint: https://doi.org/10.5281/zenodo.23245323
 
 **Website:** https://jmgirard.github.io/pilot-ptsd-markers/
 
