@@ -268,7 +268,17 @@ group_delta_table
 #| fig-width: 6.5
 #| fig-height: 6.5
 
-plot_titles <- str_replace(names(all_models), "_", " ")
+plot_titles <- c(
+  "CPPS: Voice clarity (dB)",
+  "H1−H2: Breathiness (dB)",
+  "Loudness: Variability (SD)",
+  "Pitch: Variability (Hz)",
+  "Speech rate (segments/s)",
+  "Voiced: Mean length (s)",
+  "Unvoiced: Mean length (s)",
+  "Voiced: Length SD (s)",
+  "Unvoiced: Length SD (s)"
+)
 
 # Plot the simple group effects from the table above: PTSD minus Control within
 # each task, with 95% credible intervals; filled points have pd > 97.5%
@@ -287,6 +297,8 @@ make_model_plot <- function(name, title) {
       shape = 21, size = 0.4, color = "grey20", show.legend = TRUE
     ) +
     scale_fill_manual(values = c(No = "white", Yes = "black"), limits = c("No", "Yes"), drop = FALSE) +
+    # typographic minus signs on the y-axis (Cairo otherwise draws a hyphen)
+    scale_y_continuous(labels = \(x) sub("^-", "\u2212", format(x, trim = TRUE))) +
     labs(title = title, x = NULL, y = "PTSD − Control Difference (95% CI)", fill = "pd > 97.5%") +
     theme_minimal(base_size = 8) +
     theme(
@@ -305,7 +317,9 @@ combined_plot <- wrap_plots(plot_list, ncol = 3) +
 
 combined_plot
 
-ggsave("vocal.pdf", width = 6.5, height = 6.5, units = "in")
+# Cairo embeds fonts and renders hyphens and minus signs correctly
+ggsave("vocal.pdf", width = 6.5, height = 6.5, units = "in", device = cairo_pdf)
+ggsave("vocal.png", width = 6.5, height = 6.5, units = "in", dpi = 600, device = ragg::agg_png, bg = "white")
 ```
 
 ## Diagnostics

@@ -325,7 +325,7 @@ plot_titles <- c(
   "LIWC: First-Person Plural",
   "LIWC: Negative Emotion",
   "LIWC: Positive Emotion",
-  "LIWC: All or None",
+  "LIWC: All-or-None",
   "LIWC: Cognitive Processes",
   "LIWC: Perceptual Processes",
   "Word Count",
@@ -349,6 +349,8 @@ make_model_plot <- function(name, title) {
       shape = 21, size = 0.4, color = "grey20", show.legend = TRUE
     ) +
     scale_fill_manual(values = c(No = "white", Yes = "black"), limits = c("No", "Yes"), drop = FALSE) +
+    # typographic minus signs on the y-axis (Cairo otherwise draws a hyphen)
+    scale_y_continuous(labels = \(x) sub("^-", "\u2212", format(x, trim = TRUE))) +
     labs(title = title, x = NULL, y = "PTSD − Control Difference (95% CI)", fill = "pd > 97.5%") +
     theme_minimal(base_size = 8) +
     theme(
@@ -367,7 +369,9 @@ combined_plot <- wrap_plots(plot_list, ncol = 3) +
 
 combined_plot
 
-ggsave("verbal.pdf", width = 6.5, height = 6.5, units = "in")
+# Cairo embeds fonts and renders hyphens and minus signs correctly
+ggsave("verbal.pdf", width = 6.5, height = 6.5, units = "in", device = cairo_pdf)
+ggsave("verbal.png", width = 6.5, height = 6.5, units = "in", dpi = 600, device = ragg::agg_png, bg = "white")
 ```
 
 ## Diagnostics
