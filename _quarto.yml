@@ -1,16 +1,18 @@
 project:
   type: website
   output-dir: docs
-  # Only the landing page is rendered; the analysis reports are pre-rendered
-  # HTML (see src/ for their sources and README.md for how to reproduce them)
+  # Every report renders as a page of this site. Computed output is stored in
+  # _freeze/ (tracked), so a project render reuses it and never re-runs a
+  # report. To re-run one report, render it by name; see README.md.
   render:
     - index.qmd
+    - "analyses/*.qmd"
   resources:
-    - "analyses/*.html"
-    - "analyses/*_files/**"
-    - "src/*.qmd"
     - "data/*.csv"
     - ".nojekyll"
+
+execute:
+  freeze: true
 
 website:
   title: "PTSD Behavioral Markers: Supplemental Materials"
@@ -18,6 +20,20 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - text: Tables
+        menu:
+          - href: analyses/demographics.qmd
+            text: Sample Demographics
+          - href: analyses/feature_descriptives.qmd
+            text: Behavioral Feature Descriptives
+      - text: Analyses
+        menu:
+          - href: analyses/verbal_analyses.qmd
+            text: Verbal Feature Analyses
+          - href: analyses/vocal_analyses.qmd
+            text: Vocal Feature Analyses
+          - href: analyses/visual_analyses.qmd
+            text: Visual Feature Analyses
     right:
       - icon: github
         href: https://github.com/jmgirard/pilot-ptsd-markers
