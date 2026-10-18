@@ -17,4 +17,6 @@ analyses/*_files/
 analyses/*.rmarkdown
 analyses/*.pdf
 analyses/*.png
+# Leftovers from the old layout, where reports rendered in src/
+/src/
 .claude/

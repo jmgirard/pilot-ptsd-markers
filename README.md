@@ -47,15 +47,20 @@ quarto render
 ```
 
 The site uses Quarto's freeze option (`execute: freeze: true`). A full render
-uses the stored output in `_freeze/` and runs no report code, so it needs
-neither the data nor R. A report with no stored output yet runs once.
+uses the stored output in `_freeze/` and does not run the code of a report
+that already holds stored output. A report with no stored output runs once,
+so it needs its data, its fit files, and R. After every report holds stored
+output, a full render needs neither the data nor R.
 
 ## Rendering on the data machine
 
 Use the machine that holds the fitted models and the private demographic
 records.
 
-1. Move the existing fit files from `src/fits/` into `analyses/fits/`.
+1. Move the existing fit files from `src/fits/` into `analyses/fits/`. Make
+   sure that `analyses/fits/` holds the same `.rds` files that `src/fits/`
+   held. If a fit file is missing, brms refits that model, which takes hours
+   and stores new estimates.
 2. If the REDCap folder or the participant key is not at the default path in
    `analyses/demographics.qmd`, set `CMBA_REDCAP_DIR` and `CMBA_KEY_FILE`.
 3. Run a full render at the repository root:
@@ -64,13 +69,14 @@ records.
    quarto render
    ```
 
-4. Commit `_freeze/` and `docs/`, then push the branch.
+4. Stage only `_freeze/` and `docs/` (`git add _freeze docs`), commit, and
+   push the branch.
 
 ## License
 
-- **Code** (the `.qmd` source files in `src/` and the website configuration):
-  [MIT License](LICENSE)
-- **Content** (rendered reports in `analyses/` and `docs/`, website text, and
+- **Code** (the `.qmd` source files in `analyses/` and the website
+  configuration): [MIT License](LICENSE)
+- **Content** (rendered reports in `_freeze/` and `docs/`, website text, and
   data files): [CC BY 4.0](LICENSE-CC-BY.md)
 
 ## Citation
