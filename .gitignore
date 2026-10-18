@@ -8,12 +8,13 @@
 /.quarto/
 **/*.quarto_ipynb
 
-# Rendering by-products in src/ (published copies live in analyses/)
+# Rendering by-products. Rendered output that is published lives in
+# _freeze/ and docs/, which are tracked. Fitted models embed the data.
 *.rds
-src/fits/
-src/*.html
-src/*_files/
-src/*.rmarkdown
-src/*.pdf
-src/*.png
+analyses/fits/
+analyses/*.html
+analyses/*_files/
+analyses/*.rmarkdown
+analyses/*.pdf
+analyses/*.png
 .claude/
