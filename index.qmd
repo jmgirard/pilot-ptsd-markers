@@ -23,8 +23,8 @@ archived in v1.0.0; the analyses and results are unchanged.
 
 | Report | Description |
 |---|---|
-| [Sample Demographics](analyses/demographics.html) | Demographic and clinical characteristics by group, with group comparisons (Table 1) |
-| [Behavioral Feature Descriptives](analyses/feature_descriptives.html) | Means and standard deviations of all 27 behavioral features by group and task (Table S1) |
+| [Sample Demographics](analyses/demographics.qmd) | Demographic and clinical characteristics by group, with group comparisons (Table 1) |
+| [Behavioral Feature Descriptives](analyses/feature_descriptives.qmd) | Means and standard deviations of all 27 behavioral features by group and task (Table S1) |
 
 ## Analysis Reports
 
@@ -32,13 +32,13 @@ Each report is a rendered Quarto document containing the complete analysis
 code and output: model specifications and priors, full parameter tables, the
 group and interaction effects reported in the article, figures, and posterior
 predictive checks. The corresponding source files (`.qmd`) are available in
-the [source folder](https://github.com/jmgirard/pilot-ptsd-markers/tree/main/src).
+the [analyses folder](https://github.com/jmgirard/pilot-ptsd-markers/tree/main/analyses).
 
 | Report | Description |
 |---|---|
-| [Verbal Feature Analyses](analyses/verbal_analyses.html) | Bayesian mixed models for word count, seven LIWC-22 categories, and LLM-rated sentiment (Table 2, Figure 1) |
-| [Vocal Feature Analyses](analyses/vocal_analyses.html) | Bayesian mixed models for nine prosodic and voice quality features (Table 3, Figure 2) |
-| [Visual Feature Analyses](analyses/visual_analyses.html) | Bayesian mixed models for five facial action units and four head pose and motion features (Table 4, Figure 3) |
+| [Verbal Feature Analyses](analyses/verbal_analyses.qmd) | Bayesian mixed models for word count, seven LIWC-22 categories, and LLM-rated sentiment (Table 2, Figure 1) |
+| [Vocal Feature Analyses](analyses/vocal_analyses.qmd) | Bayesian mixed models for nine prosodic and voice quality features (Table 3, Figure 2) |
+| [Visual Feature Analyses](analyses/visual_analyses.qmd) | Bayesian mixed models for five facial action units and four head pose and motion features (Table 4, Figure 3) |
 
 ## Data Availability
 
@@ -64,7 +64,7 @@ reproduce every model, table, and figure in the analysis reports. The video,
 audio, and transcript data cannot be shared because they contain identifiable
 protected health information. The other participant-level demographic and
 clinical measures summarized in Table 1 are not shared to protect participant
-privacy; the [Sample Demographics](analyses/demographics.html) report shows the
+privacy; the [Sample Demographics](analyses/demographics.qmd) report shows the
 code used to produce that table.
 
 ## Contact
